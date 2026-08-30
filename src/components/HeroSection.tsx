@@ -1,33 +1,148 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { ArrowRight, Layers, MapPin, Shield, Network, Activity, CheckCircle2, ChevronDown } from "lucide-react";
+import React, { useState } from "react";
+import { ArrowRight, Layers, Activity } from "lucide-react";
 
 export function HeroSection() {
   const [selectedNode, setSelectedNode] = useState<string | null>("node3");
-  const [tick, setTick] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTick((t) => (t + 1) % 100);
-    }, 50);
-    return () => clearInterval(interval);
-  }, []);
 
   const nodes = [
-    { id: "node1", label: "Wallet 1A1z... (Victim)", x: 70, y: 70, type: "victim", btc: "50.00 BTC", risk: "0% Normal", desc: "Defrauded user wallet address in ransomware attack" },
-    { id: "node2", label: "Wallet 34xp... (Hop 1)", x: 230, y: 40, type: "hop", btc: "25.00 BTC", risk: "68% High", desc: "Immediate splitting hop transferring funds in <90 sec" },
-    { id: "node3", label: "Wallet 3J98... (Mixer Hub)", x: 410, y: 80, type: "target", btc: "23.90 BTC", risk: "92% Critical", desc: "Flagged high-risk peel chain hub with 18 tx/hr velocity" },
-    { id: "node4", label: "Wallet bc1q... (Hop 2)", x: 230, y: 130, type: "hop", btc: "25.00 BTC", risk: "74% High", desc: "Parallel money mule intermediate hop" },
-    { id: "node5", label: "Wallet 1Feex... (Dark Market)", x: 570, y: 40, type: "dark", btc: "12.50 BTC", risk: "95% Critical", desc: "Sanctioned entity linked to darknet bazaar off-ramp" },
-    { id: "node6", label: "Wallet 3D2o... (Exchange KYC)", x: 570, y: 130, type: "exchange", btc: "11.40 BTC", risk: "32% Medium", desc: "Regulated exchange liquidation deposit address" }
+    {
+      id: "node1",
+      label: "Wallet 1A1z... (Victim)",
+      shortLabel: "Victim",
+      badge: "0%",
+      x: 65,
+      y: 90,
+      type: "victim",
+      btc: "50.00 BTC",
+      risk: "0% Normal",
+      desc: "Defrauded victim wallet address where funds were initially stolen."
+    },
+    {
+      id: "node2",
+      label: "Wallet 34xp... (Hop 1)",
+      shortLabel: "Hop 1",
+      badge: "68%",
+      x: 195,
+      y: 90,
+      type: "hop",
+      btc: "50.00 BTC",
+      risk: "68% High",
+      desc: "First criminal laundering hop after theft; initiates rapid splitting into parallel paths."
+    },
+    {
+      id: "node4",
+      label: "Wallet bc1q... (Hop 2)",
+      shortLabel: "Hop 2",
+      badge: "74%",
+      x: 325,
+      y: 40,
+      type: "hop",
+      btc: "25.00 BTC",
+      risk: "74% High",
+      desc: "Secondary laundering wallet used to increase transaction distance and obscurity."
+    },
+    {
+      id: "node3",
+      label: "Wallet 3J98... (Mixer Hub)",
+      shortLabel: "Mixer Hub",
+      badge: "92%",
+      x: 440,
+      y: 90,
+      type: "target",
+      btc: "48.50 BTC",
+      risk: "92% Critical",
+      desc: "Central aggregation wallet receiving multiple laundering paths (Hop 1 & Hop 2) before redistribution."
+    },
+    {
+      id: "node5",
+      label: "Wallet 1Feex... (Dark Market)",
+      shortLabel: "Dark Market",
+      badge: "95%",
+      x: 580,
+      y: 40,
+      type: "dark",
+      btc: "25.00 BTC",
+      risk: "95% Critical",
+      desc: "Known illicit destination receiving laundered funds inside darknet marketplace."
+    },
+    {
+      id: "node6",
+      label: "Wallet 3D2o... (Exchange KYC)",
+      shortLabel: "Exchange",
+      badge: "32%",
+      x: 580,
+      y: 140,
+      type: "exchange",
+      btc: "23.50 BTC",
+      risk: "32% Medium",
+      desc: "Regulated exchange receiving suspicious deposits for cash-out (not inherently criminal)."
+    }
   ];
 
-  const activeNodeData = nodes.find((n) => n.id === selectedNode) || nodes[2];
+  const edges = [
+    {
+      id: "e1",
+      from: "node1",
+      to: "node2",
+      d: "M 65 90 L 195 90",
+      dur: "2.2s",
+      begin: "0s",
+      label: "Initial Theft (50 BTC)"
+    },
+    {
+      id: "e2",
+      from: "node2",
+      to: "node4",
+      d: "M 195 90 C 235 60, 275 45, 325 40",
+      dur: "2.0s",
+      begin: "0.7s",
+      label: "Laundering Split (25 BTC)"
+    },
+    {
+      id: "e3",
+      from: "node2",
+      to: "node3",
+      d: "M 195 90 C 260 145, 370 145, 440 90",
+      dur: "2.4s",
+      begin: "0.7s",
+      label: "Direct Deposit (25 BTC)"
+    },
+    {
+      id: "e4",
+      from: "node4",
+      to: "node3",
+      d: "M 325 40 C 375 45, 410 65, 440 90",
+      dur: "2.0s",
+      begin: "1.4s",
+      label: "Hop 2 Forwarding (24.5 BTC)"
+    },
+    {
+      id: "e5",
+      from: "node3",
+      to: "node5",
+      d: "M 440 90 C 485 65, 525 45, 580 40",
+      dur: "2.2s",
+      begin: "2.0s",
+      label: "Illicit Spending (25 BTC)"
+    },
+    {
+      id: "e6",
+      from: "node3",
+      to: "node6",
+      d: "M 440 90 C 485 115, 525 135, 580 140",
+      dur: "2.2s",
+      begin: "2.0s",
+      label: "KYC Cash-out (23.5 BTC)"
+    }
+  ];
+
+  const activeNodeData = nodes.find((n) => n.id === selectedNode) || nodes[3];
 
   return (
     <section id="hero" className="relative pt-12 pb-20 border-b border-zinc-200 bg-white">
-      {/* Background Dot Pattern (No Gradients) */}
+      {/* Background Dot Pattern */}
       <div className="absolute inset-0 bg-dot-pattern opacity-60 pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -96,7 +211,7 @@ export function HeroSection() {
               {/* Card Header Bar */}
               <div className="px-4 py-3 border-b border-zinc-200 bg-zinc-50 flex items-center justify-between">
                 <div className="flex items-center space-x-2">
-                  <div className="w-2.5 h-2.5 rounded-full bg-zinc-400" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-blue-600 animate-pulse" />
                   <span className="text-xs font-bold text-zinc-800">
                     Live Bitcoin Subgraph Visualization (Forensic Simulation)
                   </span>
@@ -109,51 +224,106 @@ export function HeroSection() {
               {/* Minimal SVG Node-Link Canvas */}
               <div className="p-4 bg-zinc-50/30">
                 <svg
-                  viewBox="0 0 660 180"
+                  viewBox="0 0 650 185"
                   className="w-full h-auto select-none overflow-visible"
                 >
-                  {/* Grid Lines */}
                   <defs>
+                    {/* Default Arrow Marker */}
                     <marker
-                      id="arrow"
+                      id="arrow-default"
                       viewBox="0 0 10 10"
-                      refX="18"
+                      refX="22"
                       refY="5"
                       markerWidth="6"
                       markerHeight="6"
-                      orient="auto-start-reverse"
+                      orient="auto"
                     >
-                      <path d="M 0 0 L 10 5 L 0 10 z" fill="#71717a" />
+                      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#71717a" />
+                    </marker>
+
+                    {/* Active Highlight Arrow Marker */}
+                    <marker
+                      id="arrow-active"
+                      viewBox="0 0 10 10"
+                      refX="22"
+                      refY="5"
+                      markerWidth="6"
+                      markerHeight="6"
+                      orient="auto"
+                    >
+                      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#2563eb" />
+                    </marker>
+
+                    {/* Muted Arrow Marker */}
+                    <marker
+                      id="arrow-muted"
+                      viewBox="0 0 10 10"
+                      refX="22"
+                      refY="5"
+                      markerWidth="6"
+                      markerHeight="6"
+                      orient="auto"
+                    >
+                      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#d4d4d8" />
                     </marker>
                   </defs>
 
-                  {/* Edges */}
-                  {/* Node1 -> Node2 */}
-                  <line x1="70" y1="70" x2="230" y2="40" stroke="#a1a1aa" strokeWidth="1.5" strokeDasharray="3,3" markerEnd="url(#arrow)" />
-                  {/* Node1 -> Node4 */}
-                  <line x1="70" y1="70" x2="230" y2="130" stroke="#a1a1aa" strokeWidth="1.5" strokeDasharray="3,3" markerEnd="url(#arrow)" />
-                  {/* Node2 -> Node3 */}
-                  <line x1="230" y1="40" x2="410" y2="80" stroke="#2563eb" strokeWidth="2" markerEnd="url(#arrow)" />
-                  {/* Node4 -> Node3 */}
-                  <line x1="230" y1="130" x2="410" y2="80" stroke="#2563eb" strokeWidth="2" markerEnd="url(#arrow)" />
-                  {/* Node3 -> Node5 */}
-                  <line x1="410" y1="80" x2="570" y2="40" stroke="#18181b" strokeWidth="1.5" strokeDasharray="3,3" markerEnd="url(#arrow)" />
-                  {/* Node3 -> Node6 */}
-                  <line x1="410" y1="80" x2="570" y2="130" stroke="#18181b" strokeWidth="1.5" strokeDasharray="3,3" markerEnd="url(#arrow)" />
+                  {/* Directed Edges */}
+                  {edges.map((edge) => {
+                    const isOutgoing = selectedNode === edge.from;
+                    const isIncoming = selectedNode === edge.to;
+                    const isConnected = isOutgoing || isIncoming;
+                    const hasSelection = selectedNode !== null;
 
-                  {/* Traveling Packet (Simulation) */}
-                  <circle
-                    cx={70 + ((230 - 70) * ((tick * 2) % 100)) / 100}
-                    cy={70 + ((40 - 70) * ((tick * 2) % 100)) / 100}
-                    r="3.5"
-                    fill="#2563eb"
-                  />
-                  <circle
-                    cx={230 + ((410 - 230) * (((tick + 30) * 2) % 100)) / 100}
-                    cy={40 + ((80 - 40) * (((tick + 30) * 2) % 100)) / 100}
-                    r="3.5"
-                    fill="#2563eb"
-                  />
+                    let strokeColor = "#71717a";
+                    let strokeWidth = 1.5;
+                    let strokeDash = "3,3";
+                    let markerId = "arrow-default";
+
+                    if (hasSelection) {
+                      if (isConnected) {
+                        strokeColor = "#2563eb";
+                        strokeWidth = 2.2;
+                        strokeDash = "none";
+                        markerId = "arrow-active";
+                      } else {
+                        strokeColor = "#e4e4e7";
+                        strokeWidth = 1.2;
+                        strokeDash = "3,3";
+                        markerId = "arrow-muted";
+                      }
+                    }
+
+                    return (
+                      <g key={edge.id}>
+                        {/* Static Path */}
+                        <path
+                          id={`path-${edge.id}`}
+                          d={edge.d}
+                          fill="none"
+                          stroke={strokeColor}
+                          strokeWidth={strokeWidth}
+                          strokeDasharray={strokeDash}
+                          markerEnd={`url(#${markerId})`}
+                          className="transition-all duration-300"
+                        />
+
+                        {/* Animated Flowing Bitcoin Transaction Packet */}
+                        <circle
+                          r={isConnected ? "3.5" : "2.8"}
+                          fill={isConnected ? "#2563eb" : "#71717a"}
+                          opacity={hasSelection && !isConnected ? "0.2" : "0.9"}
+                        >
+                          <animateMotion
+                            dur={edge.dur}
+                            begin={edge.begin}
+                            repeatCount="indefinite"
+                            path={edge.d}
+                          />
+                        </circle>
+                      </g>
+                    );
+                  })}
 
                   {/* Nodes */}
                   {nodes.map((n) => {
@@ -165,7 +335,7 @@ export function HeroSection() {
                         key={n.id}
                         transform={`translate(${n.x}, ${n.y})`}
                         onClick={() => setSelectedNode(n.id)}
-                        className="cursor-pointer"
+                        className="cursor-pointer group"
                       >
                         {/* Ping pulse for high risk target */}
                         {isTarget && (
@@ -174,38 +344,75 @@ export function HeroSection() {
                             fill="none"
                             stroke="#2563eb"
                             strokeWidth="1"
-                            className="animate-ping opacity-30"
+                            className="animate-ping opacity-30 pointer-events-none"
                           />
                         )}
+
+                        {/* Outer Glow Ring on Selection */}
+                        {isSelected && (
+                          <circle
+                            r="20"
+                            fill="none"
+                            stroke="#2563eb"
+                            strokeWidth="1.5"
+                            strokeDasharray="2,2"
+                            className="animate-spin-slow opacity-60 pointer-events-none"
+                          />
+                        )}
+
                         {/* Outer Circle */}
                         <circle
-                          r={isSelected ? "18" : "15"}
+                          r={isSelected ? "17" : "15"}
                           fill={isTarget ? "#18181b" : isSelected ? "#f4f4f5" : "#ffffff"}
-                          stroke={isTarget ? "#2563eb" : isSelected ? "#09090b" : "#71717a"}
+                          stroke={isTarget ? "#2563eb" : isSelected ? "#2563eb" : "#71717a"}
                           strokeWidth={isSelected ? "2.5" : "1.5"}
-                          className="transition-all"
+                          className="transition-all duration-200 group-hover:stroke-blue-600"
                         />
-                        {/* Inner Icon / Text */}
+
+                        {/* Inner Node Text / Symbol */}
                         <text
                           textAnchor="middle"
-                          dy="4"
-                          fontSize="9"
+                          dy="3.5"
+                          fontSize="8.5"
                           fontWeight="bold"
-                          fill={isTarget ? "#ffffff" : "#18181b"}
+                          fill={isTarget ? "#ffffff" : isSelected ? "#2563eb" : "#18181b"}
                           fontFamily="monospace"
                         >
-                          {n.id === "node1" ? "V" : n.id === "node3" ? "92%" : n.id === "node5" ? "D" : n.id === "node6" ? "EX" : "W"}
+                          {n.id === "node1"
+                            ? "V"
+                            : n.id === "node2"
+                            ? "H1"
+                            : n.id === "node4"
+                            ? "H2"
+                            : n.id === "node3"
+                            ? "HUB"
+                            : n.id === "node5"
+                            ? "DM"
+                            : "KYC"}
                         </text>
+
                         {/* Node Label Below */}
                         <text
                           textAnchor="middle"
-                          dy="28"
+                          dy="27"
                           fontSize="8.5"
-                          fontWeight={isSelected ? "bold" : "normal"}
-                          fill="#27272a"
+                          fontWeight={isSelected ? "bold" : "600"}
+                          fill={isSelected ? "#2563eb" : "#27272a"}
                           fontFamily="monospace"
                         >
-                          {n.label.split(" ")[0]}
+                          {n.shortLabel}
+                        </text>
+
+                        {/* Risk Score Pill Text */}
+                        <text
+                          textAnchor="middle"
+                          dy="37"
+                          fontSize="7.5"
+                          fontWeight="500"
+                          fill="#71717a"
+                          fontFamily="monospace"
+                        >
+                          {n.badge}
                         </text>
                       </g>
                     );
@@ -222,20 +429,28 @@ export function HeroSection() {
                     </span>
                     <span className="font-bold text-zinc-900">{activeNodeData.label}</span>
                   </div>
-                  <span className="px-2 py-0.5 rounded text-[11px] font-bold border border-zinc-300 bg-zinc-100 text-zinc-900">
+                  <span className={`px-2 py-0.5 rounded text-[11px] font-bold border ${
+                    activeNodeData.risk.includes("Critical")
+                      ? "border-red-300 bg-red-50 text-red-700"
+                      : activeNodeData.risk.includes("High")
+                      ? "border-amber-300 bg-amber-50 text-amber-800"
+                      : activeNodeData.risk.includes("Medium")
+                      ? "border-blue-300 bg-blue-50 text-blue-700"
+                      : "border-zinc-300 bg-zinc-100 text-zinc-800"
+                  }`}>
                     Risk: {activeNodeData.risk}
                   </span>
                 </div>
                 <div className="mt-1.5 flex items-center justify-between text-[11px] text-zinc-600">
-                  <span>Balance: {activeNodeData.btc}</span>
-                  <span className="text-zinc-500 truncate max-w-[280px]">{activeNodeData.desc}</span>
+                  <span className="font-mono font-semibold">Balance: {activeNodeData.btc}</span>
+                  <span className="text-zinc-500 truncate max-w-[320px]">{activeNodeData.desc}</span>
                 </div>
               </div>
             </div>
 
             {/* Caption */}
             <p className="text-[11px] text-zinc-500 mt-2 text-center">
-              Click any node above to inspect wallet metadata, laundering hop depth, and AI risk score.
+              Click any wallet node to trace incoming/outgoing transaction paths, laundering depth, and AI risk scores.
             </p>
           </div>
         </div>
@@ -243,3 +458,4 @@ export function HeroSection() {
     </section>
   );
 }
+
