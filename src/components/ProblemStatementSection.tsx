@@ -1,0 +1,220 @@
+"use client";
+
+import React, { useState, useEffect } from "react";
+import { ArrowDown, AlertTriangle, UserCheck, ShieldAlert, Cpu, ArrowRight, RefreshCw } from "lucide-react";
+
+export function ProblemStatementSection() {
+  const [activeStep, setActiveStep] = useState(0);
+
+  const steps = [
+    {
+      id: "victim",
+      name: "Victim",
+      role: "Source of Stolen Funds",
+      desc: "Victim transfers 50 BTC under extortion or fraud.",
+      detail: "Initial stolen funds leave victim's verified wallet.",
+      badge: "Inception (00:00:00)"
+    },
+    {
+      id: "wallet-a",
+      name: "Wallet A",
+      role: "Layer 1 Mule Wallet",
+      desc: "Funds instantly split into two 25 BTC sub-streams.",
+      detail: "Quick fan-out designed to confuse single-hop tracking.",
+      badge: "Hop 1 (+00:03:12)"
+    },
+    {
+      id: "wallet-b",
+      name: "Wallet B",
+      role: "Layer 2 Peel Chain",
+      desc: "Peels off 1.5 BTC to cashout; passes 23.5 BTC forward.",
+      detail: "Classic peel chain technique to disguise bulk volume.",
+      badge: "Hop 2 (+00:11:45)"
+    },
+    {
+      id: "wallet-c",
+      name: "Wallet C",
+      role: "Layer 3 Mixer / Obfuscation",
+      desc: "Blends with 30+ other addresses in a CoinJoin pool.",
+      detail: "Transaction entropy spikes; ownership links break.",
+      badge: "Hop 3 (+00:24:10)"
+    },
+    {
+      id: "exchange",
+      name: "Exchange",
+      role: "Off-Ramp Liquidation",
+      desc: "Deposits to offshore OTC broker / unverified exchange.",
+      detail: "Cash out into fiat currency or privacy coins.",
+      badge: "Final Exit (+00:48:30)"
+    }
+  ];
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveStep((prev) => (prev + 1) % steps.length);
+    }, 2800);
+    return () => clearInterval(timer);
+  }, [steps.length]);
+
+  return (
+    <section id="problem-statement" className="py-20 border-b border-zinc-200 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header */}
+        <div className="max-w-3xl mb-12">
+          <div className="flex items-center gap-2 text-xs font-bold text-zinc-500 uppercase tracking-wider mb-2">
+            <span className="w-2 h-2 rounded-full bg-zinc-900" />
+            Section 02 // The Real-World Challenge
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-950">
+            Problem Statement
+          </h2>
+          <p className="mt-3 text-sm sm:text-base text-zinc-600 leading-relaxed">
+            Understanding why modern cybercrime law enforcement struggles to trace illicit cryptocurrency trails without automated graph intelligence.
+          </p>
+        </div>
+
+        {/* 2-Column: Simple Language Narrative + Animated Flow Diagram */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          {/* Left Column: Simple Language Explanation */}
+          <div className="lg:col-span-6 space-y-4">
+            <div className="p-5 rounded-lg border border-zinc-200 bg-zinc-50/60 space-y-3">
+              <div className="text-xs font-bold uppercase tracking-wider text-zinc-500">
+                The Narrative
+              </div>
+              <div className="space-y-3 text-sm text-zinc-800 leading-relaxed">
+                <p className="font-semibold text-zinc-950">
+                  Imagine police trying to trace stolen money.
+                </p>
+                <p>
+                  Instead of physical cash, cyber criminals use <span className="font-bold text-zinc-950">Bitcoin</span>.
+                </p>
+                <p>
+                  Within seconds, the stolen money is split and transferred across <span className="font-bold text-zinc-950">hundreds of intermediate disposable wallets</span> and automated mixing pools.
+                </p>
+                <p className="text-zinc-600">
+                  Human investigators cannot manually inspect thousands of multi-input transactions, calculate UTXO peel ratios, or correlate foreign IP broadcasts in time.
+                </p>
+                <div className="p-3 rounded border border-blue-200 bg-blue-50/50 text-blue-900 text-xs leading-relaxed font-bold">
+                  ⚡ Our system helps cybercrime investigators automatically discover suspicious activity, reconstruct laundering graphs, and produce explainable evidentiary reports.
+                </div>
+              </div>
+            </div>
+
+            {/* Micro Highlights */}
+            <div className="grid grid-cols-2 gap-3">
+              <div className="p-3.5 rounded border border-zinc-200 bg-white">
+                <div className="text-xs font-bold text-zinc-900">4,000+ TXs / Hour</div>
+                <div className="text-[11px] text-zinc-500 mt-1">Average velocity in active ransomware syndicates.</div>
+              </div>
+              <div className="p-3.5 rounded border border-zinc-200 bg-white">
+                <div className="text-xs font-bold text-zinc-900">&lt; 15 Minutes</div>
+                <div className="text-[11px] text-zinc-500 mt-1">Time window before funds reach offshore fiat off-ramps.</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: Animated Flow Diagram */}
+          <div className="lg:col-span-6">
+            <div className="rounded-lg border border-zinc-300 bg-white shadow-sm overflow-hidden">
+              <div className="px-4 py-3 border-b border-zinc-200 bg-zinc-50 flex items-center justify-between">
+                <span className="text-xs font-bold text-zinc-800">
+                  Money Laundering Flow Simulation
+                </span>
+                <button
+                  onClick={() => setActiveStep((prev) => (prev + 1) % steps.length)}
+                  className="flex items-center gap-1 text-[11px] px-2 py-0.5 rounded border border-zinc-300 bg-white text-zinc-700 hover:bg-zinc-100 transition-colors"
+                >
+                  <RefreshCw className="w-3 h-3" />
+                  Next Step
+                </button>
+              </div>
+
+              {/* Vertical Animated Flow */}
+              <div className="p-5 space-y-2">
+                {steps.map((step, idx) => {
+                  const isActive = activeStep === idx;
+                  const isPassed = activeStep > idx;
+
+                  return (
+                    <React.Fragment key={step.id}>
+                      <div
+                        onClick={() => setActiveStep(idx)}
+                        className={`cursor-pointer p-3.5 rounded-lg border transition-all ${
+                          isActive
+                            ? "border-blue-600 bg-blue-50/20 shadow-sm"
+                            : isPassed
+                            ? "border-zinc-300 bg-zinc-50/50 opacity-90"
+                            : "border-zinc-200 bg-white hover:border-zinc-300"
+                        }`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-3">
+                            <div
+                              className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold border ${
+                                isActive
+                                  ? "bg-blue-600 text-white border-blue-600"
+                                  : isPassed
+                                  ? "bg-zinc-800 text-white border-zinc-800"
+                                  : "bg-zinc-100 text-zinc-600 border-zinc-300"
+                              }`}
+                            >
+                              {idx + 1}
+                            </div>
+                            <div>
+                              <div className="text-xs font-bold text-zinc-900 flex items-center gap-2">
+                                {step.name}
+                                <span className="text-[10px] font-normal text-zinc-500">
+                                  ({step.role})
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                          <span
+                            className={`text-[10px] font-mono px-2 py-0.5 rounded border ${
+                              isActive
+                                ? "border-blue-300 bg-blue-50 text-blue-700 font-bold"
+                                : "border-zinc-200 bg-white text-zinc-500"
+                            }`}
+                          >
+                            {step.badge}
+                          </span>
+                        </div>
+
+                        {/* Expanded details on active */}
+                        <div className="mt-2 text-xs text-zinc-600 pl-9">
+                          <p>{step.desc}</p>
+                          {isActive && (
+                            <p className="text-[11px] text-blue-600 font-medium mt-1">
+                              ↳ Forensic Insight: {step.detail}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Arrow Connector */}
+                      {idx < steps.length - 1 && (
+                        <div className="flex justify-center py-0.5">
+                          <ArrowDown
+                            className={`w-4 h-4 transition-colors ${
+                              activeStep > idx ? "text-zinc-800" : "text-zinc-300"
+                            }`}
+                          />
+                        </div>
+                      )}
+                    </React.Fragment>
+                  );
+                })}
+              </div>
+
+              {/* Simulation Footer */}
+              <div className="px-4 py-2.5 border-t border-zinc-200 bg-zinc-50 flex items-center justify-between text-[11px] text-zinc-500">
+                <span>Autonomous step cycling active</span>
+                <span className="font-mono text-zinc-700">Step {activeStep + 1} of 5</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
