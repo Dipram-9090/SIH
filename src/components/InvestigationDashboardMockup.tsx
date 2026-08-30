@@ -1,10 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-<<<<<<< HEAD
 import { useTheme } from "next-themes";
-=======
->>>>>>> 0abf518ad88d2cb15eea599a10a445d340e1a7f3
 import {
   DASHBOARD_METRICS,
   TIMELINE_VOLUME_DATA,
@@ -23,12 +20,8 @@ import {
   YAxis,
   Tooltip,
   BarChart,
-<<<<<<< HEAD
-  Bar
-=======
   Bar,
   CartesianGrid
->>>>>>> 0abf518ad88d2cb15eea599a10a445d340e1a7f3
 } from "recharts";
 import {
   LayoutDashboard,
@@ -39,15 +32,9 @@ import {
   Clock,
   FileText,
   Search,
-<<<<<<< HEAD
-  ShieldAlert
-=======
-  Filter,
   ShieldAlert,
   Download,
-  Eye,
   CheckCircle2,
-  ExternalLink,
   ChevronRight,
   RefreshCw,
   Globe,
@@ -60,27 +47,31 @@ import {
   Hash,
   Database,
   Info
->>>>>>> 0abf518ad88d2cb15eea599a10a445d340e1a7f3
 } from "lucide-react";
+
+interface GeneratedReport {
+  caseId: string;
+  dataset: string;
+  investigator: string;
+  timestamp: string;
+  targetWallet: string;
+  threatLevel: string;
+  riskScore: number;
+  sha256Signature: string;
+  bsaCertification: string;
+  notes: string;
+}
 
 export function InvestigationDashboardMockup() {
   const [activeTab, setActiveTab] = useState<string>("Overview");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedThreatFilter, setSelectedThreatFilter] = useState<string>("ALL");
   const [selectedAlert, setSelectedAlert] = useState<DashboardAlert | null>(null);
-  const [mounted, setMounted] = useState(false);
-  const { resolvedTheme } = useTheme();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const isDark = mounted && resolvedTheme === "dark";
 
   // Graph Analysis States
   const [isFlowing, setIsFlowing] = useState<boolean>(true);
   const [ciohOverlay, setCiohOverlay] = useState<boolean>(false);
-  const [hoveredNode, setHoveredNode] = useState<any | null>(null);
+  const [hoveredNode, setHoveredNode] = useState<{ id: string; label: string; sublabel: string; risk: number } | null>(null);
 
   // Wallet Explorer States
   const [walletSearch, setWalletSearch] = useState<string>("3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy");
@@ -91,14 +82,26 @@ export function InvestigationDashboardMockup() {
   // Transaction States
   const [txSearchQuery, setTxSearchQuery] = useState<string>("");
   const [txFilter, setTxFilter] = useState<string>("ALL");
-  const [selectedTx, setSelectedTx] = useState<any | null>(null);
+  const [selectedTx, setSelectedTx] = useState<DashboardAlert | null>(null);
 
   // Report Generator States
   const [investigatorName, setInvestigatorName] = useState<string>("Agent S. Sharma");
-  const [caseNotes, setCaseNotes] = useState<string>("Tracing funds linked to ransomware payload cluster CLUST-09. Off-ramp address resolved to KYC profile at exchange.");
+  const [caseNotes, setCaseNotes] = useState<string>(
+    "Tracing funds linked to ransomware payload cluster CLUST-09. Off-ramp address resolved to KYC profile at exchange."
+  );
   const [reportProgress, setReportProgress] = useState<number>(0);
   const [isGeneratingReport, setIsGeneratingReport] = useState<boolean>(false);
-  const [generatedReport, setGeneratedReport] = useState<any | null>(null);
+  const [generatedReport, setGeneratedReport] = useState<GeneratedReport | null>(null);
+
+  // Theme support
+  const [mounted, setMounted] = useState(false);
+  const { resolvedTheme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const isDark = mounted && resolvedTheme === "dark";
 
   // Trigger CIOH heuristic resolution animation
   const handleResolveCioh = () => {
@@ -119,7 +122,7 @@ export function InvestigationDashboardMockup() {
 
   // Handle report generator countup
   useEffect(() => {
-    let interval: any;
+    let interval: ReturnType<typeof setInterval> | undefined;
     if (isGeneratingReport && reportProgress < 100) {
       interval = setInterval(() => {
         setReportProgress((prev) => {
@@ -144,7 +147,9 @@ export function InvestigationDashboardMockup() {
         });
       }, 300);
     }
-    return () => clearInterval(interval);
+    return () => {
+      if (interval) clearInterval(interval);
+    };
   }, [isGeneratingReport, reportProgress, investigatorName, caseNotes, selectedWallet]);
 
   // Filtered alerts for Overview/Alerts tables
@@ -169,77 +174,43 @@ export function InvestigationDashboardMockup() {
   ];
 
   return (
-    <section id="dashboard-mockup" className="py-20 border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 transition-colors">
+    <section id="dashboard-mockup" className="py-20 scroll-mt-20 border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="max-w-3xl mb-12">
-<<<<<<< HEAD
           <div className="flex items-center gap-2 text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-2">
-            <span className="w-2 h-2 rounded-full bg-zinc-900 dark:bg-zinc-100" />
-            Section 11 // Product Simulation
-          </div>
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-950 dark:text-zinc-100">
-            Investigation Dashboard Mockup
-          </h2>
-          <p className="mt-3 text-sm sm:text-base text-zinc-600 dark:text-zinc-400 leading-relaxed">
-            An interactive preview of the investigator dashboard. Test the active sidebar views, filter threat queues, inspect live charting, and examine wallet subgraphs.
-          </p>
-        </div>
-
-        {/* Dashboard Container (Simulated Window) */}
-        <div className="rounded-xl border border-zinc-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-lg overflow-hidden flex flex-col transition-colors">
-          {/* Top Window Bar */}
-          <div className="px-4 py-3 bg-zinc-100 dark:bg-zinc-900 text-zinc-900 dark:text-white flex items-center justify-between border-b border-zinc-200 dark:border-zinc-800 transition-colors">
-            <div className="flex items-center space-x-3">
-              <div className="flex space-x-1.5">
-                <div className="w-3 h-3 rounded-full bg-zinc-300 dark:bg-zinc-700" />
-                <div className="w-3 h-3 rounded-full bg-zinc-300 dark:bg-zinc-700" />
-                <div className="w-3 h-3 rounded-full bg-zinc-300 dark:bg-zinc-700" />
-              </div>
-              <span className="text-xs font-mono text-zinc-700 dark:text-zinc-300 hidden sm:inline">
-                SIH-Forensic-Investigation-Console // Live Session #8942
-=======
-          <div className="flex items-center gap-2 text-xs font-bold text-zinc-500 uppercase tracking-wider mb-2">
-            <span className="w-2 h-2 rounded-full bg-zinc-900 animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-zinc-900 dark:bg-zinc-100 animate-pulse" />
             Section 11 // Forensic Interactive Simulator
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-950">
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-950 dark:text-zinc-100">
             AegisTrace Interactive Console
           </h2>
-          <p className="mt-3 text-sm sm:text-base text-zinc-600 leading-relaxed">
+          <p className="mt-3 text-sm sm:text-base text-zinc-600 dark:text-zinc-400 leading-relaxed">
             Experience the actual investigator interface. Navigate through specialized modules, run the CIOH entity resolver, simulate flow paths, and compile signed statutory evidence.
           </p>
         </div>
 
-        {/* Dashboard Container (Simulated Dark Forensic Window) */}
-        <div className="rounded-xl border border-zinc-800 bg-zinc-950 shadow-2xl overflow-hidden flex flex-col terminal-grid">
+        {/* Dashboard Container (Theme Responsive Window) */}
+        <div className="rounded-xl border border-zinc-300 dark:border-zinc-800 bg-white dark:bg-zinc-950 shadow-xl dark:shadow-2xl overflow-hidden flex flex-col terminal-grid transition-colors">
           
-          {/* Top Window Bar (Forensic Blue) */}
-          <div className="px-4 py-3 bg-zinc-900 text-zinc-100 flex items-center justify-between border-b border-zinc-800">
+          {/* Top Window Bar */}
+          <div className="px-4 py-3 bg-zinc-100 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 flex items-center justify-between border-b border-zinc-200 dark:border-zinc-800 transition-colors">
             <div className="flex items-center space-x-3">
               <div className="flex space-x-1.5">
                 <div className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-600 transition-colors cursor-pointer" />
                 <div className="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-600 transition-colors cursor-pointer" />
                 <div className="w-3 h-3 rounded-full bg-green-500 hover:bg-green-600 transition-colors cursor-pointer" />
               </div>
-              <span className="text-xs font-mono text-zinc-400 hidden sm:inline-flex items-center gap-2">
-                <Terminal className="w-3 h-3 text-blue-500" />
+              <span className="text-xs font-mono text-zinc-700 dark:text-zinc-400 hidden sm:inline-flex items-center gap-2">
+                <Terminal className="w-3 h-3 text-blue-600 dark:text-blue-500" />
                 AEGISTRACE-FORENSIC-CONSOLE // Live Session #8942
->>>>>>> 0abf518ad88d2cb15eea599a10a445d340e1a7f3
               </span>
             </div>
 
             <div className="flex items-center space-x-3 text-xs">
-<<<<<<< HEAD
-              <span className="px-2 py-0.5 rounded bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700 text-[10px] font-mono shadow-xs">
-                BTC MEMPOOL: SYNCED
-              </span>
-              <button className="px-2.5 py-1 rounded bg-blue-600 text-white text-[11px] font-bold hover:bg-blue-700 transition-colors shadow-sm">
-                Export Dossier
-=======
-              <span className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-zinc-800 text-blue-400 border border-zinc-700/60 text-[10px] font-mono">
-                <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
+              <span className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-white dark:bg-zinc-800 text-blue-700 dark:text-blue-400 border border-zinc-300 dark:border-zinc-700/60 text-[10px] font-mono shadow-xs">
+                <span className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-blue-500 animate-pulse" />
                 OFFLINE MEMPOOL: ACTIVE
               </span>
               <button 
@@ -247,30 +218,19 @@ export function InvestigationDashboardMockup() {
                 className="px-2.5 py-1 rounded bg-blue-600 text-white text-[11px] font-bold hover:bg-blue-700 active:scale-95 transition-all shadow-md shadow-blue-600/10"
               >
                 Compile Dossier
->>>>>>> 0abf518ad88d2cb15eea599a10a445d340e1a7f3
               </button>
             </div>
           </div>
 
-<<<<<<< HEAD
-          {/* Main Body: Sidebar + Content */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[700px]">
-            {/* Sidebar (Mock) */}
-            <div className="lg:col-span-3 border-r border-zinc-200 dark:border-zinc-800 bg-zinc-50/70 dark:bg-zinc-950/70 p-4 space-y-6 transition-colors">
-              <div>
-                <div className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 mb-2 px-2">
-                  Investigation Modules
-=======
           {/* Main Body: Sidebar + Dynamic Content */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[720px] bg-zinc-950">
+          <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[720px] bg-zinc-50/50 dark:bg-zinc-950 transition-colors">
             
             {/* Sidebar Module Menu */}
-            <div className="lg:col-span-3 border-r border-zinc-800 bg-zinc-900/35 p-4 space-y-6">
+            <div className="lg:col-span-3 border-r border-zinc-200 dark:border-zinc-800 bg-zinc-100/60 dark:bg-zinc-900/35 p-4 space-y-6 transition-colors">
               <div>
-                <div className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 mb-3 px-2 flex items-center justify-between">
+                <div className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-500 mb-3 px-2 flex items-center justify-between">
                   <span>Investigation Modules</span>
                   <Database className="w-3 h-3" />
->>>>>>> 0abf518ad88d2cb15eea599a10a445d340e1a7f3
                 </div>
                 <nav className="space-y-1">
                   {sidebarLinks.map((item) => {
@@ -281,13 +241,8 @@ export function InvestigationDashboardMockup() {
                         onClick={() => setActiveTab(item.name)}
                         className={`w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-xs font-medium transition-all ${
                           isActive
-<<<<<<< HEAD
-                            ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-950 font-bold shadow-sm"
-                            : "text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200/60 dark:hover:bg-zinc-900"
-=======
                             ? "bg-blue-600 text-white font-bold shadow-[0_0_15px_rgba(37,99,235,0.25)]"
-                            : "text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/40"
->>>>>>> 0abf518ad88d2cb15eea599a10a445d340e1a7f3
+                            : "text-zinc-700 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-100 hover:bg-zinc-200/60 dark:hover:bg-zinc-800/40"
                         }`}
                       >
                         <div className="flex items-center space-x-2.5">
@@ -298,13 +253,8 @@ export function InvestigationDashboardMockup() {
                           <span
                             className={`text-[9px] font-mono px-1.5 py-0.5 rounded ${
                               isActive
-<<<<<<< HEAD
-                                ? "bg-blue-600 text-white font-bold"
-                                : "bg-zinc-200 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200"
-=======
                                 ? "bg-white text-blue-700 font-bold"
-                                : "bg-zinc-800 text-zinc-400 border border-zinc-700/60"
->>>>>>> 0abf518ad88d2cb15eea599a10a445d340e1a7f3
+                                : "bg-zinc-200 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-400 border border-zinc-300 dark:border-zinc-700/60"
                             }`}
                           >
                             {item.badge}
@@ -316,161 +266,27 @@ export function InvestigationDashboardMockup() {
                 </nav>
               </div>
 
-<<<<<<< HEAD
-              {/* Active Case Context */}
-              <div className="p-3.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 space-y-2 text-xs transition-colors">
-                <div className="text-[10px] uppercase font-bold text-zinc-400 dark:text-zinc-500">
-                  Target Dataset
-                </div>
-                <div className="font-bold text-zinc-900 dark:text-zinc-100 truncate">
-                  SilkRoad_2026_Seizure.csv
-                </div>
-                <div className="text-[11px] text-zinc-500 dark:text-zinc-400 font-mono">
-                  SHA-256: e3b0c44...996fb
-                </div>
-                <div className="pt-2 border-t border-zinc-100 dark:border-zinc-800 flex justify-between text-[10px] text-zinc-600 dark:text-zinc-400">
-                  <span>Processed: 142k rows</span>
-                  <span className="text-blue-600 dark:text-blue-400 font-bold">100% Analyzed</span>
-=======
               {/* Seized Case Data Target Context */}
-              <div className="p-3.5 rounded-lg border border-zinc-800 bg-zinc-900/50 space-y-2 text-xs">
+              <div className="p-3.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/50 space-y-2 text-xs transition-colors">
                 <div className="text-[10px] uppercase font-bold text-zinc-500 tracking-wider">
                   Target Dataset (Offline)
                 </div>
-                <div className="font-bold text-zinc-100 truncate flex items-center gap-1.5">
+                <div className="font-bold text-zinc-900 dark:text-zinc-100 truncate flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
                   SilkRoad_2026_Seizure.csv
                 </div>
                 <div className="text-[10px] text-zinc-500 font-mono select-all">
                   SHA-256: e3b0c44...996fb
                 </div>
-                <div className="pt-2 border-t border-zinc-800 flex justify-between text-[10px] text-zinc-400">
+                <div className="pt-2 border-t border-zinc-200 dark:border-zinc-800 flex justify-between text-[10px] text-zinc-600 dark:text-zinc-400">
                   <span>Size: 142k records</span>
-                  <span className="text-blue-400 font-bold">Heuristics: 100%</span>
->>>>>>> 0abf518ad88d2cb15eea599a10a445d340e1a7f3
+                  <span className="text-blue-600 dark:text-blue-400 font-bold">Heuristics: 100%</span>
                 </div>
               </div>
             </div>
 
-<<<<<<< HEAD
-            {/* Content Area */}
-            <div className="lg:col-span-9 p-5 sm:p-6 space-y-6 overflow-y-auto max-h-[800px] bg-white dark:bg-zinc-900/50 transition-colors">
-              {/* 5 Main KPI Cards */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-                <div className="p-3.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
-                  <div className="text-[10px] uppercase font-bold text-zinc-400 dark:text-zinc-500">
-                    Total Transactions
-                  </div>
-                  <div className="text-lg sm:text-xl font-bold font-mono text-zinc-950 dark:text-zinc-100 mt-1">
-                    {DASHBOARD_METRICS.totalTransactions}
-                  </div>
-                  <span className="text-[10px] text-zinc-500 dark:text-zinc-400 font-mono">In current dataset</span>
-                </div>
-
-                <div className="p-3.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
-                  <div className="text-[10px] uppercase font-bold text-zinc-400 dark:text-zinc-500">
-                    Flagged Wallets
-                  </div>
-                  <div className="text-lg sm:text-xl font-bold font-mono text-zinc-950 dark:text-zinc-100 mt-1">
-                    {DASHBOARD_METRICS.flaggedWallets}
-                  </div>
-                  <span className="text-[10px] text-zinc-500 dark:text-zinc-400 font-mono">Anomalous nodes</span>
-                </div>
-
-                <div className="p-3.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
-                  <div className="text-[10px] uppercase font-bold text-zinc-400 dark:text-zinc-500">
-                    Flagged IPs
-                  </div>
-                  <div className="text-lg sm:text-xl font-bold font-mono text-zinc-950 dark:text-zinc-100 mt-1">
-                    {DASHBOARD_METRICS.flaggedIps}
-                  </div>
-                  <span className="text-[10px] text-zinc-500 dark:text-zinc-400 font-mono">Tor/VPN relays</span>
-                </div>
-
-                <div className="p-3.5 rounded-lg border border-blue-200 dark:border-blue-900/60 bg-blue-50/40 dark:bg-blue-950/30">
-                  <div className="text-[10px] uppercase font-bold text-blue-800 dark:text-blue-300">
-                    Risk Alerts
-                  </div>
-                  <div className="text-lg sm:text-xl font-bold font-mono text-blue-700 dark:text-blue-400 mt-1">
-                    {DASHBOARD_METRICS.riskAlerts} Critical
-                  </div>
-                  <span className="text-[10px] text-blue-600 dark:text-blue-400 font-mono">Requires action</span>
-                </div>
-
-                <div className="p-3.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 col-span-2 sm:col-span-1">
-                  <div className="text-[10px] uppercase font-bold text-zinc-400 dark:text-zinc-500">
-                    Countries
-                  </div>
-                  <div className="text-lg sm:text-xl font-bold font-mono text-zinc-950 dark:text-zinc-100 mt-1">
-                    {DASHBOARD_METRICS.countriesCount} Identified
-                  </div>
-                  <span className="text-[10px] text-zinc-500 dark:text-zinc-400 font-mono">Cross-border hops</span>
-                </div>
-              </div>
-
-              {/* Charts Row: Line Chart + Bar Chart */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
-                {/* Line Chart */}
-                <div className="lg:col-span-7 p-4 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-zinc-900 dark:text-zinc-100">
-                      Transaction Volume & Anomaly Spikes
-                    </span>
-                    <span className="text-[10px] font-mono text-zinc-500 dark:text-zinc-400">24-Hour Window</span>
-                  </div>
-
-                  <div className="h-52 w-full">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <LineChart data={TIMELINE_VOLUME_DATA}>
-                        <XAxis
-                          dataKey="time"
-                          stroke={isDark ? "#71717a" : "#71717a"}
-                          fontSize={10}
-                          tickLine={false}
-                        />
-                        <YAxis stroke={isDark ? "#71717a" : "#71717a"} fontSize={10} tickLine={false} />
-                        <Tooltip
-                          contentStyle={{
-                            backgroundColor: isDark ? "#18181b" : "#ffffff",
-                            borderColor: isDark ? "#27272a" : "#e4e4e7",
-                            color: isDark ? "#f4f4f5" : "#09090b",
-                            fontSize: "11px",
-                            fontFamily: "monospace",
-                            borderRadius: "6px"
-                          }}
-                        />
-                        <Line
-                          type="monotone"
-                          dataKey="suspiciousTx"
-                          name="Suspicious TXs"
-                          stroke="#2563eb"
-                          strokeWidth={2}
-                          dot={{ r: 3 }}
-                        />
-                        <Line
-                          type="monotone"
-                          dataKey="anomalyScore"
-                          name="Threat Score %"
-                          stroke={isDark ? "#f4f4f5" : "#18181b"}
-                          strokeWidth={1.5}
-                          strokeDasharray="4 4"
-                          dot={false}
-                        />
-                      </LineChart>
-                    </ResponsiveContainer>
-                  </div>
-                  <div className="flex items-center justify-center space-x-6 text-[10px] font-mono text-zinc-600 dark:text-zinc-400">
-                    <span className="flex items-center gap-1.5">
-                      <span className="w-2.5 h-2.5 rounded-full bg-blue-600" />
-                      Suspicious Volume (BTC)
-                    </span>
-                    <span className="flex items-center gap-1.5">
-                      <span className="w-2.5 h-2.5 rounded-full bg-zinc-900 dark:bg-zinc-100" />
-                      Composite Threat Index
-                    </span>
-=======
             {/* Dynamic Content Panel */}
-            <div className="lg:col-span-9 p-5 sm:p-6 space-y-6 overflow-y-auto max-h-[800px] bg-zinc-950/20 text-zinc-200">
+            <div className="lg:col-span-9 p-5 sm:p-6 space-y-6 overflow-y-auto max-h-[800px] bg-white dark:bg-zinc-950/20 text-zinc-800 dark:text-zinc-200 transition-colors">
               
               {/* -------------------- 1. OVERVIEW TAB -------------------- */}
               {activeTab === "Overview" && (
@@ -479,16 +295,16 @@ export function InvestigationDashboardMockup() {
                   {/* KPI Metrics */}
                   <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
                     {[
-                      { label: "Total Transactions", value: DASHBOARD_METRICS.totalTransactions, desc: "In current ledger", color: "border-zinc-800 text-zinc-100" },
-                      { label: "Flagged Entities", value: DASHBOARD_METRICS.flaggedWallets, desc: "Heuristic clusters", color: "border-zinc-800 text-zinc-100" },
-                      { label: "Flagged IP Relays", value: DASHBOARD_METRICS.flaggedIps, desc: "Tor exit nodes", color: "border-zinc-800 text-zinc-100" },
-                      { label: "Risk Alerts", value: `${DASHBOARD_METRICS.riskAlerts} Critical`, desc: "Require inspection", color: "border-red-900/60 bg-red-950/10 text-red-400 animate-pulse-glow-red" },
-                      { label: "Jurisdictions", value: DASHBOARD_METRICS.countriesCount, desc: "Cross-border hops", color: "border-zinc-800 text-zinc-100" }
+                      { label: "Total Transactions", value: DASHBOARD_METRICS.totalTransactions, desc: "In current ledger", color: "border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 text-zinc-900 dark:text-zinc-100" },
+                      { label: "Flagged Entities", value: DASHBOARD_METRICS.flaggedWallets, desc: "Heuristic clusters", color: "border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 text-zinc-900 dark:text-zinc-100" },
+                      { label: "Flagged IP Relays", value: DASHBOARD_METRICS.flaggedIps, desc: "Tor exit nodes", color: "border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 text-zinc-900 dark:text-zinc-100" },
+                      { label: "Risk Alerts", value: `${DASHBOARD_METRICS.riskAlerts} Critical`, desc: "Require inspection", color: "border-red-300 dark:border-red-900/60 bg-red-50 dark:bg-red-950/10 text-red-700 dark:text-red-400 animate-pulse-glow-red" },
+                      { label: "Jurisdictions", value: DASHBOARD_METRICS.countriesCount, desc: "Cross-border hops", color: "border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 text-zinc-900 dark:text-zinc-100" }
                     ].map((m, idx) => (
                       <div key={idx} className={`p-3 rounded-lg border transition-all duration-200 hover:-translate-y-0.5 ${m.color}`}>
                         <div className="text-[10px] uppercase font-bold text-zinc-500">{m.label}</div>
                         <div className="text-base sm:text-lg font-bold font-mono mt-1">{m.value}</div>
-                        <span className="text-[9px] text-zinc-400 font-mono">{m.desc}</span>
+                        <span className="text-[9px] text-zinc-500 dark:text-zinc-400 font-mono">{m.desc}</span>
                       </div>
                     ))}
                   </div>
@@ -497,9 +313,9 @@ export function InvestigationDashboardMockup() {
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
                     
                     {/* Line Chart */}
-                    <div className="lg:col-span-7 p-4 rounded-lg border border-zinc-800 bg-zinc-900/40 space-y-3">
+                    <div className="lg:col-span-7 p-4 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 space-y-3">
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-bold text-zinc-200">
+                        <span className="text-xs font-bold text-zinc-900 dark:text-zinc-200">
                           Transaction Velocity & Threat Index Spikes
                         </span>
                         <span className="text-[10px] font-mono text-zinc-500">24h Anomaly Spikes</span>
@@ -508,16 +324,17 @@ export function InvestigationDashboardMockup() {
                       <div className="h-52 w-full">
                         <ResponsiveContainer width="100%" height="100%">
                           <LineChart data={TIMELINE_VOLUME_DATA}>
-                            <CartesianGrid stroke="#1f2937" strokeDasharray="3 3" vertical={false} />
-                            <XAxis dataKey="time" stroke="#71717a" fontSize={9} tickLine={false} />
-                            <YAxis stroke="#71717a" fontSize={9} tickLine={false} />
+                            <CartesianGrid stroke={isDark ? "#1f2937" : "#f0f0f0"} strokeDasharray="3 3" vertical={false} />
+                            <XAxis dataKey="time" stroke={isDark ? "#71717a" : "#71717a"} fontSize={9} tickLine={false} />
+                            <YAxis stroke={isDark ? "#71717a" : "#71717a"} fontSize={9} tickLine={false} />
                             <Tooltip
                               contentStyle={{
-                                backgroundColor: "#09090b",
-                                borderColor: "#27272a",
+                                backgroundColor: isDark ? "#09090b" : "#ffffff",
+                                borderColor: isDark ? "#27272a" : "#e4e4e7",
                                 fontSize: "11px",
-                                color: "#f4f4f5",
-                                fontFamily: "monospace"
+                                color: isDark ? "#f4f4f5" : "#09090b",
+                                fontFamily: "monospace",
+                                borderRadius: "6px"
                               }}
                             />
                             <Line
@@ -540,7 +357,7 @@ export function InvestigationDashboardMockup() {
                           </LineChart>
                         </ResponsiveContainer>
                       </div>
-                      <div className="flex items-center justify-center space-x-6 text-[9px] font-mono text-zinc-400">
+                      <div className="flex items-center justify-center space-x-6 text-[9px] font-mono text-zinc-600 dark:text-zinc-400">
                         <span className="flex items-center gap-1.5">
                           <span className="w-2 h-2 rounded-full bg-blue-500" />
                           Suspicious Volume (BTC)
@@ -553,9 +370,9 @@ export function InvestigationDashboardMockup() {
                     </div>
 
                     {/* Bar Chart */}
-                    <div className="lg:col-span-5 p-4 rounded-lg border border-zinc-800 bg-zinc-900/40 space-y-3">
+                    <div className="lg:col-span-5 p-4 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 space-y-3">
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-bold text-zinc-200">
+                        <span className="text-xs font-bold text-zinc-900 dark:text-zinc-200">
                           Top Risk Jurisdictions
                         </span>
                         <span className="text-[10px] font-mono text-zinc-500">Uncovered IP Leads</span>
@@ -564,22 +381,23 @@ export function InvestigationDashboardMockup() {
                       <div className="h-52 w-full">
                         <ResponsiveContainer width="100%" height="100%">
                           <BarChart data={COUNTRY_DISTRIBUTION_DATA} layout="vertical">
-                            <XAxis type="number" stroke="#71717a" fontSize={9} tickLine={false} />
+                            <XAxis type="number" stroke={isDark ? "#71717a" : "#71717a"} fontSize={9} tickLine={false} />
                             <YAxis
                               type="category"
                               dataKey="country"
-                              stroke="#71717a"
+                              stroke={isDark ? "#71717a" : "#71717a"}
                               fontSize={9}
                               width={80}
                               tickLine={false}
                             />
                             <Tooltip
                               contentStyle={{
-                                backgroundColor: "#09090b",
-                                borderColor: "#27272a",
+                                backgroundColor: isDark ? "#09090b" : "#ffffff",
+                                borderColor: isDark ? "#27272a" : "#e4e4e7",
                                 fontSize: "11px",
-                                color: "#f4f4f5",
-                                fontFamily: "monospace"
+                                color: isDark ? "#f4f4f5" : "#09090b",
+                                fontFamily: "monospace",
+                                borderRadius: "6px"
                               }}
                             />
                             <Bar dataKey="alerts" fill="#3b82f6" radius={[0, 4, 4, 0]} />
@@ -593,41 +411,41 @@ export function InvestigationDashboardMockup() {
                   </div>
 
                   {/* Subgraph Preview Box */}
-                  <div className="p-4 rounded-lg border border-zinc-800 bg-zinc-900/20 flex flex-col sm:flex-row items-center justify-between gap-4">
+                  <div className="p-4 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/20 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <div className="space-y-1">
-                      <h4 className="text-xs font-bold text-zinc-200 flex items-center gap-1.5">
-                        <Network className="w-3.5 h-3.5 text-blue-500" />
+                      <h4 className="text-xs font-bold text-zinc-900 dark:text-zinc-200 flex items-center gap-1.5">
+                        <Network className="w-3.5 h-3.5 text-blue-600 dark:text-blue-500" />
                         Multi-Hop Ledger Graph Topology
                       </h4>
-                      <p className="text-[11px] text-zinc-400">
+                      <p className="text-[11px] text-zinc-600 dark:text-zinc-400">
                         Interactive transaction propagation tracing resolves flow distances and entity resolves.
                       </p>
                     </div>
                     <button 
                       onClick={() => setActiveTab("Graph Analysis")}
-                      className="px-3.5 py-1.5 rounded bg-zinc-800 text-zinc-200 border border-zinc-700 hover:bg-zinc-700 hover:text-white transition-all text-xs font-bold active:scale-95"
+                      className="px-3.5 py-1.5 rounded bg-zinc-900 dark:bg-zinc-800 text-white dark:text-zinc-200 border border-zinc-800 dark:border-zinc-700 hover:bg-zinc-800 dark:hover:bg-zinc-700 hover:text-white transition-all text-xs font-bold active:scale-95"
                     >
                       Open Graph Sandbox →
                     </button>
                   </div>
 
                   {/* Alerts Distribution progress */}
-                  <div className="p-4 rounded-lg border border-zinc-800 bg-zinc-900/40 space-y-3">
-                    <span className="text-xs font-bold text-zinc-200 block">
+                  <div className="p-4 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 space-y-3">
+                    <span className="text-xs font-bold text-zinc-900 dark:text-zinc-200 block">
                       Resolved Anomaly Distributions (Laundering Signatures)
                     </span>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {ALERT_CATEGORY_DATA.map((cat, idx) => (
+                      {ALERT_CATEGORY_DATA.map((cat) => (
                         <div key={cat.name} className="space-y-1">
                           <div className="flex justify-between text-[11px]">
-                            <span className="text-zinc-400">{cat.name}</span>
-                            <span className="font-mono font-bold text-zinc-200">
+                            <span className="text-zinc-600 dark:text-zinc-400">{cat.name}</span>
+                            <span className="font-mono font-bold text-zinc-900 dark:text-zinc-200">
                               {cat.count} alerts ({cat.percentage})
                             </span>
                           </div>
-                          <div className="h-1.5 w-full bg-zinc-800 rounded overflow-hidden">
+                          <div className="h-1.5 w-full bg-zinc-100 dark:bg-zinc-800 rounded overflow-hidden">
                             <div
-                              className="h-full bg-blue-500 rounded"
+                              className="h-full bg-blue-600 dark:bg-blue-500 rounded"
                               style={{ width: cat.percentage }}
                             />
                           </div>
@@ -644,17 +462,17 @@ export function InvestigationDashboardMockup() {
                 <div className="space-y-6 animate-slide-up">
                   
                   {/* Search Bar / Wallet Selector */}
-                  <div className="p-4 rounded-lg border border-zinc-800 bg-zinc-900/40 space-y-4">
-                    <h3 className="text-xs font-bold text-zinc-200">Forensic Wallet Address Lookup</h3>
+                  <div className="p-4 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 space-y-4">
+                    <h3 className="text-xs font-bold text-zinc-900 dark:text-zinc-200">Forensic Wallet Address Lookup</h3>
                     <div className="flex flex-col sm:flex-row gap-2">
                       <div className="relative flex-1">
-                        <Search className="w-4 h-4 text-zinc-500 absolute left-3 top-2.5" />
+                        <Search className="w-4 h-4 text-zinc-400 dark:text-zinc-500 absolute left-3 top-2.5" />
                         <input
                           type="text"
                           placeholder="Paste target address (e.g. 3J98t1...)"
                           value={walletSearch}
                           onChange={(e) => setWalletSearch(e.target.value)}
-                          className="w-full pl-9 pr-3 py-2 text-xs rounded border border-zinc-800 bg-zinc-950 text-zinc-100 focus:outline-none focus:ring-1 focus:ring-blue-600 font-mono"
+                          className="w-full pl-9 pr-3 py-2 text-xs rounded border border-zinc-300 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-1 focus:ring-blue-600 font-mono"
                         />
                       </div>
                       <button
@@ -685,15 +503,14 @@ export function InvestigationDashboardMockup() {
                           }}
                           className={`px-2 py-0.5 rounded text-[10px] font-mono border transition-all ${
                             selectedWallet?.id === a.id
-                              ? "border-blue-500 bg-blue-950/40 text-blue-400"
-                              : "border-zinc-800 bg-zinc-900 text-zinc-400 hover:text-zinc-200"
+                              ? "border-blue-600 dark:border-blue-500 bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-400 font-bold"
+                              : "border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200"
                           }`}
                         >
                           {a.id} ({a.threatLevel})
                         </button>
                       ))}
                     </div>
->>>>>>> 0abf518ad88d2cb15eea599a10a445d340e1a7f3
                   </div>
 
                   {/* Wallet Profile Details */}
@@ -701,8 +518,8 @@ export function InvestigationDashboardMockup() {
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-5">
                       
                       {/* Left: Risk Metric Circular Dial Gauge */}
-                      <div className="md:col-span-5 p-5 rounded-lg border border-zinc-800 bg-zinc-900/40 flex flex-col items-center justify-center space-y-4">
-                        <span className="text-xs font-bold text-zinc-300">Composite Threat Index</span>
+                      <div className="md:col-span-5 p-5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 flex flex-col items-center justify-center space-y-4">
+                        <span className="text-xs font-bold text-zinc-800 dark:text-zinc-300">Composite Threat Index</span>
                         
                         <div className="relative w-36 h-36 flex items-center justify-center">
                           <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
@@ -710,7 +527,7 @@ export function InvestigationDashboardMockup() {
                               cx="50"
                               cy="50"
                               r="40"
-                              stroke="#1f2937"
+                              stroke={isDark ? "#1f2937" : "#e4e4e7"}
                               strokeWidth="8"
                               fill="transparent"
                             />
@@ -728,64 +545,64 @@ export function InvestigationDashboardMockup() {
                             />
                           </svg>
                           <div className="absolute text-center">
-                            <div className="text-3xl font-bold font-mono text-zinc-100">{selectedWallet.riskScore}%</div>
+                            <div className="text-3xl font-bold font-mono text-zinc-900 dark:text-zinc-100">{selectedWallet.riskScore}%</div>
                             <div className="text-[10px] text-zinc-500 uppercase font-bold">{selectedWallet.threatLevel}</div>
                           </div>
                         </div>
 
                         <div className="text-center">
-                          <span className="text-[10px] font-mono text-zinc-400">Confidence Accuracy: {selectedWallet.confidence}%</span>
+                          <span className="text-[10px] font-mono text-zinc-500 dark:text-zinc-400">Confidence Accuracy: {selectedWallet.confidence}%</span>
                         </div>
                       </div>
 
                       {/* Right: Technical Stats Card */}
-                      <div className="md:col-span-7 p-5 rounded-lg border border-zinc-800 bg-zinc-900/40 space-y-4">
+                      <div className="md:col-span-7 p-5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 space-y-4">
                         <div className="space-y-1">
-                          <span className="text-[9px] uppercase font-bold text-zinc-500 font-mono">Resolved Entity Cluster</span>
-                          <h4 className="text-sm font-bold text-blue-400 font-mono flex items-center gap-1.5">
+                          <span className="text-[9px] uppercase font-bold text-zinc-400 dark:text-zinc-500 font-mono">Resolved Entity Cluster</span>
+                          <h4 className="text-sm font-bold text-blue-600 dark:text-blue-400 font-mono flex items-center gap-1.5">
                             <ShieldAlert className="w-4 h-4 text-red-500" />
                             {selectedWallet.entityCluster}
                           </h4>
                         </div>
 
-                        <div className="grid grid-cols-2 gap-4 pt-2 border-t border-zinc-800/80">
+                        <div className="grid grid-cols-2 gap-4 pt-2 border-t border-zinc-100 dark:border-zinc-800/80">
                           <div>
-                            <span className="text-[9px] text-zinc-500 font-mono">Total Traced Volume</span>
-                            <div className="text-sm font-bold font-mono text-zinc-200">{selectedWallet.volumeBtc.toFixed(2)} BTC</div>
+                            <span className="text-[9px] text-zinc-400 dark:text-zinc-500 font-mono">Total Traced Volume</span>
+                            <div className="text-sm font-bold font-mono text-zinc-900 dark:text-zinc-200">{selectedWallet.volumeBtc.toFixed(2)} BTC</div>
                           </div>
                           <div>
-                            <span className="text-[9px] text-zinc-500 font-mono">Transaction Hops</span>
-                            <div className="text-sm font-bold font-mono text-zinc-200">{selectedWallet.txCount} blocks</div>
+                            <span className="text-[9px] text-zinc-400 dark:text-zinc-500 font-mono">Transaction Hops</span>
+                            <div className="text-sm font-bold font-mono text-zinc-900 dark:text-zinc-200">{selectedWallet.txCount} blocks</div>
                           </div>
                           <div>
-                            <span className="text-[9px] text-zinc-500 font-mono">Origin Geolocation</span>
-                            <div className="text-sm font-bold text-zinc-200 flex items-center gap-1">
-                              <Globe className="w-3.5 h-3.5 text-zinc-400" />
+                            <span className="text-[9px] text-zinc-400 dark:text-zinc-500 font-mono">Origin Geolocation</span>
+                            <div className="text-sm font-bold text-zinc-900 dark:text-zinc-200 flex items-center gap-1">
+                              <Globe className="w-3.5 h-3.5 text-zinc-500" />
                               {selectedWallet.originCountry}
                             </div>
                           </div>
                           <div>
-                            <span className="text-[9px] text-zinc-500 font-mono">Network Layer Relays</span>
-                            <div className="text-sm font-bold text-zinc-200">
+                            <span className="text-[9px] text-zinc-400 dark:text-zinc-500 font-mono">Network Layer Relays</span>
+                            <div className="text-sm font-bold text-zinc-900 dark:text-zinc-200">
                               {selectedWallet.isTor ? "TOR VPN Broadcast" : "ClearNet Broadcaster"}
                             </div>
                           </div>
                         </div>
 
                         {/* Heuristic clustering solver button */}
-                        <div className="pt-4 border-t border-zinc-800/80 flex flex-col sm:flex-row items-center gap-2">
+                        <div className="pt-4 border-t border-zinc-100 dark:border-zinc-800/80 flex flex-col sm:flex-row items-center gap-2">
                           <button
                             onClick={handleResolveCioh}
                             disabled={isResolvingCioh}
-                            className="w-full sm:w-auto px-3.5 py-1.5 text-xs font-bold rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border border-zinc-700 flex items-center justify-center gap-1.5 active:scale-95 transition-all"
+                            className="w-full sm:w-auto px-3.5 py-1.5 text-xs font-bold rounded bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-200 border border-zinc-300 dark:border-zinc-700 flex items-center justify-center gap-1.5 active:scale-95 transition-all"
                           >
-                            <RefreshCw className={`w-3.5 h-3.5 text-blue-500 ${isResolvingCioh ? "animate-spin" : ""}`} />
+                            <RefreshCw className={`w-3.5 h-3.5 text-blue-600 dark:text-blue-500 ${isResolvingCioh ? "animate-spin" : ""}`} />
                             {isResolvingCioh ? "Clustering Entities..." : "CIOH Cluster Resolution"}
                           </button>
 
                           {ciohResolved && (
-                            <span className="text-[10px] text-green-400 font-mono flex items-center gap-1 animate-slide-up">
-                              <CheckCircle2 className="w-3.5 h-3.5 text-green-500" />
+                            <span className="text-[10px] text-green-600 dark:text-green-400 font-mono flex items-center gap-1 animate-slide-up">
+                              <CheckCircle2 className="w-3.5 h-3.5 text-green-600 dark:text-green-500" />
                               Linked 14 sub-wallets under common ownership.
                             </span>
                           )}
@@ -796,15 +613,15 @@ export function InvestigationDashboardMockup() {
 
                   {/* Evidence Checklist */}
                   {selectedWallet && (
-                    <div className="p-4 rounded-lg border border-zinc-800 bg-zinc-900/40 space-y-3">
-                      <h4 className="text-xs font-bold text-zinc-200 flex items-center gap-1.5">
+                    <div className="p-4 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 space-y-3">
+                      <h4 className="text-xs font-bold text-zinc-900 dark:text-zinc-200 flex items-center gap-1.5">
                         <AlertTriangle className="w-4 h-4 text-amber-500" />
                         AI Forensic Attributions (SHAP Checklist)
                       </h4>
                       <ul className="space-y-2">
                         {selectedWallet.reasons.map((reason, idx) => (
-                          <li key={idx} className="text-xs text-zinc-300 flex items-start space-x-2.5 p-2.5 rounded border border-zinc-800 bg-zinc-950/40">
-                            <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0 mt-1.5" />
+                          <li key={idx} className="text-xs text-zinc-700 dark:text-zinc-300 flex items-start space-x-2.5 p-2.5 rounded border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950/40">
+                            <span className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-blue-500 shrink-0 mt-1.5" />
                             <span>{reason}</span>
                           </li>
                         ))}
@@ -815,67 +632,27 @@ export function InvestigationDashboardMockup() {
                 </div>
               )}
 
-<<<<<<< HEAD
-                {/* Bar Chart: Country Breakdown */}
-                <div className="lg:col-span-5 p-4 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-zinc-900 dark:text-zinc-100">
-                      Top High-Risk Jurisdictions
-                    </span>
-                    <span className="text-[10px] font-mono text-zinc-500 dark:text-zinc-400">Alerts Count</span>
-                  </div>
-
-                  <div className="h-52 w-full">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <BarChart data={COUNTRY_DISTRIBUTION_DATA} layout="vertical">
-                        <XAxis type="number" stroke={isDark ? "#71717a" : "#71717a"} fontSize={9} />
-                        <YAxis
-                          type="category"
-                          dataKey="country"
-                          stroke={isDark ? "#71717a" : "#71717a"}
-                          fontSize={9}
-                          width={85}
-                          tickLine={false}
-                        />
-                        <Tooltip
-                          contentStyle={{
-                            backgroundColor: isDark ? "#18181b" : "#ffffff",
-                            borderColor: isDark ? "#27272a" : "#e4e4e7",
-                            color: isDark ? "#f4f4f5" : "#09090b",
-                            fontSize: "11px",
-                            fontFamily: "monospace",
-                            borderRadius: "6px"
-                          }}
-                        />
-                        <Bar dataKey="alerts" fill={isDark ? "#3b82f6" : "#18181b"} radius={[0, 4, 4, 0]} />
-                      </BarChart>
-                    </ResponsiveContainer>
-                  </div>
-                  <p className="text-[10px] text-zinc-500 dark:text-zinc-400 text-center font-mono">
-                    Correlated via Tor exit relays & ISP autonomous systems
-                  </p>
-=======
               {/* -------------------- 3. TRANSACTION EXPLORER -------------------- */}
               {activeTab === "Transaction Explorer" && (
                 <div className="space-y-6 animate-slide-up">
                   
                   {/* Search and Filters */}
-                  <div className="p-4 rounded-lg border border-zinc-800 bg-zinc-900/40 flex flex-col sm:flex-row gap-3 items-center justify-between">
+                  <div className="p-4 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 flex flex-col sm:flex-row gap-3 items-center justify-between">
                     <div className="relative w-full sm:w-72">
-                      <Search className="w-4 h-4 text-zinc-500 absolute left-3 top-2.5" />
+                      <Search className="w-4 h-4 text-zinc-400 dark:text-zinc-500 absolute left-3 top-2.5" />
                       <input
                         type="text"
                         placeholder="Search tx hash..."
                         value={txSearchQuery}
                         onChange={(e) => setTxSearchQuery(e.target.value)}
-                        className="w-full pl-9 pr-3 py-2 text-xs rounded border border-zinc-800 bg-zinc-950 text-zinc-100 focus:outline-none focus:ring-1 focus:ring-blue-600 font-mono"
+                        className="w-full pl-9 pr-3 py-2 text-xs rounded border border-zinc-300 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-1 focus:ring-blue-600 font-mono"
                       />
                     </div>
                     <div className="flex gap-2 w-full sm:w-auto">
                       <select
                         value={txFilter}
                         onChange={(e) => setTxFilter(e.target.value)}
-                        className="px-3 py-2 text-xs rounded border border-zinc-800 bg-zinc-950 text-zinc-300 font-mono w-full"
+                        className="px-3 py-2 text-xs rounded border border-zinc-300 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 text-zinc-800 dark:text-zinc-300 font-mono w-full"
                       >
                         <option value="ALL">All Categories</option>
                         <option value="Peel Chain">Peel Chains</option>
@@ -887,10 +664,10 @@ export function InvestigationDashboardMockup() {
                   </div>
 
                   {/* Transactions Table */}
-                  <div className="rounded-lg border border-zinc-800 bg-zinc-900/20 overflow-hidden">
+                  <div className="rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/20 overflow-hidden">
                     <div className="overflow-x-auto">
                       <table className="w-full text-left text-xs font-mono">
-                        <thead className="bg-zinc-900 border-b border-zinc-800 text-zinc-400 uppercase text-[9px] tracking-wider">
+                        <thead className="bg-zinc-50 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800 text-zinc-500 dark:text-zinc-400 uppercase text-[9px] tracking-wider">
                           <tr>
                             <th className="py-3 px-4">Transaction Hash</th>
                             <th className="py-3 px-4">Origin Wallet</th>
@@ -900,7 +677,7 @@ export function InvestigationDashboardMockup() {
                             <th className="py-3 px-4 text-right">Actions</th>
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-zinc-800 text-zinc-300">
+                        <tbody className="divide-y divide-zinc-100 dark:divide-zinc-800 text-zinc-700 dark:text-zinc-300">
                           {MOCK_ALERTS
                             .filter(tx => {
                               const matchesSearch = tx.wallet.toLowerCase().includes(txSearchQuery.toLowerCase()) || tx.id.toLowerCase().includes(txSearchQuery.toLowerCase());
@@ -910,28 +687,28 @@ export function InvestigationDashboardMockup() {
                             .map((tx) => (
                               <tr
                                 key={tx.id}
-                                className="hover:bg-zinc-900/60 cursor-pointer transition-colors"
+                                className="hover:bg-zinc-50 dark:hover:bg-zinc-900/60 cursor-pointer transition-colors"
                                 onClick={() => setSelectedTx(tx)}
                               >
-                                <td className="py-3 px-4 font-bold text-blue-400 truncate max-w-[120px]">
+                                <td className="py-3 px-4 font-bold text-blue-600 dark:text-blue-400 truncate max-w-[120px]">
                                   tx_{tx.id.toLowerCase()}_hash_9841
                                 </td>
-                                <td className="py-3 px-4 text-zinc-400 truncate max-w-[120px]">
+                                <td className="py-3 px-4 text-zinc-500 dark:text-zinc-400 truncate max-w-[120px]">
                                   {tx.shortWallet}
                                 </td>
-                                <td className="py-3 px-4 text-zinc-400 truncate max-w-[120px]">
+                                <td className="py-3 px-4 text-zinc-500 dark:text-zinc-400 truncate max-w-[120px]">
                                   {tx.entityCluster}
                                 </td>
-                                <td className="py-3 px-4 font-bold text-zinc-100">
+                                <td className="py-3 px-4 font-bold text-zinc-900 dark:text-zinc-100">
                                   {tx.volumeBtc.toFixed(2)} BTC
                                 </td>
                                 <td className="py-3 px-4">
                                   <span className={`text-[9px] px-2 py-0.5 rounded font-bold border ${
                                     tx.threatLevel === "CRITICAL"
-                                      ? "border-red-900 bg-red-950/20 text-red-400"
+                                      ? "border-red-300 dark:border-red-900 bg-red-50 dark:bg-red-950/20 text-red-700 dark:text-red-400"
                                       : tx.threatLevel === "HIGH"
-                                      ? "border-amber-900 bg-amber-950/20 text-amber-400"
-                                      : "border-blue-900 bg-blue-950/20 text-blue-400"
+                                      ? "border-amber-300 dark:border-amber-900 bg-amber-50 dark:bg-amber-950/20 text-amber-700 dark:text-amber-400"
+                                      : "border-blue-300 dark:border-blue-900 bg-blue-50 dark:bg-blue-950/20 text-blue-700 dark:text-blue-400"
                                   }`}>
                                     {tx.threatLevel}
                                   </span>
@@ -942,7 +719,7 @@ export function InvestigationDashboardMockup() {
                                       e.stopPropagation();
                                       setSelectedTx(tx);
                                     }}
-                                    className="text-xs font-bold text-blue-400 hover:text-blue-200 flex items-center gap-1 ml-auto"
+                                    className="text-xs font-bold text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 flex items-center gap-1 ml-auto"
                                   >
                                     Inspect <ChevronRight className="w-3 h-3" />
                                   </button>
@@ -956,93 +733,71 @@ export function InvestigationDashboardMockup() {
 
                   {/* Transaction Inspector Panel */}
                   {selectedTx && (
-                    <div className="p-5 rounded-lg border border-zinc-800 bg-zinc-900/40 space-y-4 animate-slide-up">
-                      <div className="flex items-center justify-between border-b border-zinc-800 pb-3">
-                        <h4 className="text-xs font-bold text-zinc-200 font-mono">
+                    <div className="p-5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 space-y-4 animate-slide-up">
+                      <div className="flex items-center justify-between border-b border-zinc-200 dark:border-zinc-800 pb-3">
+                        <h4 className="text-xs font-bold text-zinc-900 dark:text-zinc-200 font-mono">
                           Transaction Inspector // tx_{selectedTx.id.toLowerCase()}_hash_9841
                         </h4>
                         <button
                           onClick={() => setSelectedTx(null)}
-                          className="text-zinc-500 hover:text-zinc-300 text-xs font-bold"
+                          className="text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-300 text-xs font-bold"
                         >
                           Close Panel ✕
                         </button>
                       </div>
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
-                        <div className="space-y-2 p-3 rounded border border-zinc-800/80 bg-zinc-950/50">
+                        <div className="space-y-2 p-3 rounded border border-zinc-200 dark:border-zinc-800/80 bg-zinc-50 dark:bg-zinc-950/50">
                           <span className="text-[10px] text-zinc-500 font-bold uppercase block">Inputs (Source Addresses)</span>
                           <div className="space-y-1.5">
-                            <div className="flex justify-between items-center text-zinc-300">
+                            <div className="flex justify-between items-center text-zinc-800 dark:text-zinc-300">
                               <span className="truncate max-w-[150px]">{selectedTx.wallet}</span>
-                              <span className="font-bold text-zinc-400">{selectedTx.volumeBtc.toFixed(2)} BTC</span>
+                              <span className="font-bold text-zinc-600 dark:text-zinc-400">{selectedTx.volumeBtc.toFixed(2)} BTC</span>
                             </div>
                             <div className="text-[10px] text-zinc-500">CIOH grouping: Linked {selectedTx.txCount} inputs</div>
                           </div>
                         </div>
 
-                        <div className="space-y-2 p-3 rounded border border-zinc-800/80 bg-zinc-950/50">
+                        <div className="space-y-2 p-3 rounded border border-zinc-200 dark:border-zinc-800/80 bg-zinc-50 dark:bg-zinc-950/50">
                           <span className="text-[10px] text-zinc-500 font-bold uppercase block">Outputs (Transit Destinations)</span>
                           <div className="space-y-1.5">
-                            <div className="flex justify-between items-center text-zinc-300">
+                            <div className="flex justify-between items-center text-zinc-800 dark:text-zinc-300">
                               <span className="truncate max-w-[150px]">bc1qxy_out_hop_1</span>
-                              <span className="font-bold text-green-400">{(selectedTx.volumeBtc * 0.49).toFixed(2)} BTC</span>
+                              <span className="font-bold text-green-600 dark:text-green-400">{(selectedTx.volumeBtc * 0.49).toFixed(2)} BTC</span>
                             </div>
-                            <div className="flex justify-between items-center text-zinc-300">
+                            <div className="flex justify-between items-center text-zinc-800 dark:text-zinc-300">
                               <span className="truncate max-w-[150px]">bc1qxy_out_peel_change</span>
-                              <span className="font-bold text-zinc-400">{(selectedTx.volumeBtc * 0.51).toFixed(2)} BTC</span>
+                              <span className="font-bold text-zinc-600 dark:text-zinc-400">{(selectedTx.volumeBtc * 0.51).toFixed(2)} BTC</span>
                             </div>
                           </div>
                         </div>
                       </div>
 
-                      <div className="p-3.5 rounded border border-blue-900/60 bg-blue-950/10 space-y-1.5">
-                        <span className="text-[10px] font-bold text-blue-400 uppercase tracking-wider flex items-center gap-1.5">
+                      <div className="p-3.5 rounded border border-blue-200 dark:border-blue-900/60 bg-blue-50/50 dark:bg-blue-950/10 space-y-1.5">
+                        <span className="text-[10px] font-bold text-blue-700 dark:text-blue-400 uppercase tracking-wider flex items-center gap-1.5">
                           <Info className="w-3.5 h-3.5" />
                           Flow Anomaly Attribution (AI SHAP Lead)
                         </span>
-                        <p className="text-xs text-zinc-300 leading-relaxed">
-                          This transaction resolves to category: <span className="font-bold text-zinc-200">{selectedTx.category}</span>.
+                        <p className="text-xs text-zinc-700 dark:text-zinc-300 leading-relaxed">
+                          This transaction resolves to category: <span className="font-bold text-zinc-900 dark:text-zinc-200">{selectedTx.category}</span>.
                           Heuristics identify a peel ratio of 0.94 within 3 subsequent blocks. Outflow split paths show immediate KYC cash-out signatures.
                         </p>
                       </div>
                     </div>
                   )}
 
->>>>>>> 0abf518ad88d2cb15eea599a10a445d340e1a7f3
                 </div>
               )}
 
-<<<<<<< HEAD
-              {/* Wallet Graph & Alert Distribution Donut */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
-                {/* Interactive Subgraph View */}
-                <div className="lg:col-span-8 p-4 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 space-y-3">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-2">
-                      <Network className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-                      <span className="text-xs font-bold text-zinc-900 dark:text-zinc-100">
-                        Live Subgraph Inspector (Target Focus)
-                      </span>
-                    </div>
-                    <span className="text-[10px] font-mono text-zinc-500 dark:text-zinc-400">
-                      Depth: 3 Hops
-                    </span>
-                  </div>
-
-                  {/* SVG Node Graph */}
-                  <div className="h-56 bg-zinc-50/50 dark:bg-zinc-950/70 rounded border border-zinc-200 dark:border-zinc-800 p-2 overflow-hidden flex items-center justify-center">
-                    <svg viewBox="0 0 740 260" className="w-full h-full">
-=======
               {/* -------------------- 4. GRAPH ANALYSIS -------------------- */}
               {activeTab === "Graph Analysis" && (
                 <div className="space-y-6 animate-slide-up">
                   
                   {/* Graph controls */}
-                  <div className="p-4 rounded-lg border border-zinc-800 bg-zinc-900/40 flex flex-col sm:flex-row items-center justify-between gap-3">
+                  <div className="p-4 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 flex flex-col sm:flex-row items-center justify-between gap-3">
                     <div className="flex items-center space-x-2">
-                      <span className="text-xs font-bold text-zinc-200">Transaction Graph Simulator</span>
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded border border-zinc-800 bg-zinc-900 text-zinc-500">
+                      <span className="text-xs font-bold text-zinc-900 dark:text-zinc-200">Transaction Graph Simulator</span>
+                      <span className="text-[10px] font-mono px-2 py-0.5 rounded border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-500">
                         Target Focus: CLUST-09
                       </span>
                     </div>
@@ -1053,7 +808,7 @@ export function InvestigationDashboardMockup() {
                         className={`px-3 py-1.5 rounded text-xs font-bold border transition-all flex items-center gap-1 active:scale-95 ${
                           isFlowing
                             ? "bg-blue-600 border-blue-500 text-white shadow-md shadow-blue-600/10"
-                            : "bg-zinc-800 border-zinc-700 text-zinc-300 hover:bg-zinc-700"
+                            : "bg-zinc-100 dark:bg-zinc-800 border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700"
                         }`}
                       >
                         {isFlowing ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
@@ -1065,7 +820,7 @@ export function InvestigationDashboardMockup() {
                         className={`px-3 py-1.5 rounded text-xs font-bold border transition-all flex items-center gap-1 active:scale-95 ${
                           ciohOverlay
                             ? "bg-purple-600 border-purple-500 text-white shadow-md shadow-purple-600/10"
-                            : "bg-zinc-800 border-zinc-700 text-zinc-300 hover:bg-zinc-700"
+                            : "bg-zinc-100 dark:bg-zinc-800 border-zinc-300 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700"
                         }`}
                       >
                         <ShieldAlert className="w-3.5 h-3.5" />
@@ -1075,7 +830,7 @@ export function InvestigationDashboardMockup() {
                   </div>
 
                   {/* SVG Node Graph Canvas */}
-                  <div className="rounded-lg border border-zinc-800 bg-zinc-900/20 p-4 relative overflow-hidden flex items-center justify-center min-h-[340px]">
+                  <div className="rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50/70 dark:bg-zinc-900/20 p-4 relative overflow-hidden flex items-center justify-center min-h-[340px]">
                     <svg viewBox="0 0 740 280" className="w-full h-full select-none overflow-visible">
                       <defs>
                         <marker
@@ -1100,7 +855,7 @@ export function InvestigationDashboardMockup() {
                             width="370"
                             height="215"
                             rx="8"
-                            fill="rgba(168, 85, 247, 0.05)"
+                            fill={isDark ? "rgba(168, 85, 247, 0.05)" : "rgba(168, 85, 247, 0.08)"}
                             stroke="#a855f7"
                             strokeWidth="1.2"
                             strokeDasharray="4,4"
@@ -1118,7 +873,6 @@ export function InvestigationDashboardMockup() {
                         </g>
                       )}
 
->>>>>>> 0abf518ad88d2cb15eea599a10a445d340e1a7f3
                       {/* Edges */}
                       {MOCK_GRAPH_EDGES.map((edge, idx) => {
                         const src = MOCK_GRAPH_NODES.find((n) => n.id === edge.source);
@@ -1131,14 +885,9 @@ export function InvestigationDashboardMockup() {
                               y1={src.y}
                               x2={dst.x}
                               y2={dst.y}
-<<<<<<< HEAD
-                              stroke={isDark ? "#52525b" : "#a1a1aa"}
-                              strokeWidth="1.5"
-=======
-                              stroke="#374151"
+                              stroke={isDark ? "#374151" : "#d1d5db"}
                               strokeWidth="2"
                               markerEnd="url(#arrow-neon)"
->>>>>>> 0abf518ad88d2cb15eea599a10a445d340e1a7f3
                             />
 
                             {/* Neon flowing dash layer */}
@@ -1158,11 +907,7 @@ export function InvestigationDashboardMockup() {
                               x={(src.x + dst.x) / 2}
                               y={(src.y + dst.y) / 2 - 5}
                               fontSize="8"
-<<<<<<< HEAD
-                              fill={isDark ? "#a1a1aa" : "#71717a"}
-=======
-                              fill="#9ca3af"
->>>>>>> 0abf518ad88d2cb15eea599a10a445d340e1a7f3
+                              fill={isDark ? "#9ca3af" : "#6b7280"}
                               textAnchor="middle"
                               fontFamily="monospace"
                             >
@@ -1178,25 +923,25 @@ export function InvestigationDashboardMockup() {
                         const isVictim = node.type === "victim";
                         const isMixer = node.type === "mixer";
                         
-                        let borderStroke = "#4b5563";
-                        let fillBg = "#09090b";
-                        let textFill = "#e4e4e7";
+                        let borderStroke = isDark ? "#4b5563" : "#9ca3af";
+                        let fillBg = isDark ? "#09090b" : "#ffffff";
+                        let textFill = isDark ? "#e4e4e7" : "#18181b";
 
                         if (isVictim) {
                           borderStroke = "#10b981";
-                          fillBg = "rgba(16, 185, 129, 0.1)";
+                          fillBg = isDark ? "rgba(16, 185, 129, 0.1)" : "rgba(16, 185, 129, 0.15)";
                           textFill = "#10b981";
                         } else if (isTarget) {
                           borderStroke = "#ef4444";
-                          fillBg = "#7f1d1d";
-                          textFill = "#ffffff";
+                          fillBg = isDark ? "#7f1d1d" : "#fee2e2";
+                          textFill = isDark ? "#ffffff" : "#b91c1c";
                         } else if (isMixer) {
                           borderStroke = "#ef4444";
-                          fillBg = "rgba(239, 68, 68, 0.1)";
+                          fillBg = isDark ? "rgba(239, 68, 68, 0.1)" : "rgba(239, 68, 68, 0.12)";
                           textFill = "#ef4444";
                         } else if (node.type === "exchange") {
                           borderStroke = "#3b82f6";
-                          fillBg = "rgba(59, 130, 246, 0.15)";
+                          fillBg = isDark ? "rgba(59, 130, 246, 0.15)" : "rgba(59, 130, 246, 0.12)";
                           textFill = "#3b82f6";
                         }
 
@@ -1219,26 +964,11 @@ export function InvestigationDashboardMockup() {
                             }}
                           >
                             <circle
-<<<<<<< HEAD
-                              r={isTarget ? "18" : "14"}
-                              fill={
-                                isTarget
-                                  ? (isDark ? "#09090b" : "#18181b")
-                                  : (isDark ? "#18181b" : "#ffffff")
-                              }
-                              stroke={
-                                isTarget
-                                  ? (isDark ? "#60a5fa" : "#2563eb")
-                                  : (isDark ? "#52525b" : "#71717a")
-                              }
-                              strokeWidth={isTarget ? "2.5" : "1.5"}
-=======
                               r={isTarget ? "17" : "13"}
                               fill={fillBg}
                               stroke={borderStroke}
                               strokeWidth={isHovered ? "3.2" : "1.8"}
                               className="transition-all duration-200"
->>>>>>> 0abf518ad88d2cb15eea599a10a445d340e1a7f3
                             />
                             
                             {isTarget && (
@@ -1256,15 +986,7 @@ export function InvestigationDashboardMockup() {
                               dy="3"
                               fontSize="7.5"
                               fontWeight="bold"
-<<<<<<< HEAD
-                              fill={
-                                isTarget
-                                  ? "#ffffff"
-                                  : (isDark ? "#f4f4f5" : "#18181b")
-                              }
-=======
                               fill={textFill}
->>>>>>> 0abf518ad88d2cb15eea599a10a445d340e1a7f3
                               fontFamily="monospace"
                             >
                               {node.risk > 0 ? `${node.risk}%` : isVictim ? "VIC" : "HOP"}
@@ -1273,13 +995,8 @@ export function InvestigationDashboardMockup() {
                             <text
                               textAnchor="middle"
                               dy="24"
-<<<<<<< HEAD
-                              fontSize="7.5"
-                              fill={isDark ? "#e4e4e7" : "#27272a"}
-=======
                               fontSize="8"
-                              fill="#f4f4f5"
->>>>>>> 0abf518ad88d2cb15eea599a10a445d340e1a7f3
+                              fill={isDark ? "#f4f4f5" : "#18181b"}
                               fontWeight="bold"
                               fontFamily="monospace"
                             >
@@ -1290,7 +1007,7 @@ export function InvestigationDashboardMockup() {
                               textAnchor="middle"
                               dy="32"
                               fontSize="7"
-                              fill="#71717a"
+                              fill={isDark ? "#71717a" : "#6b7280"}
                               fontFamily="monospace"
                             >
                               {node.balance}
@@ -1299,53 +1016,24 @@ export function InvestigationDashboardMockup() {
                         );
                       })}
                     </svg>
-<<<<<<< HEAD
-                  </div>
-                  <div className="flex items-center justify-between text-[11px] text-zinc-500 dark:text-zinc-400">
-                    <span>Target node: 3J98t1... (92% Risk)</span>
-                    <span className="text-blue-600 dark:text-blue-400 font-bold">Hop Velocity: &lt; 90s</span>
-                  </div>
-                </div>
-
-                {/* Categories */}
-                <div className="lg:col-span-4 p-4 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 space-y-3">
-                  <span className="text-xs font-bold text-zinc-900 dark:text-zinc-100 block">
-                    Alerts By Laundering Type
-                  </span>
-
-                  <div className="space-y-2 pt-1">
-                    {ALERT_CATEGORY_DATA.map((cat) => (
-                      <div key={cat.name} className="space-y-1">
-                        <div className="flex justify-between text-[11px]">
-                          <span className="text-zinc-700 dark:text-zinc-300">{cat.name}</span>
-                          <span className="font-mono font-bold text-zinc-900 dark:text-zinc-100">
-                            {cat.count} ({cat.percentage})
-                          </span>
-                        </div>
-                        <div className="h-1.5 w-full bg-zinc-100 dark:bg-zinc-800 rounded overflow-hidden">
-                          <div
-                            className="h-full bg-zinc-900 dark:bg-zinc-100 rounded"
-                            style={{ width: cat.percentage }}
-                          />
-=======
 
                     {hoveredNode && (
-                      <div className="absolute bottom-4 left-4 p-3 rounded border border-zinc-800 bg-zinc-900/90 backdrop-blur text-xs font-mono space-y-1.5 animate-slide-up max-w-[280px]">
-                        <div className="font-bold text-zinc-100 flex items-center justify-between">
+                      <div className="absolute bottom-4 left-4 p-3 rounded border border-zinc-300 dark:border-zinc-800 bg-white/95 dark:bg-zinc-900/90 backdrop-blur text-xs font-mono space-y-1.5 animate-slide-up max-w-[280px] shadow-lg">
+                        <div className="font-bold text-zinc-900 dark:text-zinc-100 flex items-center justify-between">
                           <span>{hoveredNode.label}</span>
-                          <span className="text-[10px] text-blue-400">Risk: {hoveredNode.risk}%</span>
+                          <span className="text-[10px] text-blue-600 dark:text-blue-400">Risk: {hoveredNode.risk}%</span>
                         </div>
-                        <div className="text-[10px] text-zinc-400">{hoveredNode.sublabel}</div>
-                        <div className="text-[9px] text-zinc-500 font-bold border-t border-zinc-800 pt-1">
+                        <div className="text-[10px] text-zinc-600 dark:text-zinc-400">{hoveredNode.sublabel}</div>
+                        <div className="text-[9px] text-zinc-500 font-bold border-t border-zinc-200 dark:border-zinc-800 pt-1">
                           Cluster: CLUST-09
                         </div>
                       </div>
                     )}
                   </div>
 
-                  <div className="p-4 rounded-lg border border-zinc-800 bg-zinc-900/40 text-xs text-zinc-400 space-y-1 flex items-center justify-between">
-                    <span>Target Wallet: <span className="font-mono font-bold text-zinc-200">3J98t1... (92% Risk)</span></span>
-                    <span className="text-blue-400 font-bold font-mono">Hop Transit Velocity: &lt; 90s</span>
+                  <div className="p-4 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 text-xs text-zinc-600 dark:text-zinc-400 space-y-1 flex items-center justify-between">
+                    <span>Target Wallet: <span className="font-mono font-bold text-zinc-900 dark:text-zinc-200">3J98t1... (92% Risk)</span></span>
+                    <span className="text-blue-600 dark:text-blue-400 font-bold font-mono">Hop Transit Velocity: &lt; 90s</span>
                   </div>
 
                 </div>
@@ -1355,30 +1043,30 @@ export function InvestigationDashboardMockup() {
               {activeTab === "Alerts" && (
                 <div className="space-y-6 animate-slide-up">
                   
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-zinc-800">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-zinc-200 dark:border-zinc-800">
                     <div className="flex items-center space-x-2">
-                      <ShieldAlert className="w-4 h-4 text-zinc-100" />
-                      <span className="text-xs font-bold text-zinc-200">
+                      <ShieldAlert className="w-4 h-4 text-zinc-900 dark:text-zinc-100" />
+                      <span className="text-xs font-bold text-zinc-900 dark:text-zinc-200">
                         Priority Investigative Alerts Queue ({filteredAlerts.length})
                       </span>
                     </div>
 
                     <div className="flex flex-wrap items-center gap-2">
                       <div className="relative">
-                        <Search className="w-3.5 h-3.5 text-zinc-500 absolute left-2.5 top-2" />
+                        <Search className="w-3.5 h-3.5 text-zinc-400 dark:text-zinc-500 absolute left-2.5 top-2" />
                         <input
                           type="text"
                           placeholder="Search address..."
                           value={searchQuery}
                           onChange={(e) => setSearchQuery(e.target.value)}
-                          className="pl-8 pr-3 py-1 text-xs rounded border border-zinc-800 bg-zinc-950 text-zinc-200 focus:outline-none focus:ring-1 focus:ring-blue-600 font-mono"
+                          className="pl-8 pr-3 py-1 text-xs rounded border border-zinc-300 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-200 focus:outline-none focus:ring-1 focus:ring-blue-600 font-mono"
                         />
                       </div>
 
                       <select
                         value={selectedThreatFilter}
                         onChange={(e) => setSelectedThreatFilter(e.target.value)}
-                        className="px-2 py-1 text-xs rounded border border-zinc-800 bg-zinc-950 text-zinc-300 font-mono"
+                        className="px-2 py-1 text-xs rounded border border-zinc-300 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 text-zinc-800 dark:text-zinc-300 font-mono"
                       >
                         <option value="ALL">All Threats</option>
                         <option value="CRITICAL">CRITICAL</option>
@@ -1394,17 +1082,17 @@ export function InvestigationDashboardMockup() {
                       <div
                         key={alert.id}
                         onClick={() => setSelectedAlert(alert)}
-                        className="p-4 rounded-lg border border-zinc-800 bg-zinc-900/40 hover:border-blue-500/50 hover:bg-zinc-900/70 cursor-pointer transition-all duration-200 group flex flex-col justify-between space-y-3"
+                        className="p-4 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 hover:border-blue-500/50 hover:bg-zinc-50 dark:hover:bg-zinc-900/70 cursor-pointer transition-all duration-200 group flex flex-col justify-between space-y-3 shadow-xs"
                       >
                         <div className="space-y-2">
                           <div className="flex justify-between items-center">
-                            <span className="text-xs font-mono font-bold text-blue-400">{alert.id}</span>
+                            <span className="text-xs font-mono font-bold text-blue-600 dark:text-blue-400">{alert.id}</span>
                             <span className={`text-[9px] px-2 py-0.5 rounded font-bold border ${
                               alert.threatLevel === "CRITICAL"
-                                ? "border-red-900 bg-red-950/20 text-red-400"
+                                ? "border-red-300 dark:border-red-900 bg-red-50 dark:bg-red-950/20 text-red-700 dark:text-red-400"
                                 : alert.threatLevel === "HIGH"
-                                ? "border-amber-900 bg-amber-950/20 text-amber-400"
-                                : "border-blue-900 bg-blue-950/20 text-blue-400"
+                                ? "border-amber-300 dark:border-amber-900 bg-amber-50 dark:bg-amber-950/20 text-amber-700 dark:text-amber-400"
+                                : "border-blue-300 dark:border-blue-900 bg-blue-50 dark:bg-blue-950/20 text-blue-700 dark:text-blue-400"
                             }`}>
                               {alert.threatLevel}
                             </span>
@@ -1412,158 +1100,48 @@ export function InvestigationDashboardMockup() {
 
                           <div className="space-y-1">
                             <div className="text-[10px] text-zinc-500 font-mono">Address Hash</div>
-                            <div className="text-xs font-mono text-zinc-100 truncate">{alert.wallet}</div>
+                            <div className="text-xs font-mono text-zinc-900 dark:text-zinc-100 truncate">{alert.wallet}</div>
                           </div>
 
-                          <div className="grid grid-cols-3 gap-2 text-center text-zinc-300 py-1.5 border-y border-zinc-800/60 text-[10px] font-mono">
+                          <div className="grid grid-cols-3 gap-2 text-center text-zinc-700 dark:text-zinc-300 py-1.5 border-y border-zinc-100 dark:border-zinc-800/60 text-[10px] font-mono">
                             <div>
                               <span className="text-[8px] text-zinc-500 block">Risk Score</span>
-                              <span className="font-bold text-zinc-200">{alert.riskScore}%</span>
+                              <span className="font-bold text-zinc-900 dark:text-zinc-200">{alert.riskScore}%</span>
                             </div>
                             <div>
                               <span className="text-[8px] text-zinc-500 block">Volume BTC</span>
-                              <span className="font-bold text-zinc-200">{alert.volumeBtc.toFixed(1)} BTC</span>
+                              <span className="font-bold text-zinc-900 dark:text-zinc-200">{alert.volumeBtc.toFixed(1)} BTC</span>
                             </div>
                             <div>
                               <span className="text-[8px] text-zinc-500 block">Country Code</span>
-                              <span className="font-bold text-zinc-200">{alert.originCountry.split(" ")[0]}</span>
+                              <span className="font-bold text-zinc-900 dark:text-zinc-200">{alert.originCountry.split(" ")[0]}</span>
                             </div>
                           </div>
                         </div>
 
                         <div className="flex items-center justify-between pt-1">
                           <span className="text-[10px] font-mono text-zinc-500">Category: {alert.category.split(" ")[0]}</span>
-                          <span className="text-xs font-bold text-blue-400 group-hover:text-blue-300 flex items-center gap-0.5">
+                          <span className="text-xs font-bold text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300 flex items-center gap-0.5">
                             Inspect lead →
                           </span>
->>>>>>> 0abf518ad88d2cb15eea599a10a445d340e1a7f3
                         </div>
                       </div>
                     ))}
                   </div>
 
-<<<<<<< HEAD
-                  <div className="pt-2 border-t border-zinc-100 dark:border-zinc-800 text-[10px] text-zinc-500 dark:text-zinc-400 font-mono text-center">
-                    Total: 72 Prioritized Threats
-                  </div>
-=======
->>>>>>> 0abf518ad88d2cb15eea599a10a445d340e1a7f3
                 </div>
               )}
 
-<<<<<<< HEAD
-              {/* Searchable / Filterable Alert Table */}
-              <div className="rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 space-y-4 p-4">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-zinc-100 dark:border-zinc-800">
-                  <div className="flex items-center space-x-2">
-                    <ShieldAlert className="w-4 h-4 text-zinc-900 dark:text-zinc-100" />
-                    <span className="text-xs font-bold text-zinc-900 dark:text-zinc-100">
-                      Investigative Priority Alerts ({filteredAlerts.length})
-                    </span>
-                  </div>
-
-                  <div className="flex flex-wrap items-center gap-2">
-                    {/* Search input */}
-                    <div className="relative">
-                      <Search className="w-3.5 h-3.5 text-zinc-400 dark:text-zinc-500 absolute left-2.5 top-2" />
-                      <input
-                        type="text"
-                        placeholder="Search wallet, category..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className="pl-8 pr-3 py-1 text-xs rounded border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 focus:bg-white dark:focus:bg-zinc-900 focus:outline-none focus:ring-1 focus:ring-blue-600 font-mono"
-                      />
-                    </div>
-
-                    {/* Threat Filter */}
-                    <select
-                      value={selectedThreatFilter}
-                      onChange={(e) => setSelectedThreatFilter(e.target.value)}
-                      className="px-2 py-1 text-xs rounded border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-mono"
-                    >
-                      <option value="ALL">All Threats</option>
-                      <option value="CRITICAL">CRITICAL</option>
-                      <option value="HIGH">HIGH</option>
-                      <option value="MEDIUM">MEDIUM</option>
-                    </select>
-                  </div>
-                </div>
-
-                {/* Table */}
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left text-xs font-mono">
-                    <thead className="bg-zinc-50 dark:bg-zinc-950 border-b border-zinc-200 dark:border-zinc-800 text-zinc-500 dark:text-zinc-400 uppercase text-[10px]">
-                      <tr>
-                        <th className="py-2 px-3">Alert ID</th>
-                        <th className="py-2 px-3">Wallet Address</th>
-                        <th className="py-2 px-3">Threat Tier</th>
-                        <th className="py-2 px-3">Risk</th>
-                        <th className="py-2 px-3">Volume</th>
-                        <th className="py-2 px-3">Category</th>
-                        <th className="py-2 px-3 text-right">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-zinc-100 dark:divide-zinc-800">
-                      {filteredAlerts.map((alert) => (
-                        <tr
-                          key={alert.id}
-                          onClick={() => setSelectedAlert(alert)}
-                          className="hover:bg-zinc-50/80 dark:hover:bg-zinc-800/50 cursor-pointer transition-colors"
-                        >
-                          <td className="py-2.5 px-3 font-bold text-zinc-900 dark:text-zinc-100">
-                            {alert.id}
-                          </td>
-                          <td className="py-2.5 px-3 text-zinc-700 dark:text-zinc-300 truncate max-w-[140px]">
-                            {alert.shortWallet}
-                          </td>
-                          <td className="py-2.5 px-3">
-                            <span
-                              className={`text-[9px] px-2 py-0.5 rounded font-bold border ${
-                                alert.threatLevel === "CRITICAL"
-                                  ? "border-red-300 dark:border-red-800 bg-red-50 dark:bg-red-950/60 text-red-700 dark:text-red-300"
-                                  : alert.threatLevel === "HIGH"
-                                  ? "border-amber-300 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300"
-                                  : "border-zinc-300 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300"
-                              }`}
-                            >
-                              {alert.threatLevel}
-                            </span>
-                          </td>
-                          <td className="py-2.5 px-3 font-bold text-zinc-950 dark:text-zinc-100">
-                            {alert.riskScore}%
-                          </td>
-                          <td className="py-2.5 px-3 text-zinc-700 dark:text-zinc-300">
-                            {alert.volumeBtc.toFixed(2)} BTC
-                          </td>
-                          <td className="py-2.5 px-3 text-zinc-600 dark:text-zinc-400 truncate max-w-[150px]">
-                            {alert.category}
-                          </td>
-                          <td className="py-2.5 px-3 text-right">
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setSelectedAlert(alert);
-                              }}
-                              className="text-xs font-bold text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300"
-                            >
-                              Inspect →
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-=======
               {/* -------------------- 6. TIMELINE TAB -------------------- */}
               {activeTab === "Timeline" && (
                 <div className="space-y-6 animate-slide-up">
                   
-                  <div className="p-4 rounded-lg border border-zinc-800 bg-zinc-900/40 text-xs text-zinc-400">
+                  <div className="p-4 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 text-xs text-zinc-600 dark:text-zinc-400">
                     Chronological audit flow mapping BTC splits, hops, and mixers from genesis incident to exchange endpoints.
                   </div>
 
                   {/* Vertical Timeline Tree */}
-                  <div className="relative border-l-2 border-zinc-800 ml-4 pl-6 space-y-8 py-2">
+                  <div className="relative border-l-2 border-zinc-200 dark:border-zinc-800 ml-4 pl-6 space-y-8 py-2">
                     {[
                       { title: "Incident Genesis (Theft)", desc: "Funds leave defrauded victim wallet 1A1zP1...", time: "14:02 UTC", amount: "50.00 BTC", status: "Origin" },
                       { title: "First Split (Hop A & B)", desc: "Divided between intermediary wallets 34xp4v... and bc1qxy... to strip tracing bounds.", time: "14:02 - 14:18 UTC", amount: "25.00 BTC x2", status: "Mule Hop" },
@@ -1572,21 +1150,21 @@ export function InvestigationDashboardMockup() {
                       { title: "KYC Off-ramp Outflow", desc: "Outflow sweeps routed to exchange deposit KYC account for liquidation cash-out.", time: "14:45 UTC", amount: "47.20 BTC", status: "Off-ramp" }
                     ].map((step, idx) => (
                       <div key={idx} className="relative">
-                        <span className="absolute -left-[31px] top-1.5 w-4.5 h-4.5 rounded-full border border-zinc-950 bg-blue-600 flex items-center justify-center text-white text-[9px] font-bold">
+                        <span className="absolute -left-[31px] top-1.5 w-4.5 h-4.5 rounded-full border border-white dark:border-zinc-950 bg-blue-600 flex items-center justify-center text-white text-[9px] font-bold">
                           {idx + 1}
                         </span>
 
-                        <div className="p-4 rounded-lg border border-zinc-800 bg-zinc-900/30 space-y-2 max-w-xl">
+                        <div className="p-4 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/30 space-y-2 max-w-xl shadow-xs">
                           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-                            <span className="text-xs font-bold text-zinc-100">{step.title}</span>
+                            <span className="text-xs font-bold text-zinc-900 dark:text-zinc-100">{step.title}</span>
                             <span className="text-[10px] font-mono text-zinc-500">{step.time}</span>
                           </div>
                           
-                          <p className="text-xs text-zinc-400">{step.desc}</p>
+                          <p className="text-xs text-zinc-600 dark:text-zinc-400">{step.desc}</p>
                           
-                          <div className="flex justify-between items-center text-[10px] font-mono pt-1.5 border-t border-zinc-800/80">
-                            <span className="text-zinc-500">Vol: <span className="font-bold text-zinc-300">{step.amount}</span></span>
-                            <span className="px-1.5 py-0.2 rounded border border-blue-900/40 bg-blue-950/20 text-blue-400">{step.status}</span>
+                          <div className="flex justify-between items-center text-[10px] font-mono pt-1.5 border-t border-zinc-100 dark:border-zinc-800/80">
+                            <span className="text-zinc-500">Vol: <span className="font-bold text-zinc-800 dark:text-zinc-300">{step.amount}</span></span>
+                            <span className="px-1.5 py-0.2 rounded border border-blue-200 dark:border-blue-900/40 bg-blue-50 dark:bg-blue-950/20 text-blue-700 dark:text-blue-400">{step.status}</span>
                           </div>
                         </div>
                       </div>
@@ -1601,56 +1179,56 @@ export function InvestigationDashboardMockup() {
                 <div className="space-y-6 animate-slide-up">
                   
                   {/* Form input details */}
-                  <div className="p-5 rounded-lg border border-zinc-800 bg-zinc-900/40 space-y-4">
-                    <h3 className="text-xs font-bold text-zinc-200">Compile Court-Admissible Case Report</h3>
+                  <div className="p-5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 space-y-4">
+                    <h3 className="text-xs font-bold text-zinc-900 dark:text-zinc-200">Compile Court-Admissible Case Report</h3>
                     
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
                       <div className="space-y-1.5">
-                        <label className="text-zinc-400 font-bold block">Lead Investigator Name</label>
+                        <label className="text-zinc-600 dark:text-zinc-400 font-bold block">Lead Investigator Name</label>
                         <div className="relative">
-                          <User className="w-3.5 h-3.5 text-zinc-500 absolute left-3 top-2.5" />
+                          <User className="w-3.5 h-3.5 text-zinc-400 dark:text-zinc-500 absolute left-3 top-2.5" />
                           <input
                             type="text"
                             value={investigatorName}
                             onChange={(e) => setInvestigatorName(e.target.value)}
-                            className="w-full pl-9 pr-3 py-2 rounded border border-zinc-800 bg-zinc-950 text-zinc-100 focus:outline-none focus:ring-1 focus:ring-blue-600 font-mono"
+                            className="w-full pl-9 pr-3 py-2 rounded border border-zinc-300 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-1 focus:ring-blue-600 font-mono"
                           />
                         </div>
                       </div>
 
                       <div className="space-y-1.5">
-                        <label className="text-zinc-400 font-bold block">Case Reference ID</label>
+                        <label className="text-zinc-600 dark:text-zinc-400 font-bold block">Case Reference ID</label>
                         <div className="relative">
-                          <Hash className="w-3.5 h-3.5 text-zinc-500 absolute left-3 top-2.5" />
+                          <Hash className="w-3.5 h-3.5 text-zinc-400 dark:text-zinc-500 absolute left-3 top-2.5" />
                           <input
                             type="text"
                             value="CASE-2026-8942"
                             disabled
-                            className="w-full pl-9 pr-3 py-2 rounded border border-zinc-800 bg-zinc-900 text-zinc-500 font-mono"
+                            className="w-full pl-9 pr-3 py-2 rounded border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 text-zinc-500 font-mono"
                           />
                         </div>
                       </div>
                     </div>
 
                     <div className="space-y-1.5 text-xs">
-                      <label className="text-zinc-400 font-bold block">Brief Investigation Summary</label>
+                      <label className="text-zinc-600 dark:text-zinc-400 font-bold block">Brief Investigation Summary</label>
                       <textarea
                         value={caseNotes}
                         onChange={(e) => setCaseNotes(e.target.value)}
                         rows={3}
-                        className="w-full p-2.5 rounded border border-zinc-800 bg-zinc-950 text-zinc-100 focus:outline-none focus:ring-1 focus:ring-blue-600 font-mono text-xs"
+                        className="w-full p-2.5 rounded border border-zinc-300 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-1 focus:ring-blue-600 font-mono text-xs"
                       />
                     </div>
 
                     {isGeneratingReport && (
                       <div className="space-y-2 animate-slide-up">
-                        <div className="flex justify-between text-[10px] font-mono text-zinc-400">
+                        <div className="flex justify-between text-[10px] font-mono text-zinc-600 dark:text-zinc-400">
                           <span>Compiling ledger trails & SHAP attribution profiles...</span>
                           <span>{reportProgress}%</span>
                         </div>
-                        <div className="h-1.5 w-full bg-zinc-800 rounded overflow-hidden">
+                        <div className="h-1.5 w-full bg-zinc-100 dark:bg-zinc-800 rounded overflow-hidden">
                           <div
-                            className="h-full bg-blue-500 rounded transition-all duration-300"
+                            className="h-full bg-blue-600 dark:bg-blue-500 rounded transition-all duration-300"
                             style={{ width: `${reportProgress}%` }}
                           />
                         </div>
@@ -1669,11 +1247,11 @@ export function InvestigationDashboardMockup() {
 
                   {/* Generated Dossier Card */}
                   {generatedReport && (
-                    <div className="p-5 rounded-lg border border-green-900/60 bg-green-950/10 space-y-4 animate-slide-up">
-                      <div className="flex items-center justify-between border-b border-green-900/30 pb-3">
+                    <div className="p-5 rounded-lg border border-green-300 dark:border-green-900/60 bg-green-50/50 dark:bg-green-950/10 space-y-4 animate-slide-up">
+                      <div className="flex items-center justify-between border-b border-green-200 dark:border-green-900/30 pb-3">
                         <div className="flex items-center space-x-2">
-                          <CheckCircle2 className="w-5 h-5 text-green-500" />
-                          <span className="text-xs font-bold text-green-400 font-mono">
+                          <CheckCircle2 className="w-5 h-5 text-green-600 dark:text-green-500" />
+                          <span className="text-xs font-bold text-green-700 dark:text-green-400 font-mono">
                             Evidentiary Case Dossier Compiled Successfully // Signed
                           </span>
                         </div>
@@ -1686,7 +1264,7 @@ export function InvestigationDashboardMockup() {
                             link.download = `AEGISTRACE_${generatedReport.caseId}.json`;
                             link.click();
                           }}
-                          className="px-3 py-1.5 text-xs font-bold rounded bg-green-800 text-zinc-100 hover:bg-green-700 transition-all flex items-center gap-1 active:scale-95"
+                          className="px-3 py-1.5 text-xs font-bold rounded bg-green-700 dark:bg-green-800 text-white hover:bg-green-600 dark:hover:bg-green-700 transition-all flex items-center gap-1 active:scale-95"
                         >
                           <Download className="w-3.5 h-3.5" />
                           Export dossier.json
@@ -1696,27 +1274,27 @@ export function InvestigationDashboardMockup() {
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono">
                         <div className="space-y-1">
                           <span className="text-zinc-500">Case Reference ID</span>
-                          <div className="text-zinc-300 font-bold">{generatedReport.caseId}</div>
+                          <div className="text-zinc-800 dark:text-zinc-300 font-bold">{generatedReport.caseId}</div>
                         </div>
                         <div className="space-y-1">
                           <span className="text-zinc-500">Lead Investigator</span>
-                          <div className="text-zinc-300 font-bold">{generatedReport.investigator}</div>
+                          <div className="text-zinc-800 dark:text-zinc-300 font-bold">{generatedReport.investigator}</div>
                         </div>
                         <div className="space-y-1">
                           <span className="text-zinc-500">Case Verification Key</span>
-                          <div className="text-zinc-400 font-bold truncate">{generatedReport.sha256Signature}</div>
+                          <div className="text-zinc-600 dark:text-zinc-400 font-bold truncate">{generatedReport.sha256Signature}</div>
                         </div>
                         <div className="space-y-1">
                           <span className="text-zinc-500">Legal Certification Standard</span>
-                          <div className="text-zinc-300 font-bold">{generatedReport.bsaCertification}</div>
+                          <div className="text-zinc-800 dark:text-zinc-300 font-bold">{generatedReport.bsaCertification}</div>
                         </div>
                       </div>
 
-                      <div className="p-3.5 rounded border border-green-900/40 bg-zinc-950/40 space-y-1.5">
-                        <span className="text-[10px] font-bold text-green-400 uppercase tracking-wider">
+                      <div className="p-3.5 rounded border border-green-300 dark:border-green-900/40 bg-white/80 dark:bg-zinc-950/40 space-y-1.5">
+                        <span className="text-[10px] font-bold text-green-700 dark:text-green-400 uppercase tracking-wider">
                           Section 65B Forensics Affidavit Hash
                         </span>
-                        <p className="text-xs text-zinc-300 font-mono select-all">
+                        <p className="text-xs text-zinc-700 dark:text-zinc-300 font-mono select-all">
                           sha256sum: {generatedReport.sha256Signature}
                         </p>
                         <p className="text-[10px] text-zinc-500 leading-relaxed pt-1">
@@ -1739,9 +1317,9 @@ export function InvestigationDashboardMockup() {
       {/* Modal for Alert Inspection (Globally Accessible) */}
       {selectedAlert && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-zinc-950 rounded-lg border border-zinc-800 shadow-2xl max-w-xl w-full overflow-hidden animate-slide-up">
+          <div className="bg-white dark:bg-zinc-950 rounded-lg border border-zinc-300 dark:border-zinc-800 shadow-2xl max-w-xl w-full overflow-hidden animate-slide-up text-zinc-900 dark:text-zinc-100">
             
-            <div className="p-4 border-b border-zinc-800 bg-zinc-900 text-white flex items-center justify-between">
+            <div className="p-4 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-900 text-white flex items-center justify-between">
               <div className="flex items-center space-x-2">
                 <ShieldAlert className="w-4 h-4 text-red-500 animate-pulse" />
                 <span className="text-xs font-bold font-mono">
@@ -1750,7 +1328,7 @@ export function InvestigationDashboardMockup() {
               </div>
               <button
                 onClick={() => setSelectedAlert(null)}
-                className="text-zinc-500 hover:text-zinc-200 text-sm font-bold"
+                className="text-zinc-400 hover:text-white text-sm font-bold"
               >
                 ✕
               </button>
@@ -1761,44 +1339,43 @@ export function InvestigationDashboardMockup() {
                 <div className="text-[9px] uppercase font-bold text-zinc-500 font-mono">
                   Subject Wallet Address
                 </div>
-                <div className="p-2.5 rounded border border-zinc-800 bg-zinc-900 font-mono text-xs font-bold text-blue-400 mt-1 break-all select-all">
+                <div className="p-2.5 rounded border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 font-mono text-xs font-bold text-blue-600 dark:text-blue-400 mt-1 break-all select-all">
                   {selectedAlert.wallet}
->>>>>>> 0abf518ad88d2cb15eea599a10a445d340e1a7f3
                 </div>
               </div>
 
               <div className="grid grid-cols-3 gap-3 font-mono">
-                <div className="p-3 rounded border border-zinc-800 bg-zinc-900/40 text-center">
+                <div className="p-3 rounded border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/40 text-center">
                   <div className="text-[8px] text-zinc-500 uppercase font-bold">Threat Tier</div>
-                  <div className="text-xs font-bold text-red-400 mt-1">
+                  <div className="text-xs font-bold text-red-600 dark:text-red-400 mt-1">
                     {selectedAlert.threatLevel}
                   </div>
                 </div>
-                <div className="p-3 rounded border border-zinc-800 bg-zinc-900/40 text-center">
+                <div className="p-3 rounded border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/40 text-center">
                   <div className="text-[8px] text-zinc-500 uppercase font-bold">Risk Score</div>
-                  <div className="text-xs font-bold text-zinc-100 mt-1">
+                  <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100 mt-1">
                     {selectedAlert.riskScore}%
                   </div>
                 </div>
-                <div className="p-3 rounded border border-zinc-800 bg-zinc-900/40 text-center">
+                <div className="p-3 rounded border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/40 text-center">
                   <div className="text-[8px] text-zinc-500 uppercase font-bold">Volume BTC</div>
-                  <div className="text-xs font-bold text-zinc-100 mt-1">
+                  <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100 mt-1">
                     {selectedAlert.volumeBtc} BTC
                   </div>
                 </div>
               </div>
 
               <div className="space-y-2">
-                <div className="text-xs font-bold uppercase tracking-wider text-zinc-300">
+                <div className="text-xs font-bold uppercase tracking-wider text-zinc-800 dark:text-zinc-300">
                   Attribution Checkpoints
                 </div>
                 <ul className="space-y-1.5">
                   {selectedAlert.reasons.map((r, i) => (
                     <li
                       key={i}
-                      className="text-xs text-zinc-300 flex items-start space-x-2 p-2 rounded border border-zinc-800 bg-zinc-900/20"
+                      className="text-xs text-zinc-700 dark:text-zinc-300 flex items-start space-x-2 p-2 rounded border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/20"
                     >
-                      <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0 mt-1.5" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-blue-500 shrink-0 mt-1.5" />
                       <span>{r}</span>
                     </li>
                   ))}
@@ -1806,7 +1383,7 @@ export function InvestigationDashboardMockup() {
               </div>
             </div>
 
-            <div className="p-4 border-t border-zinc-800 bg-zinc-900 flex items-center justify-between text-xs font-mono">
+            <div className="p-4 border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 flex items-center justify-between text-xs font-mono">
               <span className="text-zinc-500">
                 Cluster: {selectedAlert.entityCluster}
               </span>
@@ -1819,94 +1396,7 @@ export function InvestigationDashboardMockup() {
             </div>
           </div>
         </div>
-<<<<<<< HEAD
-
-        {/* Modal for Alert Inspection */}
-        {selectedAlert && (
-          <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
-            <div className="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-300 dark:border-zinc-800 shadow-2xl max-w-xl w-full overflow-hidden animate-fade-in text-zinc-900 dark:text-zinc-100">
-              <div className="p-4 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-900 dark:bg-zinc-950 text-white flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <ShieldAlert className="w-4 h-4 text-white" />
-                  <span className="text-xs font-bold">
-                    Forensic Alert Dossier // {selectedAlert.id}
-                  </span>
-                </div>
-                <button
-                  onClick={() => setSelectedAlert(null)}
-                  className="text-zinc-400 hover:text-white text-sm"
-                >
-                  ✕
-                </button>
-              </div>
-
-              <div className="p-6 space-y-4">
-                <div>
-                  <div className="text-[10px] uppercase font-bold text-zinc-400 dark:text-zinc-500 font-mono">
-                    Subject Wallet Address
-                  </div>
-                  <div className="p-2.5 rounded border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 font-mono text-xs font-bold text-zinc-900 dark:text-zinc-100 mt-1 break-all">
-                    {selectedAlert.wallet}
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-3 gap-3">
-                  <div className="p-3 rounded border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950">
-                    <div className="text-[10px] text-zinc-500 dark:text-zinc-400 font-mono">Threat Tier</div>
-                    <div className="text-sm font-bold text-zinc-900 dark:text-zinc-100 mt-0.5">
-                      {selectedAlert.threatLevel}
-                    </div>
-                  </div>
-                  <div className="p-3 rounded border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950">
-                    <div className="text-[10px] text-zinc-500 dark:text-zinc-400 font-mono">Risk Score</div>
-                    <div className="text-sm font-bold text-blue-600 dark:text-blue-400 mt-0.5">
-                      {selectedAlert.riskScore}%
-                    </div>
-                  </div>
-                  <div className="p-3 rounded border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950">
-                    <div className="text-[10px] text-zinc-500 dark:text-zinc-400 font-mono">Volume</div>
-                    <div className="text-sm font-bold text-zinc-900 dark:text-zinc-100 mt-0.5">
-                      {selectedAlert.volumeBtc} BTC
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <div className="text-xs font-bold uppercase tracking-wider text-zinc-800 dark:text-zinc-200 mb-2">
-                    Forensic Evidence Checklist
-                  </div>
-                  <ul className="space-y-1.5">
-                    {selectedAlert.reasons.map((r, i) => (
-                      <li
-                        key={i}
-                        className="text-xs text-zinc-700 dark:text-zinc-300 flex items-start space-x-2 p-2 rounded border border-zinc-100 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-950/60"
-                      >
-                        <span className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-blue-400 shrink-0 mt-1.5" />
-                        <span>{r}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-
-              <div className="p-4 border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 flex items-center justify-between">
-                <span className="text-xs text-zinc-500 dark:text-zinc-400 font-mono">
-                  Cluster: {selectedAlert.entityCluster}
-                </span>
-                <button
-                  onClick={() => setSelectedAlert(null)}
-                  className="px-4 py-1.5 text-xs font-bold rounded bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-950 hover:bg-zinc-800 dark:hover:bg-zinc-200"
-                >
-                  Close Dossier
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-=======
       )}
->>>>>>> 0abf518ad88d2cb15eea599a10a445d340e1a7f3
     </section>
   );
 }

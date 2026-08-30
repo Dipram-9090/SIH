@@ -1,45 +1,49 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { List, ChevronRight } from "lucide-react";
+import { List } from "lucide-react";
 
 interface TocItem {
   id: string;
-  title: string;
   num: string;
+  label: string;
 }
 
 const TOC_ITEMS: TocItem[] = [
-  { id: "hero", title: "Hero Section", num: "01" },
-  { id: "problem-statement", title: "Problem Statement", num: "02" },
-  { id: "problem-solving", title: "What Problem Are We Solving?", num: "03" },
-  { id: "architecture", title: "System Architecture", num: "04" },
-  { id: "pipeline", title: "Full Data Pipeline", num: "05" },
-  { id: "tech-stack", title: "Tech Stack", num: "06" },
-  { id: "roadmap", title: "Implementation Roadmap", num: "07" },
-  { id: "graph-analytics", title: "Graph Analytics", num: "08" },
-  { id: "ai-detection", title: "AI Detection Models", num: "09" },
-  { id: "explainability", title: "Explainable AI (XAI)", num: "10" },
-  { id: "dashboard-mockup", title: "Investigation Dashboard", num: "11" },
-  { id: "api-architecture", title: "API Architecture", num: "12" },
-  { id: "database-schema", title: "Database Schema (ERD)", num: "13" },
-  { id: "user-workflow", title: "User Workflow", num: "14" },
-  { id: "future-enhancements", title: "Future Enhancements", num: "15" },
-  { id: "summary", title: "Final Summary", num: "16" },
+  { id: "hero", num: "01", label: "Overview & Visual Graph" },
+  { id: "problem-statement", num: "02", label: "Problem Narrative" },
+  { id: "problem-solving", num: "03", label: "Solution Paradigm" },
+  { id: "architecture", num: "04", label: "System Architecture" },
+  { id: "pipeline", num: "05", label: "Data Pipeline" },
+  { id: "tech-stack", num: "06", label: "Tech Stack" },
+  { id: "roadmap", num: "07", label: "Implementation Roadmap" },
+  { id: "graph-analytics", num: "08", label: "Graph Analytics" },
+  { id: "ai-detection", num: "09", label: "AI Detection Engine" },
+  { id: "explainability", num: "10", label: "Explainable AI (XAI)" },
+  { id: "dashboard-mockup", num: "11", label: "Dashboard Mockup" },
+  { id: "api-architecture", num: "12", label: "API Architecture" },
+  { id: "database-schema", num: "13", label: "Database Schema" },
+  { id: "user-workflow", num: "14", label: "User Workflow" },
+  { id: "future-enhancements", num: "15", label: "Future Enhancements" },
+  { id: "summary", num: "16", label: "Final Summary" }
 ];
 
 export function TableOfContents() {
   const [activeId, setActiveId] = useState<string>("hero");
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPos = window.scrollY + 180;
-      for (let i = TOC_ITEMS.length - 1; i >= 0; i--) {
-        const el = document.getElementById(TOC_ITEMS[i].id);
-        if (el && el.offsetTop <= scrollPos) {
-          setActiveId(TOC_ITEMS[i].id);
-          break;
+      const scrollPosition = window.scrollY + 200;
+      for (const item of TOC_ITEMS) {
+        const el = document.getElementById(item.id);
+        if (el) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (scrollPosition >= top && scrollPosition < top + height) {
+            setActiveId(item.id);
+            break;
+          }
         }
       }
     };
@@ -55,17 +59,10 @@ export function TableOfContents() {
         <div className="relative">
           <button
             onClick={() => setIsOpen(!isOpen)}
-<<<<<<< HEAD
-            className="flex items-center gap-2 px-3.5 py-2 rounded-full border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 shadow-md hover:border-zinc-500 dark:hover:border-zinc-500 hover:bg-zinc-50 dark:hover:bg-zinc-800 text-xs font-bold transition-all"
+            className="flex items-center gap-2 px-3.5 py-2 rounded-full border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 shadow-md hover:border-zinc-500 dark:hover:border-zinc-500 hover:bg-zinc-50 dark:hover:bg-zinc-800 text-xs font-bold transition-all hover:scale-105 duration-200 active:scale-95"
             aria-label="Table of Contents"
           >
-            <List className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-=======
-            className="flex items-center gap-2 px-3.5 py-2 rounded-full border border-zinc-300 bg-white text-zinc-900 shadow-md hover:border-zinc-500 hover:bg-zinc-50 text-xs font-bold transition-all hover:scale-105 duration-200 active:scale-95"
-            aria-label="Table of Contents"
-          >
-            <List className="w-4 h-4 text-blue-600 animate-pulse" />
->>>>>>> 0abf518ad88d2cb15eea599a10a445d340e1a7f3
+            <List className="w-4 h-4 text-blue-600 dark:text-blue-400 animate-pulse" />
             <span className="hidden sm:inline">Index ({TOC_ITEMS.length})</span>
             <span className="text-[10px] px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 font-mono">
               {TOC_ITEMS.find((t) => t.id === activeId)?.num || "01"}
@@ -73,15 +70,9 @@ export function TableOfContents() {
           </button>
 
           {isOpen && (
-<<<<<<< HEAD
-            <div className="absolute bottom-12 right-0 w-80 max-h-[70vh] overflow-y-auto bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-lg shadow-xl p-3 space-y-1 animate-fade-in text-zinc-900 dark:text-zinc-100">
+            <div className="absolute bottom-14 right-0 w-80 max-w-[calc(100vw-3rem)] max-h-[70vh] overflow-y-auto bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-lg shadow-xl p-3 space-y-1 animate-slide-up text-zinc-900 dark:text-zinc-100">
               <div className="flex items-center justify-between pb-2 mb-2 border-b border-zinc-200 dark:border-zinc-800">
                 <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
-=======
-            <div className="absolute bottom-14 right-0 w-80 max-h-[70vh] overflow-y-auto bg-white border border-zinc-300 rounded-lg shadow-xl p-3 space-y-1 animate-slide-up">
-              <div className="flex items-center justify-between pb-2 mb-2 border-b border-zinc-200">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-500">
->>>>>>> 0abf518ad88d2cb15eea599a10a445d340e1a7f3
                   Document Index
                 </span>
                 <button
@@ -99,17 +90,14 @@ export function TableOfContents() {
                     onClick={() => setIsOpen(false)}
                     className={`flex items-center justify-between px-2.5 py-1.5 rounded text-xs transition-colors ${
                       activeId === item.id
-                        ? "bg-zinc-100 dark:bg-zinc-800 text-blue-600 dark:text-blue-400 font-bold border-l-2 border-blue-600 dark:border-blue-400"
-                        : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-800/60 hover:text-zinc-900 dark:hover:text-zinc-100"
+                        ? "bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-950 font-bold"
+                        : "text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-900 dark:hover:text-zinc-100"
                     }`}
                   >
-                    <div className="flex items-center space-x-2 truncate">
-                      <span className="text-[10px] text-zinc-400 dark:text-zinc-500 font-mono">{item.num}</span>
-                      <span className="truncate">{item.title}</span>
-                    </div>
-                    {activeId === item.id && (
-                      <ChevronRight className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 shrink-0" />
-                    )}
+                    <span className="font-mono text-[11px] opacity-60 mr-2">
+                      {item.num}
+                    </span>
+                    <span className="truncate flex-1">{item.label}</span>
                   </a>
                 ))}
               </div>

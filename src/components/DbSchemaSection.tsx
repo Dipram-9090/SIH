@@ -8,7 +8,7 @@ export function DbSchemaSection() {
   const [selectedTable, setSelectedTable] = useState<SchemaTable>(DB_TABLES[0]);
 
   return (
-    <section id="database-schema" className="py-20 border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 transition-colors">
+    <section id="database-schema" className="py-20 scroll-mt-20 border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="max-w-3xl mb-12">

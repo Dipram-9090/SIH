@@ -49,6 +49,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
   font-family: var(--font-space-mono), monospace;
 }
 
@@ -56,6 +57,7 @@ body {
   font-family: var(--font-space-mono), monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 /* Custom minimal scrollbar */
@@ -113,12 +115,11 @@ code, pre {
   background-size: 16px 16px;
 }
 
-<<<<<<< HEAD
 .dark .bg-dot-pattern {
   background-image: radial-gradient(#27272a 1px, transparent 1px);
   background-size: 16px 16px;
 }
-=======
+
 /* SVG Flow Animation for transaction routes */
 @keyframes flowEdge {
   from {
@@ -212,5 +213,3 @@ code, pre {
   background-size: 100% 3px, 6px 100%;
   pointer-events: none;
 }
-
->>>>>>> 0abf518ad88d2cb15eea599a10a445d340e1a7f3

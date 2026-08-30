@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Navbar } from "@/components/Navbar";
 import { TableOfContents } from "@/components/TableOfContents";
@@ -11,13 +13,8 @@ import { RoadmapSection } from "@/components/RoadmapSection";
 import { GraphAnalyticsSection } from "@/components/GraphAnalyticsSection";
 import { AiDetectionSection } from "@/components/AiDetectionSection";
 import { ExplainableAiSection } from "@/components/ExplainableAiSection";
+import { InvestigationDashboardMockup } from "@/components/InvestigationDashboardMockup";
 import { ApiArchitectureSection } from "@/components/ApiArchitectureSection";
-import dynamic from "next/dynamic";
-
-const InvestigationDashboardMockup = dynamic(
-  () => import("@/components/InvestigationDashboardMockup").then((mod) => mod.InvestigationDashboardMockup),
-  { ssr: false }
-);
 import { DbSchemaSection } from "@/components/DbSchemaSection";
 import { UserWorkflowSection } from "@/components/UserWorkflowSection";
 import { FutureEnhancementsSection } from "@/components/FutureEnhancementsSection";

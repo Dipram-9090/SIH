@@ -15,16 +15,16 @@ export function AiDetectionSection() {
   );
 
   return (
-    <section id="ai-detection" className="py-20 border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 transition-colors">
+    <section id="ai-detection" className="py-20 scroll-mt-20 border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="max-w-3xl mb-12">
           <div className="flex items-center gap-2 text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-2">
             <span className="w-2 h-2 rounded-full bg-zinc-900 dark:bg-zinc-100" />
-            Section 09 // Machine Learning
+            Section 09 // Machine Learning & Detection Models
           </div>
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-950 dark:text-zinc-100">
-            AI Detection Section
+            AI Detection Engine Architecture
           </h2>
           <p className="mt-3 text-sm sm:text-base text-zinc-600 dark:text-zinc-400 leading-relaxed">
             Multi-model unsupervised machine learning architecture combining tree anomaly isolation, density spatial clustering, and graph topological features to score suspicious Bitcoin entities.
@@ -52,22 +52,22 @@ export function AiDetectionSection() {
 
               <div className="space-y-3">
                 <div className="text-xs font-bold text-blue-600 dark:text-blue-400">
-                  Purpose: Find anomalous wallets.
+                  Objective: Isolates anomalous flow vectors via recursive sub-space partitioning.
                 </div>
                 <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                  Isolates abnormal wallet behavior by recursively partitioning feature dimensions (velocity, sudden volume spikes, hop latencies). Anomalies require significantly fewer splits to isolate than normal benign nodes.
+                  Anomalous transaction patterns (high-frequency hop bursts, abnormal fan-outs, extreme volume deltas) require significantly shorter path lengths to isolate in randomized decision trees compared to normal transactional nodes.
                 </p>
               </div>
             </div>
 
             <div className="mt-6 pt-3 border-t border-zinc-100 dark:border-zinc-800 space-y-1 text-[11px] text-zinc-500 dark:text-zinc-400 font-mono">
               <div className="flex justify-between">
-                <span>Contamination:</span>
+                <span>Contamination Parameter (α):</span>
                 <span className="text-zinc-900 dark:text-zinc-200 font-bold">5% (0.05)</span>
               </div>
               <div className="flex justify-between">
-                <span>Output:</span>
-                <span className="text-zinc-900 dark:text-zinc-200">Decision Value [-0.5, 0.5]</span>
+                <span>Decision Value:</span>
+                <span className="text-zinc-900 dark:text-zinc-200">s(x, n) ∈ [-0.5, 0.5]</span>
               </div>
             </div>
           </div>
@@ -85,28 +85,28 @@ export function AiDetectionSection() {
                   </h3>
                 </div>
                 <span className="text-[10px] font-mono px-2 py-0.5 rounded border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300">
-                  Density Cluster
+                  Density Clustering
                 </span>
               </div>
 
               <div className="space-y-3">
                 <div className="text-xs font-bold text-blue-600 dark:text-blue-400">
-                  Purpose: Cluster suspicious entities.
+                  Objective: Discovers arbitrary-shaped clusters of co-spending entities.
                 </div>
                 <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                  Density-Based Spatial Clustering of Applications with Noise automatically groups co-spending addresses and interconnected laundering syndicates without requiring a predetermined cluster count (k).
+                  Density-Based Spatial Clustering of Applications with Noise identifies interconnected wallet clusters and laundering rings based on spatial core reachability without requiring a pre-specified cluster count (k).
                 </p>
               </div>
             </div>
 
             <div className="mt-6 pt-3 border-t border-zinc-100 dark:border-zinc-800 space-y-1 text-[11px] text-zinc-500 dark:text-zinc-400 font-mono">
               <div className="flex justify-between">
-                <span>Epsilon (eps):</span>
+                <span>Epsilon Radius (ε):</span>
                 <span className="text-zinc-900 dark:text-zinc-200 font-bold">0.75</span>
               </div>
               <div className="flex justify-between">
-                <span>Min Samples:</span>
-                <span className="text-zinc-900 dark:text-zinc-200 font-bold">3 Core Nodes</span>
+                <span>Minimum Samples (minPts):</span>
+                <span className="text-zinc-900 dark:text-zinc-200 font-bold">3 Core Addresses</span>
               </div>
             </div>
           </div>
@@ -120,7 +120,7 @@ export function AiDetectionSection() {
                     <Layers className="w-4 h-4" />
                   </div>
                   <h3 className="text-sm font-bold text-zinc-950 dark:text-zinc-100">
-                    Graph Features
+                    Graph Topological Metrics
                   </h3>
                 </div>
                 <span className="text-[10px] font-mono px-2 py-0.5 rounded border border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300">
@@ -130,22 +130,22 @@ export function AiDetectionSection() {
 
               <div className="space-y-3">
                 <div className="text-xs font-bold text-blue-600 dark:text-blue-400">
-                  Purpose: Use graph metrics to improve predictions.
+                  Objective: Evaluates graph influence, bridging roles, and topological flow bottlenecks.
                 </div>
                 <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                  Computes topological signals including PageRank, Betweenness Centrality, In/Out degree divergence, and Reciprocity. Distinguishes high-throughput merchant addresses from obfuscated peel chains.
+                  Computes topological indicators including PageRank (damping α=0.85), Betweenness Centrality (Brandes algorithm), and In/Out-degree divergence to differentiate merchant hubs from peel chains.
                 </p>
               </div>
             </div>
 
             <div className="mt-6 pt-3 border-t border-zinc-100 dark:border-zinc-800 space-y-1 text-[11px] text-zinc-500 dark:text-zinc-400 font-mono">
               <div className="flex justify-between">
-                <span>Metrics Count:</span>
+                <span>Topological Vectors:</span>
                 <span className="text-zinc-900 dark:text-zinc-200 font-bold">12 Centrality Features</span>
               </div>
               <div className="flex justify-between">
-                <span>Engine:</span>
-                <span className="text-zinc-900 dark:text-zinc-200">NetworkX Graph Theory</span>
+                <span>Execution Engine:</span>
+                <span className="text-zinc-900 dark:text-zinc-200">NetworkX Directed Graph Engine</span>
               </div>
             </div>
           </div>
@@ -157,7 +157,7 @@ export function AiDetectionSection() {
             <div className="flex items-center space-x-2">
               <Calculator className="w-4 h-4 text-blue-600 dark:text-blue-400" />
               <h3 className="text-sm font-bold text-zinc-950 dark:text-zinc-100">
-                Combined Final Risk Score Formula
+                Composite Risk Scoring Ensemble Calibration
               </h3>
             </div>
             <span className="text-xs font-mono text-zinc-600 dark:text-zinc-400">
@@ -170,7 +170,7 @@ export function AiDetectionSection() {
             <div className="lg:col-span-7 space-y-5">
               <div className="space-y-1.5">
                 <div className="flex justify-between text-xs font-bold">
-                  <span className="text-zinc-800 dark:text-zinc-200">1. Isolation Forest Anomaly (40% Weight)</span>
+                  <span className="text-zinc-800 dark:text-zinc-200">1. Isolation Forest Anomaly Component (40% Weight)</span>
                   <span className="text-blue-600 dark:text-blue-400 font-mono">{anomalyValue}%</span>
                 </div>
                 <input
@@ -188,7 +188,7 @@ export function AiDetectionSection() {
 
               <div className="space-y-1.5">
                 <div className="flex justify-between text-xs font-bold">
-                  <span className="text-zinc-800 dark:text-zinc-200">2. Graph Centrality & Peel Ratio (25% Weight)</span>
+                  <span className="text-zinc-800 dark:text-zinc-200">2. Graph Centrality & Peel Ratio Component (25% Weight)</span>
                   <span className="text-blue-600 dark:text-blue-400 font-mono">{graphCentrality}%</span>
                 </div>
                 <input
@@ -206,7 +206,7 @@ export function AiDetectionSection() {
 
               <div className="space-y-1.5">
                 <div className="flex justify-between text-xs font-bold">
-                  <span className="text-zinc-800 dark:text-zinc-200">3. Forensic Heuristics & GeoIP (35% Weight)</span>
+                  <span className="text-zinc-800 dark:text-zinc-200">3. Forensic Heuristics & GeoIP Component (35% Weight)</span>
                   <span className="text-blue-600 dark:text-blue-400 font-mono">{heuristicScore}%</span>
                 </div>
                 <input
@@ -218,7 +218,7 @@ export function AiDetectionSection() {
                   className="w-full accent-blue-600"
                 />
                 <span className="text-[11px] text-zinc-500 dark:text-zinc-400 block">
-                  Tor exit node matches, VPN broadcaster flags, and proximity to darknet markets.
+                  Tor exit relay matches, VPN broadcaster flags, and proximity to darknet markets.
                 </span>
               </div>
             </div>
@@ -250,8 +250,8 @@ export function AiDetectionSection() {
               </div>
               <p className="text-[11px] text-zinc-500 dark:text-zinc-400 leading-relaxed max-w-xs">
                 {calculatedRisk >= 80
-                  ? "Immediate warrant recommendation triggered. Direct evidence of multi-hop money laundering."
-                  : "Within normal heuristic bounds. Continued automated background indexing."}
+                  ? "Immediate statutory freezing recommendation triggered. Strong evidence of programmatic multi-hop laundering."
+                  : "Within normal baseline parameters. Continues background indexing."}
               </p>
             </div>
           </div>

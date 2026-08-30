@@ -10,19 +10,19 @@ export function ExplainableAiSection() {
   const walletAddress = "3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy";
 
   const reasons = [
-    "High transaction frequency (18.4 tx/hr vs network median 0.2)",
-    "Large outgoing amount (482.50 BTC drained in 4 hours)",
-    "Connected to suspicious darknet wallet (1-hop link)",
-    "Multiple IP addresses across 4 jurisdictions (DE, RU, SC, PA)",
-    "Rapid transaction chain (Peel ratio 0.94 / sub-90s hop latency)"
+    "Extreme transaction velocity (18.4 tx/hr vs network baseline median 0.2 tx/hr)",
+    "Anomalous outbound volume (482.50 BTC drained across 4 hours)",
+    "Direct 1-hop topological link to high-risk obfuscation hub",
+    "Multi-jurisdictional relay broadcaster IPs across 4 international routing nodes (DE, RU, SC, PA)",
+    "High-ratio peel chain structure (Peel ratio 0.94 / sub-90s block propagation)"
   ];
 
   const shapFeatures = [
-    { feature: "Transaction Velocity (tx/hr)", weight: "+34%", positive: true },
-    { feature: "Peel Chain Ratio", weight: "+28%", positive: true },
-    { feature: "Tor / Relay IP Diversity", weight: "+18%", positive: true },
-    { feature: "Darknet Node Proximity", weight: "+12%", positive: true },
-    { feature: "Lifespan in Blocks (<10)", weight: "+8%", positive: true }
+    { feature: "Transaction Velocity Delta (tx/hr)", weight: "+34%", positive: true },
+    { feature: "Peel Chain Ratio Index", weight: "+28%", positive: true },
+    { feature: "Tor / Relay Node IP Diversity", weight: "+18%", positive: true },
+    { feature: "Sanctioned Entity Proximity", weight: "+12%", positive: true },
+    { feature: "Ephemeral Address Lifespan (<10 Blocks)", weight: "+8%", positive: true }
   ];
 
   const handleCopyWallet = () => {
@@ -32,19 +32,19 @@ export function ExplainableAiSection() {
   };
 
   return (
-    <section id="explainability" className="py-20 border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 transition-colors">
+    <section id="explainability" className="py-20 scroll-mt-20 border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="max-w-3xl mb-12">
           <div className="flex items-center gap-2 text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-2">
             <span className="w-2 h-2 rounded-full bg-zinc-900 dark:bg-zinc-100" />
-            Section 10 // Explainable AI (XAI)
+            Section 10 // Explainable AI (XAI) & Statutory Evidence Admissibility
           </div>
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-950 dark:text-zinc-100">
-            Explainable AI Alert
+            Explainable AI Forensic Intelligence
           </h2>
           <p className="mt-3 text-sm sm:text-base text-zinc-600 dark:text-zinc-400 leading-relaxed">
-            Black-box machine learning is inadmissible in courts of law. Our Explainable AI engine provides full transparency with human-readable reason checklists and mathematical feature attributions.
+            Black-box machine learning predictions are inadmissible under strict judicial scrutiny. Our Explainable AI engine provides complete transparency with human-readable reason checklists, mathematical feature attributions (TreeSHAP), and statutory compliance trails.
           </p>
         </div>
 
@@ -71,7 +71,7 @@ export function ExplainableAiSection() {
                 {/* Subject Wallet */}
                 <div>
                   <div className="text-[10px] uppercase font-bold text-zinc-400 dark:text-zinc-500 font-mono">
-                    Subject Wallet
+                    Target Subject Address
                   </div>
                   <div className="mt-1 flex items-center justify-between p-2.5 rounded border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950">
                     <span className="font-mono text-xs font-bold text-zinc-900 dark:text-zinc-100 truncate mr-2">
@@ -98,10 +98,10 @@ export function ExplainableAiSection() {
                       Risk Score
                     </div>
                     <div className="text-3xl font-bold font-mono text-zinc-950 dark:text-zinc-100 mt-1">
-                      92%
+                      92.4%
                     </div>
                     <span className="text-[10px] text-zinc-500 dark:text-zinc-400 mt-0.5 block">
-                      Ensemble ML + Graph
+                      Ensemble ML + Graph Model
                     </span>
                   </div>
 
@@ -110,10 +110,10 @@ export function ExplainableAiSection() {
                       Confidence
                     </div>
                     <div className="text-3xl font-bold font-mono text-blue-600 dark:text-blue-400 mt-1">
-                      92%
+                      94.8%
                     </div>
                     <span className="text-[10px] text-zinc-500 dark:text-zinc-400 mt-0.5 block">
-                      Evidence Convergence
+                      Multi-Vector Convergence
                     </span>
                   </div>
                 </div>
@@ -121,9 +121,9 @@ export function ExplainableAiSection() {
                 {/* Checklist of Reasons */}
                 <div>
                   <div className="text-xs font-bold uppercase tracking-wider text-zinc-800 dark:text-zinc-200 mb-3 flex items-center justify-between">
-                    <span>Evidence Reasons</span>
+                    <span>Forensic Evidence Checklist</span>
                     <span className="text-[10px] text-zinc-400 dark:text-zinc-500 font-mono">
-                      5 Flags Triggered
+                      5 Indicators Corroborated
                     </span>
                   </div>
 
@@ -147,12 +147,12 @@ export function ExplainableAiSection() {
 
               {/* Card Footer */}
               <div className="p-4 border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 flex items-center justify-between text-xs">
-                <span className="text-zinc-500 dark:text-zinc-400 font-mono">Status: Active Triage</span>
+                <span className="text-zinc-500 dark:text-zinc-400 font-mono">Investigation Status: Active Triage</span>
                 <button
                   onClick={() => setActiveTab("court")}
                   className="text-xs font-bold text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 flex items-center gap-1"
                 >
-                  Generate Judicial Dossier →
+                  Inspect Section 65B Dossier →
                 </button>
               </div>
             </div>
@@ -171,7 +171,7 @@ export function ExplainableAiSection() {
                       : "border-transparent text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100"
                   }`}
                 >
-                  SHAP Feature Weights
+                  TreeSHAP Feature Weights
                 </button>
                 <button
                   onClick={() => setActiveTab("court")}
@@ -181,7 +181,7 @@ export function ExplainableAiSection() {
                       : "border-transparent text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100"
                   }`}
                 >
-                  Court Evidence Dossier
+                  Section 65B Evidence Dossier
                 </button>
               </div>
 
@@ -190,10 +190,10 @@ export function ExplainableAiSection() {
                 <div className="p-6 space-y-4">
                   <div>
                     <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-1">
-                      Mathematical Attribution (TreeSHAP)
+                      Local Feature Attribution (TreeSHAP)
                     </h4>
                     <p className="text-xs text-zinc-600 dark:text-zinc-400">
-                      Shows how much each individual behavioral metric pushed the prediction above the baseline benign threshold (0%).
+                      Calculates the exact Shapley contribution of each topological and behavioral feature pushing the risk prediction above baseline network expectation.
                     </p>
                   </div>
 
@@ -220,7 +220,7 @@ export function ExplainableAiSection() {
                   </div>
 
                   <div className="p-3 rounded border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 text-[11px] text-zinc-600 dark:text-zinc-400 leading-relaxed mt-4">
-                    <span className="font-bold text-zinc-900 dark:text-zinc-100">Statistical Guarantee:</span> SHAP values sum exactly to the discrepancy between base model expectation and target wallet risk score.
+                    <span className="font-bold text-zinc-900 dark:text-zinc-100">Axiomatic Guarantee:</span> Shapley Additive Explanations enforce local accuracy, missingness, and consistency—ensuring feature weights sum exactly to the model output difference.
                   </div>
                 </div>
               )}
@@ -231,28 +231,28 @@ export function ExplainableAiSection() {
                   <div className="flex items-center justify-between">
                     <div>
                       <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
-                        Judicial Evidentiary Summary
+                        Statutory Evidence Certificate
                       </h4>
                       <p className="text-xs text-zinc-600 dark:text-zinc-400 mt-0.5">
-                        Exportable forensic affidavit draft for cyber prosecution.
+                        Indian Evidence Act (Sec 65B) / Cyber Forensics Affidavit Draft
                       </p>
                     </div>
                     <button className="flex items-center gap-1 px-3 py-1.5 rounded text-xs font-bold bg-blue-600 text-white hover:bg-blue-700 transition-colors">
                       <Download className="w-3.5 h-3.5" />
-                      Export PDF
+                      Export Affidavit
                     </button>
                   </div>
 
                   <div className="p-4 rounded border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-950/60 font-mono text-[11px] text-zinc-800 dark:text-zinc-200 space-y-2 leading-relaxed">
                     <div className="font-bold pb-1 border-b border-zinc-200 dark:border-zinc-800 text-zinc-950 dark:text-zinc-100">
-                      REPORT CASE REF: #SIH-2026-BTC-9041
+                      FORENSIC CASE REF: CR-2026-BTC-9041
                     </div>
-                    <div>SUBJECT: Bitcoin Address {walletAddress}</div>
-                    <div>DETECTED ANOMALY: Multi-hop Peel Chain Laundering with Mixer Convergence</div>
-                    <div>AGGREGATE RISK: 92.4% (Critical Level)</div>
-                    <div>EVIDENTIARY HASH (SHA-256): e3b0c44298fc1c149afbf4c8996fb92427ae...</div>
+                    <div>SUBJECT ADDRESS: {walletAddress}</div>
+                    <div>ATTRIBUTION CLASSIFICATION: High-Velocity Peel Chain with Obfuscation Ingress</div>
+                    <div>AGGREGATE RISK SCORE: 92.4% (Critical Threat Priority)</div>
+                    <div>CRYPTOGRAPHIC INTEGRITY HASH (SHA-256): e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855</div>
                     <div className="pt-2 text-zinc-600 dark:text-zinc-400 font-sans text-xs">
-                      &quot;Based on graph traversal analysis and unsupervised isolation metrics, Subject Wallet 3J98... exhibited anomalous outbound volume (482.5 BTC) across 18 transactions per hour, routing through known privacy relays in Germany and Russia. Recommended for statutory exchange freezing.&quot;
+                      &quot;Based on multi-directed graph traversal and unsupervised tree isolation metrics, Subject Wallet {walletAddress} exhibited anomalous outbound velocity (482.50 BTC) across 18 transactions per hour, routing through known darknet relay infrastructure. Recommended for statutory exchange freezing under relevant cybercrime statutes.&quot;
                     </div>
                   </div>
                 </div>

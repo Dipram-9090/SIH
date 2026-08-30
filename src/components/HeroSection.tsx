@@ -150,7 +150,7 @@ export function HeroSection() {
   const activeNodeData = nodes.find((n) => n.id === selectedNode) || nodes[3];
 
   return (
-    <section id="hero" className="relative pt-12 pb-20 border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 transition-colors">
+    <section id="hero" className="relative pt-24 pb-20 sm:pt-28 lg:pt-32 scroll-mt-20 border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 transition-colors">
       {/* Background Dot Pattern */}
       <div className="absolute inset-0 bg-dot-pattern opacity-60 dark:opacity-40 pointer-events-none" />
 
@@ -174,7 +174,7 @@ export function HeroSection() {
             </h1>
 
             <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400 leading-relaxed">
-              An educational walkthrough explaining how an AI-powered cyber investigation platform can detect suspicious Bitcoin transactions, cluster criminal entities and assist investigators through explainable AI.
+              Production-grade blockchain intelligence architecture enabling law enforcement and cybersecurity agencies to reconstruct multi-hop laundering chains, identify obscured entity clusters, and generate court-admissible forensic evidence through explainable AI.
             </p>
 
             {/* CTAs */}
@@ -190,11 +190,7 @@ export function HeroSection() {
 
               <a
                 href="#roadmap"
-<<<<<<< HEAD
-                className="inline-flex items-center gap-2 px-5 py-2.5 text-xs font-bold rounded border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 transition-colors"
-=======
-                className="inline-flex items-center gap-2 px-5 py-2.5 text-xs font-bold rounded border border-zinc-300 bg-white text-zinc-900 hover:bg-zinc-100 hover:border-zinc-400 hover:scale-105 active:scale-95 transition-all duration-200 shadow-sm hover:shadow-zinc-200"
->>>>>>> 0abf518ad88d2cb15eea599a10a445d340e1a7f3
+                className="inline-flex items-center gap-2 px-5 py-2.5 text-xs font-bold rounded border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 hover:scale-105 active:scale-95 transition-all duration-200 shadow-sm"
               >
                 <Activity className="w-4 h-4 text-zinc-700 dark:text-zinc-300" />
                 View Implementation Roadmap
