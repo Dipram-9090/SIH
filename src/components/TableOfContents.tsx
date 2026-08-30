@@ -55,10 +55,17 @@ export function TableOfContents() {
         <div className="relative">
           <button
             onClick={() => setIsOpen(!isOpen)}
+<<<<<<< HEAD
             className="flex items-center gap-2 px-3.5 py-2 rounded-full border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 shadow-md hover:border-zinc-500 dark:hover:border-zinc-500 hover:bg-zinc-50 dark:hover:bg-zinc-800 text-xs font-bold transition-all"
             aria-label="Table of Contents"
           >
             <List className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+=======
+            className="flex items-center gap-2 px-3.5 py-2 rounded-full border border-zinc-300 bg-white text-zinc-900 shadow-md hover:border-zinc-500 hover:bg-zinc-50 text-xs font-bold transition-all hover:scale-105 duration-200 active:scale-95"
+            aria-label="Table of Contents"
+          >
+            <List className="w-4 h-4 text-blue-600 animate-pulse" />
+>>>>>>> 0abf518ad88d2cb15eea599a10a445d340e1a7f3
             <span className="hidden sm:inline">Index ({TOC_ITEMS.length})</span>
             <span className="text-[10px] px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 font-mono">
               {TOC_ITEMS.find((t) => t.id === activeId)?.num || "01"}
@@ -66,9 +73,15 @@ export function TableOfContents() {
           </button>
 
           {isOpen && (
+<<<<<<< HEAD
             <div className="absolute bottom-12 right-0 w-80 max-h-[70vh] overflow-y-auto bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-lg shadow-xl p-3 space-y-1 animate-fade-in text-zinc-900 dark:text-zinc-100">
               <div className="flex items-center justify-between pb-2 mb-2 border-b border-zinc-200 dark:border-zinc-800">
                 <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+=======
+            <div className="absolute bottom-14 right-0 w-80 max-h-[70vh] overflow-y-auto bg-white border border-zinc-300 rounded-lg shadow-xl p-3 space-y-1 animate-slide-up">
+              <div className="flex items-center justify-between pb-2 mb-2 border-b border-zinc-200">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-500">
+>>>>>>> 0abf518ad88d2cb15eea599a10a445d340e1a7f3
                   Document Index
                 </span>
                 <button
