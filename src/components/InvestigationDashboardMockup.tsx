@@ -99,7 +99,7 @@ export function InvestigationDashboardMockup() {
 
   // Handle report generator countup
   useEffect(() => {
-    let interval: NodeJS.Timeout;
+    let interval: any;
     if (isGeneratingReport && reportProgress < 100) {
       interval = setInterval(() => {
         setReportProgress((prev) => {
