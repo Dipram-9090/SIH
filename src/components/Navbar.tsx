@@ -88,43 +88,30 @@ export function Navbar() {
 
         {/* Quick Section Navigator Dropdown (Desktop) */}
         <nav className="hidden lg:flex items-center space-x-1 text-xs">
-          <a
-            href="#architecture"
-            className="px-3 py-1.5 rounded text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100 transition-colors"
-          >
-            Architecture
-          </a>
-          <a
-            href="#pipeline"
-            className="px-3 py-1.5 rounded text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100 transition-colors"
-          >
-            Pipeline
-          </a>
-          <a
-            href="#ai-detection"
-            className="px-3 py-1.5 rounded text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100 transition-colors"
-          >
-            AI Models
-          </a>
-          <a
-            href="#explainability"
-            className="px-3 py-1.5 rounded text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100 transition-colors"
-          >
-            XAI Alert
-          </a>
-          <a
-            href="#dashboard-mockup"
-            className="px-3 py-1.5 rounded text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100 transition-colors flex items-center gap-1"
-          >
-            <LayoutDashboard className="w-3.5 h-3.5" />
-            Dashboard
-          </a>
-          <a
-            href="#roadmap"
-            className="px-3 py-1.5 rounded text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100 transition-colors"
-          >
-            Roadmap
-          </a>
+          {[
+            { name: "Architecture", href: "#architecture" },
+            { name: "Pipeline", href: "#pipeline" },
+            { name: "AI Models", href: "#ai-detection" },
+            { name: "XAI Alert", href: "#explainability" },
+            { name: "Dashboard", href: "#dashboard-mockup", isDashboard: true },
+            { name: "Roadmap", href: "#roadmap" }
+          ].map((link) => {
+            const isActive = activeSection === link.href.substring(1);
+            return (
+              <a
+                key={link.name}
+                href={link.href}
+                className={`px-3 py-1.5 rounded relative transition-all duration-200 hover:scale-105 active:scale-95 flex items-center gap-1 ${
+                  isActive
+                    ? "bg-zinc-900 text-white font-bold"
+                    : "text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100"
+                }`}
+              >
+                {link.isDashboard && <LayoutDashboard className="w-3.5 h-3.5" />}
+                <span>{link.name}</span>
+              </a>
+            );
+          })}
         </nav>
 
         {/* Action Button */}

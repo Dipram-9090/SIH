@@ -172,7 +172,7 @@ export function HeroSection() {
             <div className="flex flex-wrap items-center gap-3 pt-2">
               <a
                 href="#architecture"
-                className="inline-flex items-center gap-2 px-5 py-2.5 text-xs font-bold rounded bg-blue-600 text-white hover:bg-blue-700 transition-colors shadow-sm"
+                className="inline-flex items-center gap-2 px-5 py-2.5 text-xs font-bold rounded bg-blue-600 text-white hover:bg-blue-700 hover:scale-105 active:scale-95 transition-all duration-200 shadow-md hover:shadow-blue-600/20"
               >
                 <Layers className="w-4 h-4" />
                 Explore Architecture
@@ -181,7 +181,7 @@ export function HeroSection() {
 
               <a
                 href="#roadmap"
-                className="inline-flex items-center gap-2 px-5 py-2.5 text-xs font-bold rounded border border-zinc-300 bg-white text-zinc-900 hover:bg-zinc-100 hover:border-zinc-400 transition-colors"
+                className="inline-flex items-center gap-2 px-5 py-2.5 text-xs font-bold rounded border border-zinc-300 bg-white text-zinc-900 hover:bg-zinc-100 hover:border-zinc-400 hover:scale-105 active:scale-95 transition-all duration-200 shadow-sm hover:shadow-zinc-200"
               >
                 <Activity className="w-4 h-4 text-zinc-700" />
                 View Implementation Roadmap

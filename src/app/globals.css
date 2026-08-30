@@ -74,3 +74,98 @@ code, pre {
   background-image: radial-gradient(#e4e4e7 1px, transparent 1px);
   background-size: 16px 16px;
 }
+
+/* SVG Flow Animation for transaction routes */
+@keyframes flowEdge {
+  from {
+    stroke-dashoffset: 20;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-flow-edge {
+  stroke-dasharray: 6, 4;
+  animation: flowEdge 1s linear infinite;
+}
+
+/* Glowing card indicators for high-risk elements */
+@keyframes pulseGlowBlue {
+  0%, 100% {
+    box-shadow: 0 0 8px rgba(37, 99, 235, 0.15), 0 0 15px rgba(37, 99, 235, 0.1);
+    border-color: rgba(37, 99, 235, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(37, 99, 235, 0.4), 0 0 25px rgba(37, 99, 235, 0.2);
+    border-color: rgba(37, 99, 235, 0.6);
+  }
+}
+
+.animate-pulse-glow-blue {
+  animation: pulseGlowBlue 2.5s infinite ease-in-out;
+}
+
+@keyframes pulseGlowRed {
+  0%, 100% {
+    box-shadow: 0 0 8px rgba(239, 68, 68, 0.15), 0 0 15px rgba(239, 68, 68, 0.1);
+    border-color: rgba(239, 68, 68, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 16px rgba(239, 68, 68, 0.45), 0 0 25px rgba(239, 68, 68, 0.25);
+    border-color: rgba(239, 68, 68, 0.6);
+  }
+}
+
+.animate-pulse-glow-red {
+  animation: pulseGlowRed 2.5s infinite ease-in-out;
+}
+
+/* Glassmorphism panels for a modern dark console */
+.glass-panel {
+  background: rgba(9, 9, 11, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(63, 63, 70, 0.3);
+}
+
+.glass-panel-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.glass-panel-hover:hover {
+  border-color: rgba(113, 113, 122, 0.4);
+  background: rgba(24, 24, 27, 0.9);
+  transform: translateY(-2px);
+}
+
+/* Slide in transitions for interactive tabs */
+@keyframes slideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Soft scanline terminal effect */
+.terminal-grid {
+  position: relative;
+}
+.terminal-grid::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  z-index: 2;
+  background-size: 100% 3px, 6px 100%;
+  pointer-events: none;
+}
+

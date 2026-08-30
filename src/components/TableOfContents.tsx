@@ -55,10 +55,10 @@ export function TableOfContents() {
         <div className="relative">
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="flex items-center gap-2 px-3.5 py-2 rounded-full border border-zinc-300 bg-white text-zinc-900 shadow-md hover:border-zinc-500 hover:bg-zinc-50 text-xs font-bold transition-all"
+            className="flex items-center gap-2 px-3.5 py-2 rounded-full border border-zinc-300 bg-white text-zinc-900 shadow-md hover:border-zinc-500 hover:bg-zinc-50 text-xs font-bold transition-all hover:scale-105 duration-200 active:scale-95"
             aria-label="Table of Contents"
           >
-            <List className="w-4 h-4 text-blue-600" />
+            <List className="w-4 h-4 text-blue-600 animate-pulse" />
             <span className="hidden sm:inline">Index ({TOC_ITEMS.length})</span>
             <span className="text-[10px] px-1.5 py-0.5 rounded bg-zinc-100 text-zinc-600 font-mono">
               {TOC_ITEMS.find((t) => t.id === activeId)?.num || "01"}
@@ -66,7 +66,7 @@ export function TableOfContents() {
           </button>
 
           {isOpen && (
-            <div className="absolute bottom-12 right-0 w-80 max-h-[70vh] overflow-y-auto bg-white border border-zinc-300 rounded-lg shadow-xl p-3 space-y-1 animate-fade-in">
+            <div className="absolute bottom-14 right-0 w-80 max-h-[70vh] overflow-y-auto bg-white border border-zinc-300 rounded-lg shadow-xl p-3 space-y-1 animate-slide-up">
               <div className="flex items-center justify-between pb-2 mb-2 border-b border-zinc-200">
                 <span className="text-[11px] font-bold uppercase tracking-wider text-zinc-500">
                   Document Index
