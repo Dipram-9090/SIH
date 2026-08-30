@@ -21,7 +21,7 @@ import { Footer } from "@/components/Footer";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white text-zinc-900 flex flex-col selection:bg-blue-600 selection:text-white">
+    <main className="min-h-screen bg-white text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100 flex flex-col selection:bg-blue-600 selection:text-white transition-colors duration-200">
       {/* Sticky Header */}
       <Navbar />
 

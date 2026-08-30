@@ -1,10 +1,19 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ArrowRight, Layers, Activity } from "lucide-react";
+import { useTheme } from "next-themes";
 
 export function HeroSection() {
   const [selectedNode, setSelectedNode] = useState<string | null>("node3");
+  const [mounted, setMounted] = useState(false);
+  const { resolvedTheme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const isDark = mounted && resolvedTheme === "dark";
 
   const nodes = [
     {
@@ -141,18 +150,18 @@ export function HeroSection() {
   const activeNodeData = nodes.find((n) => n.id === selectedNode) || nodes[3];
 
   return (
-    <section id="hero" className="relative pt-12 pb-20 border-b border-zinc-200 bg-white">
+    <section id="hero" className="relative pt-12 pb-20 border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 transition-colors">
       {/* Background Dot Pattern */}
-      <div className="absolute inset-0 bg-dot-pattern opacity-60 pointer-events-none" />
+      <div className="absolute inset-0 bg-dot-pattern opacity-60 dark:opacity-40 pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Top Tag */}
         <div className="flex items-center gap-2 mb-6">
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded border border-zinc-300 bg-zinc-50 text-xs font-bold text-zinc-800">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900 text-xs font-bold text-zinc-800 dark:text-zinc-200">
             <span className="w-2 h-2 rounded-full bg-blue-600 animate-pulse-subtle" />
             Smart India Hackathon (SIH) 2026
           </span>
-          <span className="text-xs text-zinc-500 hidden sm:inline border-l border-zinc-300 pl-3">
+          <span className="text-xs text-zinc-500 dark:text-zinc-400 hidden sm:inline border-l border-zinc-300 dark:border-zinc-700 pl-3">
             Problem Statement: Cybercrime Investigation & AI Forensics
           </span>
         </div>
@@ -160,11 +169,11 @@ export function HeroSection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Text Info */}
           <div className="lg:col-span-6 space-y-6">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-zinc-950 leading-[1.15]">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-zinc-950 dark:text-zinc-100 leading-[1.15]">
               AI-Powered Bitcoin Transaction Investigation System
             </h1>
 
-            <p className="text-sm sm:text-base text-zinc-600 leading-relaxed">
+            <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400 leading-relaxed">
               An educational walkthrough explaining how an AI-powered cyber investigation platform can detect suspicious Bitcoin transactions, cluster criminal entities and assist investigators through explainable AI.
             </p>
 
@@ -181,48 +190,48 @@ export function HeroSection() {
 
               <a
                 href="#roadmap"
-                className="inline-flex items-center gap-2 px-5 py-2.5 text-xs font-bold rounded border border-zinc-300 bg-white text-zinc-900 hover:bg-zinc-100 hover:border-zinc-400 transition-colors"
+                className="inline-flex items-center gap-2 px-5 py-2.5 text-xs font-bold rounded border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 transition-colors"
               >
-                <Activity className="w-4 h-4 text-zinc-700" />
+                <Activity className="w-4 h-4 text-zinc-700 dark:text-zinc-300" />
                 View Implementation Roadmap
               </a>
             </div>
 
             {/* Quick Metrics Strip */}
-            <div className="grid grid-cols-3 gap-3 pt-4 border-t border-zinc-200">
-              <div className="p-3 rounded border border-zinc-200 bg-zinc-50/50">
-                <div className="text-[10px] text-zinc-500 uppercase font-bold">Detection Engine</div>
-                <div className="text-sm font-bold text-zinc-900 mt-0.5">Isolation Forest</div>
+            <div className="grid grid-cols-3 gap-3 pt-4 border-t border-zinc-200 dark:border-zinc-800">
+              <div className="p-3 rounded border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50">
+                <div className="text-[10px] text-zinc-500 dark:text-zinc-400 uppercase font-bold">Detection Engine</div>
+                <div className="text-sm font-bold text-zinc-900 dark:text-zinc-100 mt-0.5">Isolation Forest</div>
               </div>
-              <div className="p-3 rounded border border-zinc-200 bg-zinc-50/50">
-                <div className="text-[10px] text-zinc-500 uppercase font-bold">Graph Analytics</div>
-                <div className="text-sm font-bold text-zinc-900 mt-0.5">NetworkX + CIOH</div>
+              <div className="p-3 rounded border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50">
+                <div className="text-[10px] text-zinc-500 dark:text-zinc-400 uppercase font-bold">Graph Analytics</div>
+                <div className="text-sm font-bold text-zinc-900 dark:text-zinc-100 mt-0.5">NetworkX + CIOH</div>
               </div>
-              <div className="p-3 rounded border border-zinc-200 bg-zinc-50/50">
-                <div className="text-[10px] text-zinc-500 uppercase font-bold">Explainability</div>
-                <div className="text-sm font-bold text-zinc-900 mt-0.5">SHAP + Audit Trail</div>
+              <div className="p-3 rounded border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50">
+                <div className="text-[10px] text-zinc-500 dark:text-zinc-400 uppercase font-bold">Explainability</div>
+                <div className="text-sm font-bold text-zinc-900 dark:text-zinc-100 mt-0.5">SHAP + Audit Trail</div>
               </div>
             </div>
           </div>
 
           {/* Right Visual: Minimal Illustration of Connected Wallets & Transactions */}
           <div className="lg:col-span-6">
-            <div className="rounded-lg border border-zinc-300 bg-white shadow-sm overflow-hidden">
+            <div className="rounded-lg border border-zinc-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm overflow-hidden transition-colors">
               {/* Card Header Bar */}
-              <div className="px-4 py-3 border-b border-zinc-200 bg-zinc-50 flex items-center justify-between">
+              <div className="px-4 py-3 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/80 flex items-center justify-between">
                 <div className="flex items-center space-x-2">
                   <div className="w-2.5 h-2.5 rounded-full bg-blue-600 animate-pulse" />
-                  <span className="text-xs font-bold text-zinc-800">
+                  <span className="text-xs font-bold text-zinc-800 dark:text-zinc-200">
                     Live Bitcoin Subgraph Visualization (Forensic Simulation)
                   </span>
                 </div>
-                <span className="text-[10px] px-2 py-0.5 rounded border border-zinc-200 bg-white text-zinc-600 font-mono">
+                <span className="text-[10px] px-2 py-0.5 rounded border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 font-mono">
                   Interactive Sandbox
                 </span>
               </div>
 
               {/* Minimal SVG Node-Link Canvas */}
-              <div className="p-4 bg-zinc-50/30">
+              <div className="p-4 bg-zinc-50/30 dark:bg-zinc-950/60 transition-colors">
                 <svg
                   viewBox="0 0 650 185"
                   className="w-full h-auto select-none overflow-visible"
@@ -238,7 +247,7 @@ export function HeroSection() {
                       markerHeight="6"
                       orient="auto"
                     >
-                      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#71717a" />
+                      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill={isDark ? "#71717a" : "#71717a"} />
                     </marker>
 
                     {/* Active Highlight Arrow Marker */}
@@ -251,7 +260,7 @@ export function HeroSection() {
                       markerHeight="6"
                       orient="auto"
                     >
-                      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#2563eb" />
+                      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill={isDark ? "#60a5fa" : "#2563eb"} />
                     </marker>
 
                     {/* Muted Arrow Marker */}
@@ -264,7 +273,7 @@ export function HeroSection() {
                       markerHeight="6"
                       orient="auto"
                     >
-                      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#d4d4d8" />
+                      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill={isDark ? "#27272a" : "#d4d4d8"} />
                     </marker>
                   </defs>
 
@@ -275,19 +284,19 @@ export function HeroSection() {
                     const isConnected = isOutgoing || isIncoming;
                     const hasSelection = selectedNode !== null;
 
-                    let strokeColor = "#71717a";
+                    let strokeColor = isDark ? "#52525b" : "#71717a";
                     let strokeWidth = 1.5;
                     let strokeDash = "3,3";
                     let markerId = "arrow-default";
 
                     if (hasSelection) {
                       if (isConnected) {
-                        strokeColor = "#2563eb";
+                        strokeColor = isDark ? "#60a5fa" : "#2563eb";
                         strokeWidth = 2.2;
                         strokeDash = "none";
                         markerId = "arrow-active";
                       } else {
-                        strokeColor = "#e4e4e7";
+                        strokeColor = isDark ? "#27272a" : "#e4e4e7";
                         strokeWidth = 1.2;
                         strokeDash = "3,3";
                         markerId = "arrow-muted";
@@ -311,8 +320,8 @@ export function HeroSection() {
                         {/* Animated Flowing Bitcoin Transaction Packet */}
                         <circle
                           r={isConnected ? "3.5" : "2.8"}
-                          fill={isConnected ? "#2563eb" : "#71717a"}
-                          opacity={hasSelection && !isConnected ? "0.2" : "0.9"}
+                          fill={isConnected ? (isDark ? "#60a5fa" : "#2563eb") : (isDark ? "#71717a" : "#71717a")}
+                          opacity={hasSelection && !isConnected ? "0.15" : "0.9"}
                         >
                           <animateMotion
                             dur={edge.dur}
@@ -342,7 +351,7 @@ export function HeroSection() {
                           <circle
                             r="22"
                             fill="none"
-                            stroke="#2563eb"
+                            stroke={isDark ? "#60a5fa" : "#2563eb"}
                             strokeWidth="1"
                             className="animate-ping opacity-30 pointer-events-none"
                           />
@@ -353,7 +362,7 @@ export function HeroSection() {
                           <circle
                             r="20"
                             fill="none"
-                            stroke="#2563eb"
+                            stroke={isDark ? "#60a5fa" : "#2563eb"}
                             strokeWidth="1.5"
                             strokeDasharray="2,2"
                             className="animate-spin-slow opacity-60 pointer-events-none"
@@ -363,10 +372,22 @@ export function HeroSection() {
                         {/* Outer Circle */}
                         <circle
                           r={isSelected ? "17" : "15"}
-                          fill={isTarget ? "#18181b" : isSelected ? "#f4f4f5" : "#ffffff"}
-                          stroke={isTarget ? "#2563eb" : isSelected ? "#2563eb" : "#71717a"}
+                          fill={
+                            isTarget
+                              ? (isDark ? "#09090b" : "#18181b")
+                              : isSelected
+                              ? (isDark ? "#27272a" : "#f4f4f5")
+                              : (isDark ? "#18181b" : "#ffffff")
+                          }
+                          stroke={
+                            isTarget
+                              ? (isDark ? "#60a5fa" : "#2563eb")
+                              : isSelected
+                              ? (isDark ? "#60a5fa" : "#2563eb")
+                              : (isDark ? "#52525b" : "#71717a")
+                          }
                           strokeWidth={isSelected ? "2.5" : "1.5"}
-                          className="transition-all duration-200 group-hover:stroke-blue-600"
+                          className="transition-all duration-200 group-hover:stroke-blue-500"
                         />
 
                         {/* Inner Node Text / Symbol */}
@@ -375,7 +396,13 @@ export function HeroSection() {
                           dy="3.5"
                           fontSize="8.5"
                           fontWeight="bold"
-                          fill={isTarget ? "#ffffff" : isSelected ? "#2563eb" : "#18181b"}
+                          fill={
+                            isTarget
+                              ? "#ffffff"
+                              : isSelected
+                              ? (isDark ? "#60a5fa" : "#2563eb")
+                              : (isDark ? "#f4f4f5" : "#18181b")
+                          }
                           fontFamily="monospace"
                         >
                           {n.id === "node1"
@@ -397,7 +424,7 @@ export function HeroSection() {
                           dy="27"
                           fontSize="8.5"
                           fontWeight={isSelected ? "bold" : "600"}
-                          fill={isSelected ? "#2563eb" : "#27272a"}
+                          fill={isSelected ? (isDark ? "#60a5fa" : "#2563eb") : (isDark ? "#e4e4e7" : "#27272a")}
                           fontFamily="monospace"
                         >
                           {n.shortLabel}
@@ -409,7 +436,7 @@ export function HeroSection() {
                           dy="37"
                           fontSize="7.5"
                           fontWeight="500"
-                          fill="#71717a"
+                          fill={isDark ? "#a1a1aa" : "#71717a"}
                           fontFamily="monospace"
                         >
                           {n.badge}
@@ -421,35 +448,35 @@ export function HeroSection() {
               </div>
 
               {/* Node Inspector Footer */}
-              <div className="p-3 border-t border-zinc-200 bg-white">
+              <div className="p-3 border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 transition-colors">
                 <div className="flex items-center justify-between text-xs">
                   <div className="flex items-center space-x-2">
-                    <span className="text-[10px] uppercase font-bold text-zinc-500">
+                    <span className="text-[10px] uppercase font-bold text-zinc-500 dark:text-zinc-400">
                       Selected Node:
                     </span>
-                    <span className="font-bold text-zinc-900">{activeNodeData.label}</span>
+                    <span className="font-bold text-zinc-900 dark:text-zinc-100">{activeNodeData.label}</span>
                   </div>
                   <span className={`px-2 py-0.5 rounded text-[11px] font-bold border ${
                     activeNodeData.risk.includes("Critical")
-                      ? "border-red-300 bg-red-50 text-red-700"
+                      ? "border-red-300 dark:border-red-800 bg-red-50 dark:bg-red-950/60 text-red-700 dark:text-red-300"
                       : activeNodeData.risk.includes("High")
-                      ? "border-amber-300 bg-amber-50 text-amber-800"
+                      ? "border-amber-300 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300"
                       : activeNodeData.risk.includes("Medium")
-                      ? "border-blue-300 bg-blue-50 text-blue-700"
-                      : "border-zinc-300 bg-zinc-100 text-zinc-800"
+                      ? "border-blue-300 dark:border-blue-800 bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300"
+                      : "border-zinc-300 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200"
                   }`}>
                     Risk: {activeNodeData.risk}
                   </span>
                 </div>
-                <div className="mt-1.5 flex items-center justify-between text-[11px] text-zinc-600">
-                  <span className="font-mono font-semibold">Balance: {activeNodeData.btc}</span>
-                  <span className="text-zinc-500 truncate max-w-[320px]">{activeNodeData.desc}</span>
+                <div className="mt-1.5 flex items-center justify-between text-[11px] text-zinc-600 dark:text-zinc-400">
+                  <span className="font-mono font-semibold text-zinc-900 dark:text-zinc-200">Balance: {activeNodeData.btc}</span>
+                  <span className="text-zinc-500 dark:text-zinc-400 truncate max-w-[320px]">{activeNodeData.desc}</span>
                 </div>
               </div>
             </div>
 
             {/* Caption */}
-            <p className="text-[11px] text-zinc-500 mt-2 text-center">
+            <p className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-2 text-center">
               Click any wallet node to trace incoming/outgoing transaction paths, laundering depth, and AI risk scores.
             </p>
           </div>
@@ -458,4 +485,3 @@ export function HeroSection() {
     </section>
   );
 }
-

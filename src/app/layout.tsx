@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Space_Mono } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 const spaceMono = Space_Mono({
   weight: ["400", "700"],
@@ -31,9 +32,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${spaceMono.variable} scroll-smooth`}>
-      <body className="font-mono bg-white text-zinc-900 antialiased selection:bg-blue-600 selection:text-white">
-        {children}
+    <html lang="en" suppressHydrationWarning className={`${spaceMono.variable} scroll-smooth`}>
+      <body className="font-mono bg-white text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100 antialiased selection:bg-blue-600 selection:text-white transition-colors duration-200">
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

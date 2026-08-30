@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { ArrowDown, Layers, CheckCircle2, ChevronRight, Binary, Cpu, ShieldCheck, Database, FileSpreadsheet, Eye } from "lucide-react";
+import { ArrowDown, ChevronRight } from "lucide-react";
 
 interface ArchNode {
   id: string;
@@ -122,18 +122,18 @@ export function SystemArchitectureSection() {
   const selectedNode = ARCH_NODES.find((n) => n.id === selectedId) || ARCH_NODES[6];
 
   return (
-    <section id="architecture" className="py-20 border-b border-zinc-200 bg-white">
+    <section id="architecture" className="py-20 border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="max-w-3xl mb-12">
-          <div className="flex items-center gap-2 text-xs font-bold text-zinc-500 uppercase tracking-wider mb-2">
-            <span className="w-2 h-2 rounded-full bg-zinc-900" />
+          <div className="flex items-center gap-2 text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-2">
+            <span className="w-2 h-2 rounded-full bg-zinc-900 dark:bg-zinc-100" />
             Section 04 // Blueprint
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-950">
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-950 dark:text-zinc-100">
             Complete System Architecture
           </h2>
-          <p className="mt-3 text-sm sm:text-base text-zinc-600 leading-relaxed">
+          <p className="mt-3 text-sm sm:text-base text-zinc-600 dark:text-zinc-400 leading-relaxed">
             The end-to-end dataflow pipeline transforming unstructured blockchain ledger logs into actionable, court-ready forensic intelligence.
           </p>
         </div>
@@ -142,19 +142,18 @@ export function SystemArchitectureSection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left Column: Flowchart */}
           <div className="lg:col-span-7">
-            <div className="rounded-lg border border-zinc-300 bg-white shadow-sm p-4 sm:p-6 space-y-2">
-              <div className="flex items-center justify-between pb-3 mb-2 border-b border-zinc-200">
-                <span className="text-xs font-bold text-zinc-800 uppercase tracking-wider">
+            <div className="rounded-lg border border-zinc-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm p-4 sm:p-6 space-y-2">
+              <div className="flex items-center justify-between pb-3 mb-2 border-b border-zinc-200 dark:border-zinc-800">
+                <span className="text-xs font-bold text-zinc-800 dark:text-zinc-200 uppercase tracking-wider">
                   Dataflow Architecture (10 Pipeline Blocks)
                 </span>
-                <span className="text-[10px] text-zinc-500 font-mono">
+                <span className="text-[10px] text-zinc-500 dark:text-zinc-400 font-mono">
                   Click any block to inspect
                 </span>
               </div>
 
               {ARCH_NODES.map((node, index) => {
                 const isSelected = selectedId === node.id;
-                const isAI = node.category === "AI" || node.category === "Analytics";
 
                 return (
                   <React.Fragment key={node.id}>
@@ -162,8 +161,8 @@ export function SystemArchitectureSection() {
                       onClick={() => setSelectedId(node.id)}
                       className={`cursor-pointer p-3 rounded-lg border transition-all flex items-center justify-between ${
                         isSelected
-                          ? "border-blue-600 bg-blue-50/20 shadow-sm ring-1 ring-blue-600"
-                          : "border-zinc-200 bg-white hover:border-zinc-400 hover:bg-zinc-50"
+                          ? "border-blue-600 dark:border-blue-500 bg-blue-50/20 dark:bg-blue-950/30 shadow-sm ring-1 ring-blue-600 dark:ring-blue-500"
+                          : "border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 hover:border-zinc-400 dark:hover:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-900"
                       }`}
                     >
                       <div className="flex items-center space-x-3">
@@ -171,19 +170,19 @@ export function SystemArchitectureSection() {
                           className={`w-6 h-6 rounded flex items-center justify-center text-[10px] font-bold font-mono border ${
                             isSelected
                               ? "bg-blue-600 text-white border-blue-600"
-                              : "bg-zinc-100 text-zinc-700 border-zinc-300"
+                              : "bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border-zinc-300 dark:border-zinc-700"
                           }`}
                         >
                           {index + 1}
                         </div>
                         <div>
-                          <div className="text-xs font-bold text-zinc-900 flex items-center gap-2">
+                          <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
                             {node.name}
-                            <span className="text-[9px] px-1.5 py-0.2 rounded border border-zinc-200 bg-zinc-100 text-zinc-600 uppercase font-mono">
+                            <span className="text-[9px] px-1.5 py-0.2 rounded border border-zinc-200 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 uppercase font-mono">
                               {node.category}
                             </span>
                           </div>
-                          <div className="text-[11px] text-zinc-500 mt-0.5 truncate max-w-[280px] sm:max-w-md">
+                          <div className="text-[11px] text-zinc-500 dark:text-zinc-400 mt-0.5 truncate max-w-[280px] sm:max-w-md">
                             {node.desc}
                           </div>
                         </div>
@@ -191,7 +190,7 @@ export function SystemArchitectureSection() {
 
                       <ChevronRight
                         className={`w-4 h-4 shrink-0 transition-transform ${
-                          isSelected ? "text-blue-600 translate-x-1" : "text-zinc-400"
+                          isSelected ? "text-blue-600 dark:text-blue-400 translate-x-1" : "text-zinc-400 dark:text-zinc-600"
                         }`}
                       />
                     </div>
@@ -199,7 +198,7 @@ export function SystemArchitectureSection() {
                     {/* Arrow between nodes */}
                     {index < ARCH_NODES.length - 1 && (
                       <div className="flex justify-center py-0.5">
-                        <ArrowDown className="w-3.5 h-3.5 text-zinc-400" />
+                        <ArrowDown className="w-3.5 h-3.5 text-zinc-400 dark:text-zinc-600" />
                       </div>
                     )}
                   </React.Fragment>
@@ -210,18 +209,18 @@ export function SystemArchitectureSection() {
 
           {/* Right Column: Selected Block Inspector */}
           <div className="lg:col-span-5 sticky top-24">
-            <div className="rounded-lg border border-zinc-300 bg-white shadow-sm overflow-hidden">
+            <div className="rounded-lg border border-zinc-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm overflow-hidden">
               {/* Header */}
-              <div className="p-4 border-b border-zinc-200 bg-zinc-50 flex items-center justify-between">
+              <div className="p-4 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/80 flex items-center justify-between">
                 <div>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-500">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
                     Component Inspector
                   </span>
-                  <h3 className="text-sm font-bold text-zinc-950 mt-0.5">
+                  <h3 className="text-sm font-bold text-zinc-950 dark:text-zinc-100 mt-0.5">
                     {selectedNode.name}
                   </h3>
                 </div>
-                <span className="text-[10px] px-2 py-0.5 rounded border border-blue-200 bg-blue-50 text-blue-700 font-bold uppercase font-mono">
+                <span className="text-[10px] px-2 py-0.5 rounded border border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 font-bold uppercase font-mono">
                   {selectedNode.category}
                 </span>
               </div>
@@ -229,51 +228,51 @@ export function SystemArchitectureSection() {
               {/* Details Body */}
               <div className="p-5 space-y-4">
                 <div>
-                  <label className="text-[10px] font-bold uppercase tracking-wider text-zinc-400">
+                  <label className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
                     Description & Role
                   </label>
-                  <p className="text-xs text-zinc-700 mt-1 leading-relaxed">
+                  <p className="text-xs text-zinc-700 dark:text-zinc-300 mt-1 leading-relaxed">
                     {selectedNode.desc}
                   </p>
                 </div>
 
-                <div className="p-3 rounded border border-zinc-200 bg-zinc-50/60 space-y-1">
-                  <div className="text-[10px] font-bold uppercase text-zinc-500">
+                <div className="p-3 rounded border border-zinc-200 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-950/60 space-y-1">
+                  <div className="text-[10px] font-bold uppercase text-zinc-500 dark:text-zinc-400">
                     Key Execution Action
                   </div>
-                  <div className="text-xs font-semibold text-zinc-900">
+                  <div className="text-xs font-semibold text-zinc-900 dark:text-zinc-100">
                     {selectedNode.keyAction}
                   </div>
                 </div>
 
                 <div className="space-y-2 text-xs">
                   <div>
-                    <span className="text-[10px] font-bold uppercase text-zinc-400 block">
+                    <span className="text-[10px] font-bold uppercase text-zinc-400 dark:text-zinc-500 block">
                       Input Contract:
                     </span>
-                    <code className="text-[11px] block mt-0.5 p-2 rounded bg-zinc-100 text-zinc-800 border border-zinc-200 font-mono">
+                    <code className="text-[11px] block mt-0.5 p-2 rounded bg-zinc-100 dark:bg-zinc-950 text-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-800 font-mono">
                       {selectedNode.input}
                     </code>
                   </div>
 
                   <div>
-                    <span className="text-[10px] font-bold uppercase text-zinc-400 block">
+                    <span className="text-[10px] font-bold uppercase text-zinc-400 dark:text-zinc-500 block">
                       Output Artifact:
                     </span>
-                    <code className="text-[11px] block mt-0.5 p-2 rounded bg-zinc-100 text-zinc-800 border border-zinc-200 font-mono">
+                    <code className="text-[11px] block mt-0.5 p-2 rounded bg-zinc-100 dark:bg-zinc-950 text-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-800 font-mono">
                       {selectedNode.output}
                     </code>
                   </div>
 
                   <div>
-                    <span className="text-[10px] font-bold uppercase text-zinc-400 block">
+                    <span className="text-[10px] font-bold uppercase text-zinc-400 dark:text-zinc-500 block">
                       Core Technology:
                     </span>
                     <div className="mt-1 flex flex-wrap gap-1.5">
                       {selectedNode.tech.split(", ").map((t) => (
                         <span
                           key={t}
-                          className="px-2 py-0.5 text-[10px] rounded border border-zinc-300 bg-white text-zinc-800 font-mono"
+                          className="px-2 py-0.5 text-[10px] rounded border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-zinc-800 dark:text-zinc-200 font-mono"
                         >
                           {t}
                         </span>
@@ -284,9 +283,9 @@ export function SystemArchitectureSection() {
               </div>
 
               {/* Footer */}
-              <div className="p-3 border-t border-zinc-200 bg-zinc-50 text-[11px] text-zinc-500 flex items-center justify-between">
+              <div className="p-3 border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/80 text-[11px] text-zinc-500 dark:text-zinc-400 flex items-center justify-between">
                 <span>Architecture Layer: {selectedNode.category}</span>
-                <span className="font-mono text-zinc-700">SIH 2026 Ready</span>
+                <span className="font-mono text-zinc-700 dark:text-zinc-300">SIH 2026 Ready</span>
               </div>
             </div>
           </div>

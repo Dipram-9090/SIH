@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { UploadCloud, Cpu, Network, ShieldAlert, Bell, LayoutDashboard, Search, FileDown, ArrowDown, CheckCircle2 } from "lucide-react";
+import { UploadCloud, Cpu, Network, ShieldAlert, Bell, LayoutDashboard, Search, FileDown } from "lucide-react";
 
 interface WorkflowStep {
   step: number;
@@ -92,18 +92,18 @@ export function UserWorkflowSection() {
   const [activeStep, setActiveStep] = useState<number>(1);
 
   return (
-    <section id="user-workflow" className="py-20 border-b border-zinc-200 bg-white">
+    <section id="user-workflow" className="py-20 border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="max-w-3xl mb-12">
-          <div className="flex items-center gap-2 text-xs font-bold text-zinc-500 uppercase tracking-wider mb-2">
-            <span className="w-2 h-2 rounded-full bg-zinc-900" />
+          <div className="flex items-center gap-2 text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-2">
+            <span className="w-2 h-2 rounded-full bg-zinc-900 dark:bg-zinc-100" />
             Section 14 // End-To-End Experience
           </div>
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-950">
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-950 dark:text-zinc-100">
             User Workflow
           </h2>
-          <p className="mt-3 text-sm sm:text-base text-zinc-600 leading-relaxed">
+          <p className="mt-3 text-sm sm:text-base text-zinc-600 dark:text-zinc-400 leading-relaxed">
             How law enforcement officers and cyber forensic investigators interact with the system from initial seizure ingestion to statutory courtroom report generation.
           </p>
         </div>
@@ -112,7 +112,7 @@ export function UserWorkflowSection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left: Interactive Step Cards */}
           <div className="lg:col-span-7 space-y-3">
-            {WORKFLOW_STEPS.map((step, idx) => {
+            {WORKFLOW_STEPS.map((step) => {
               const isSelected = activeStep === step.step;
               const isOfficer = step.actor === "Investigator";
 
@@ -122,8 +122,8 @@ export function UserWorkflowSection() {
                   onClick={() => setActiveStep(step.step)}
                   className={`cursor-pointer p-4 rounded-lg border transition-all ${
                     isSelected
-                      ? "border-blue-600 bg-blue-50/20 ring-1 ring-blue-600 shadow-sm"
-                      : "border-zinc-200 bg-white hover:border-zinc-400 hover:bg-zinc-50"
+                      ? "border-blue-600 dark:border-blue-500 bg-blue-50/20 dark:bg-blue-950/30 ring-1 ring-blue-600 dark:ring-blue-500 shadow-sm"
+                      : "border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:border-zinc-400 dark:hover:border-zinc-700 hover:bg-zinc-50 dark:hover:bg-zinc-800/60"
                   }`}
                 >
                   <div className="flex items-center justify-between">
@@ -133,21 +133,21 @@ export function UserWorkflowSection() {
                           isSelected
                             ? "bg-blue-600 text-white border-blue-600"
                             : isOfficer
-                            ? "bg-zinc-900 text-white border-zinc-900"
-                            : "bg-zinc-100 text-zinc-700 border-zinc-300"
+                            ? "bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-950 border-zinc-900 dark:border-zinc-100"
+                            : "bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border-zinc-300 dark:border-zinc-700"
                         }`}
                       >
                         {step.step}
                       </div>
 
                       <div>
-                        <h3 className="text-xs font-bold text-zinc-950 flex items-center gap-2">
+                        <h3 className="text-xs font-bold text-zinc-950 dark:text-zinc-100 flex items-center gap-2">
                           {step.title}
                           <span
                             className={`text-[9px] px-2 py-0.2 rounded font-mono font-normal border ${
                               isOfficer
-                                ? "border-zinc-300 bg-zinc-100 text-zinc-800"
-                                : "border-blue-200 bg-blue-50 text-blue-800"
+                                ? "border-zinc-300 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200"
+                                : "border-blue-200 dark:border-blue-900 bg-blue-50 dark:bg-blue-950/60 text-blue-800 dark:text-blue-300"
                             }`}
                           >
                             {step.actor}
@@ -156,12 +156,12 @@ export function UserWorkflowSection() {
                       </div>
                     </div>
 
-                    <span className="text-[10px] font-mono text-zinc-400">
+                    <span className="text-[10px] font-mono text-zinc-400 dark:text-zinc-500">
                       {step.timeEstimate}
                     </span>
                   </div>
 
-                  <p className="text-xs text-zinc-600 mt-2 pl-10 leading-relaxed">
+                  <p className="text-xs text-zinc-600 dark:text-zinc-400 mt-2 pl-10 leading-relaxed">
                     {step.description}
                   </p>
                 </div>
@@ -171,12 +171,12 @@ export function UserWorkflowSection() {
 
           {/* Right: Step Deep Dive Preview Card */}
           <div className="lg:col-span-5 sticky top-24">
-            <div className="rounded-lg border border-zinc-300 bg-white shadow-sm overflow-hidden">
-              <div className="p-4 border-b border-zinc-200 bg-zinc-50 flex items-center justify-between">
-                <span className="text-xs font-bold text-zinc-800">
+            <div className="rounded-lg border border-zinc-300 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-sm overflow-hidden">
+              <div className="p-4 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/80 flex items-center justify-between">
+                <span className="text-xs font-bold text-zinc-800 dark:text-zinc-200">
                   Step {activeStep} Detail Inspector
                 </span>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded border border-zinc-300 bg-white text-zinc-600">
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300">
                   Workflow Simulation
                 </span>
               </div>
@@ -188,53 +188,53 @@ export function UserWorkflowSection() {
                 return (
                   <div className="p-6 space-y-4">
                     <div className="flex items-center space-x-3">
-                      <div className="p-2.5 rounded-lg border border-zinc-300 bg-zinc-100 text-zinc-900">
+                      <div className="p-2.5 rounded-lg border border-zinc-300 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100">
                         {current.icon}
                       </div>
                       <div>
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 font-mono">
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500 font-mono">
                           Action by {current.actor}
                         </span>
-                        <h4 className="text-sm font-bold text-zinc-950">
+                        <h4 className="text-sm font-bold text-zinc-950 dark:text-zinc-100">
                           {current.title}
                         </h4>
                       </div>
                     </div>
 
-                    <p className="text-xs text-zinc-700 leading-relaxed pt-2 border-t border-zinc-100">
+                    <p className="text-xs text-zinc-700 dark:text-zinc-300 leading-relaxed pt-2 border-t border-zinc-100 dark:border-zinc-800">
                       {current.description}
                     </p>
 
-                    <div className="p-3.5 rounded border border-zinc-200 bg-zinc-50 space-y-1">
-                      <div className="text-[10px] font-bold uppercase text-zinc-500 font-mono">
+                    <div className="p-3.5 rounded border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 space-y-1">
+                      <div className="text-[10px] font-bold uppercase text-zinc-500 dark:text-zinc-400 font-mono">
                         Generated Artifact / Output
                       </div>
-                      <div className="text-xs font-bold text-zinc-900">
+                      <div className="text-xs font-bold text-zinc-900 dark:text-zinc-100">
                         {current.actionOutput}
                       </div>
                     </div>
 
-                    <div className="pt-2 flex items-center justify-between text-xs text-zinc-500 font-mono">
+                    <div className="pt-2 flex items-center justify-between text-xs text-zinc-500 dark:text-zinc-400 font-mono">
                       <span>Duration: {current.timeEstimate}</span>
-                      <span className="text-blue-600 font-bold">Step {current.step} / 8</span>
+                      <span className="text-blue-600 dark:text-blue-400 font-bold">Step {current.step} / 8</span>
                     </div>
                   </div>
                 );
               })()}
 
               {/* Progress Stepper Footer */}
-              <div className="p-3 border-t border-zinc-200 bg-zinc-50 flex items-center justify-between">
+              <div className="p-3 border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/80 flex items-center justify-between">
                 <button
                   onClick={() => setActiveStep((prev) => Math.max(1, prev - 1))}
                   disabled={activeStep === 1}
-                  className="text-xs font-bold px-3 py-1.5 rounded border border-zinc-300 bg-white text-zinc-800 disabled:opacity-40"
+                  className="text-xs font-bold px-3 py-1.5 rounded border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-zinc-800 dark:text-zinc-200 disabled:opacity-40 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
                 >
                   Previous
                 </button>
                 <button
                   onClick={() => setActiveStep((prev) => Math.min(8, prev + 1))}
                   disabled={activeStep === 8}
-                  className="text-xs font-bold px-3 py-1.5 rounded bg-blue-600 text-white disabled:opacity-40"
+                  className="text-xs font-bold px-3 py-1.5 rounded bg-blue-600 text-white disabled:opacity-40 hover:bg-blue-700 transition-colors"
                 >
                   Next Step →
                 </button>
