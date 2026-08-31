@@ -1,49 +1,14 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Binary, Menu, X, Terminal, LayoutDashboard } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
+import { useNavigation } from "@/context/NavigationContext";
+import { DESKTOP_NAV_LINKS, DOCUMENT_SECTIONS } from "@/config/navigation";
 
 export function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState<string>("");
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-
-      // Track active section for navigation pills
-      const sections = [
-        "architecture",
-        "pipeline",
-        "ai-detection",
-        "explainability",
-        "dashboard-mockup",
-        "roadmap"
-      ];
-      
-      const scrollPosition = window.scrollY + 100;
-      for (const sectionId of sections) {
-        const el = document.getElementById(sectionId);
-        if (el) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPosition >= top && scrollPosition < top + height) {
-            setActiveSection(sectionId);
-            break;
-          }
-        }
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const { activeSection, activeDesktopNavId, scrollToSection, isScrolled } = useNavigation();
 
   return (
     <header
@@ -57,7 +22,8 @@ export function Navbar() {
         {/* Brand / Logo */}
         <div className="flex items-center space-x-3">
           <a
-            href="#"
+            href="#hero"
+            onClick={(e) => scrollToSection("hero", e)}
             className="flex items-center space-x-2.5 focus:outline-none"
             aria-label="Bitcoin Investigation System Homepage"
           >
@@ -75,24 +41,18 @@ export function Navbar() {
           </a>
         </div>
 
-        {/* Quick Section Navigator Dropdown (Desktop) */}
+        {/* Quick Section Navigator (Desktop) - Ordered strictly according to document flow */}
         <nav className="hidden lg:flex items-center space-x-1 text-xs">
-          {[
-            { name: "Architecture", href: "#architecture" },
-            { name: "Pipeline", href: "#pipeline" },
-            { name: "AI Models", href: "#ai-detection" },
-            { name: "XAI Alert", href: "#explainability" },
-            { name: "Dashboard", href: "#dashboard-mockup", isDashboard: true },
-            { name: "Roadmap", href: "#roadmap" }
-          ].map((link) => {
-            const isActive = activeSection === link.href.substring(1);
+          {DESKTOP_NAV_LINKS.map((link) => {
+            const isActive = activeDesktopNavId === link.id || activeSection === link.id;
             return (
               <a
                 key={link.name}
                 href={link.href}
+                onClick={(e) => scrollToSection(link.id, e)}
                 className={`px-3 py-1.5 rounded relative transition-all duration-200 hover:scale-105 active:scale-95 flex items-center gap-1 ${
                   isActive
-                    ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-950 font-bold"
+                    ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-950 font-bold shadow-xs"
                     : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-900"
                 }`}
               >
@@ -110,6 +70,7 @@ export function Navbar() {
 
           <a
             href="#dashboard-mockup"
+            onClick={(e) => scrollToSection("dashboard-mockup", e)}
             className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold rounded bg-blue-600 text-white hover:bg-blue-700 transition-colors shadow-sm"
           >
             <Terminal className="w-3.5 h-3.5" />
@@ -128,59 +89,31 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Drawer */}
+      {/* Mobile Drawer - Complete Ordered Index */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-4 py-4 space-y-2">
+        <div className="lg:hidden border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-4 py-4 space-y-2 max-h-[calc(100vh-4rem)] overflow-y-auto animate-slide-up">
           <div className="flex flex-col space-y-1 text-xs">
-            <a
-              href="#architecture"
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 font-medium"
-            >
-              System Architecture
-            </a>
-            <a
-              href="#pipeline"
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 font-medium"
-            >
-              Data Pipeline Stages
-            </a>
-            <a
-              href="#graph-analytics"
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 font-medium"
-            >
-              Graph Analytics Theory
-            </a>
-            <a
-              href="#ai-detection"
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 font-medium"
-            >
-              AI Detection Engine
-            </a>
-            <a
-              href="#explainability"
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 font-medium"
-            >
-              Explainable AI (XAI)
-            </a>
-            <a
-              href="#dashboard-mockup"
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded text-blue-600 dark:text-blue-400 font-bold bg-blue-50 dark:bg-blue-950/40"
-            >
-              Investigation Dashboard
-            </a>
-            <a
-              href="#roadmap"
-              onClick={() => setMobileMenuOpen(false)}
-              className="px-3 py-2 rounded text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900 font-medium"
-            >
-              Implementation Roadmap
-            </a>
+            {DOCUMENT_SECTIONS.map((item) => {
+              const isActive = activeSection === item.id;
+              return (
+                <a
+                  key={item.id}
+                  href={`#${item.id}`}
+                  onClick={(e) => {
+                    scrollToSection(item.id, e);
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`px-3 py-2 rounded font-medium flex items-center justify-between transition-colors ${
+                    isActive
+                      ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-950 font-bold"
+                      : "text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-900"
+                  }`}
+                >
+                  <span className="truncate">{item.mobileName}</span>
+                  <span className="text-[10px] font-mono opacity-60 ml-2">{item.num}</span>
+                </a>
+              );
+            })}
           </div>
         </div>
       )}

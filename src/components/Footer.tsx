@@ -2,8 +2,11 @@
 
 import React from "react";
 import { Binary } from "lucide-react";
+import { useNavigation } from "@/context/NavigationContext";
 
 export function Footer() {
+  const { scrollToSection } = useNavigation();
+
   return (
     <footer className="border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 py-12 text-xs font-mono text-zinc-600 dark:text-zinc-400 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -33,27 +36,47 @@ export function Footer() {
             </div>
             <ul className="space-y-1.5 text-[11px]">
               <li>
-                <a href="#architecture" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                <a
+                  href="#architecture"
+                  onClick={(e) => scrollToSection("architecture", e)}
+                  className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                >
                   System Architecture (10 Blocks)
                 </a>
               </li>
               <li>
-                <a href="#pipeline" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                <a
+                  href="#pipeline"
+                  onClick={(e) => scrollToSection("pipeline", e)}
+                  className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                >
                   Full Data Pipeline (10 Stages)
                 </a>
               </li>
               <li>
-                <a href="#graph-analytics" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                <a
+                  href="#graph-analytics"
+                  onClick={(e) => scrollToSection("graph-analytics", e)}
+                  className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                >
                   Graph Analytics & Nodes
                 </a>
               </li>
               <li>
-                <a href="#ai-detection" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                <a
+                  href="#ai-detection"
+                  onClick={(e) => scrollToSection("ai-detection", e)}
+                  className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                >
                   Isolation Forest & DBSCAN
                 </a>
               </li>
               <li>
-                <a href="#database-schema" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                <a
+                  href="#database-schema"
+                  onClick={(e) => scrollToSection("database-schema", e)}
+                  className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                >
                   Database Schema (ERD)
                 </a>
               </li>
@@ -67,27 +90,47 @@ export function Footer() {
             </div>
             <ul className="space-y-1.5 text-[11px]">
               <li>
-                <a href="#hero" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                <a
+                  href="#hero"
+                  onClick={(e) => scrollToSection("hero", e)}
+                  className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                >
                   Live Subgraph Sandbox
                 </a>
               </li>
               <li>
-                <a href="#problem-statement" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                <a
+                  href="#problem-statement"
+                  onClick={(e) => scrollToSection("problem-statement", e)}
+                  className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                >
                   Laundering Hop Flow
                 </a>
               </li>
               <li>
-                <a href="#explainability" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                <a
+                  href="#explainability"
+                  onClick={(e) => scrollToSection("explainability", e)}
+                  className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                >
                   Explainable AI Alert Card (92%)
                 </a>
               </li>
               <li>
-                <a href="#dashboard-mockup" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                <a
+                  href="#dashboard-mockup"
+                  onClick={(e) => scrollToSection("dashboard-mockup", e)}
+                  className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                >
                   Investigation Dashboard Mockup
                 </a>
               </li>
               <li>
-                <a href="#api-architecture" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                <a
+                  href="#api-architecture"
+                  onClick={(e) => scrollToSection("api-architecture", e)}
+                  className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                >
                   REST API Explorer
                 </a>
               </li>

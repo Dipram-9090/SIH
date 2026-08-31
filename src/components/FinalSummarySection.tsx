@@ -2,9 +2,11 @@
 
 import React, { useState } from "react";
 import { ShieldCheck, ArrowUp, Copy, Check } from "lucide-react";
+import { useNavigation } from "@/context/NavigationContext";
 
 export function FinalSummarySection() {
   const [copied, setCopied] = useState(false);
+  const { scrollToSection } = useNavigation();
 
   const quoteText =
     "Our objective is not to replace human investigative intuition, but to augment specialized cybercrime units with automated graph intelligence, anomaly isolation, and statutory forensic verification.";
@@ -49,6 +51,7 @@ export function FinalSummarySection() {
 
             <a
               href="#hero"
+              onClick={(e) => scrollToSection("hero", e)}
               className="inline-flex items-center gap-2 px-4 py-2 text-xs font-bold rounded bg-blue-600 text-white hover:bg-blue-700 transition-colors shadow-sm"
             >
               <ArrowUp className="w-3.5 h-3.5" />
